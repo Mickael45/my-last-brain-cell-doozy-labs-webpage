@@ -154,26 +154,32 @@ const ProjectDetail: React.FC = () => {
             >
               <div className="text-center p-8 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl border border-cyan-500/20">
                 <Users className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-white mb-2">
+                <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
+                  Active Users
+                </div>
+                <div className="text-3xl font-bold text-white">
                   {project.metrics.users}
                 </div>
-                <div className="text-gray-400">Active Users</div>
               </div>
 
               <div className="text-center p-8 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl border border-green-500/20">
                 <Clock className="w-12 h-12 text-green-400 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-white mb-2">
+                <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
+                  Performance
+                </div>
+                <div className="text-3xl font-bold text-white">
                   {project.metrics.performance}
                 </div>
-                <div className="text-gray-400">Performance</div>
               </div>
 
               <div className="text-center p-8 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl border border-purple-500/20">
                 <TrendingUp className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-white mb-2">
+                <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
+                  Impact
+                </div>
+                <div className="text-3xl font-bold text-white">
                   {project.metrics.impact}
                 </div>
-                <div className="text-gray-400">Impact</div>
               </div>
             </motion.div>
           </div>

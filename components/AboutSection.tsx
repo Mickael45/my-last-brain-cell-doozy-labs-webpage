@@ -82,7 +82,7 @@ const AboutSection: React.FC = () => {
               I've got two flavors:{" "}
               <strong className="text-cyan-400">Public Utilities</strong> (stuff
               that actually works and won't break your workflow) and{" "}
-              <strong className="text-purple-400">Volatile Prototypes</strong>{" "}
+              <strong className="text-purple-400">Chaos Experiments</strong>{" "}
               (experimental chaos that might achieve sentience or crash
               spectacularly - no guarantees either way).
             </p>

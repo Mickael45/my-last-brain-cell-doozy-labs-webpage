@@ -34,8 +34,8 @@ const AnimatedMesh = ()=>{
             }["AnimatedMesh.useEffect.resizeCanvas"];
             resizeCanvas();
             window.addEventListener("resize", resizeCanvas);
-            // Mesh properties
-            const gridSize = 80;
+            // Mesh properties (tighter mesh -> smaller gridSize, lower movement amplitude)
+            const gridSize = 30; // was 80
             const points = [];
             // Initialize grid points
             for(let x = 0; x <= canvas.width; x += gridSize){
@@ -56,28 +56,31 @@ const AnimatedMesh = ()=>{
                     points.forEach({
                         "AnimatedMesh.useEffect.animate": (point)=>{
                             const distanceToMouse = Math.sqrt(Math.pow(point.originalX - mousePosition.current.x, 2) + Math.pow(point.originalY - mousePosition.current.y, 2));
-                            const influenceRadius = 200;
+                            const influenceRadius = 180; // slightly smaller so mouse affects a more local area
                             const influence = Math.max(0, 1 - distanceToMouse / influenceRadius);
-                            const waveX = Math.sin(time + point.originalX * 0.01) * 10;
-                            const waveY = Math.cos(time + point.originalY * 0.01) * 10;
-                            const mouseInfluenceX = (mousePosition.current.x - point.originalX) * influence * 0.1;
-                            const mouseInfluenceY = (mousePosition.current.y - point.originalY) * influence * 0.1;
+                            // Reduce wave amplitude for a tighter / less wobbly look
+                            const waveX = Math.sin(time + point.originalX * 0.012) * 6;
+                            const waveY = Math.cos(time + point.originalY * 0.012) * 6;
+                            const mouseInfluenceX = (mousePosition.current.x - point.originalX) * influence * 0.06;
+                            const mouseInfluenceY = (mousePosition.current.y - point.originalY) * influence * 0.06;
                             point.x = point.originalX + waveX + mouseInfluenceX;
                             point.y = point.originalY + waveY + mouseInfluenceY;
                         }
                     }["AnimatedMesh.useEffect.animate"]);
                     // Draw connections
-                    ctx.strokeStyle = "rgba(0, 212, 255, 0.1)";
-                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = "rgba(0, 212, 255, 0.12)";
+                    ctx.lineWidth = 0.9;
                     for(let i = 0; i < points.length; i++){
                         const point = points[i];
                         // Connect to nearby points
                         for(let j = i + 1; j < points.length; j++){
                             const otherPoint = points[j];
                             const distance = Math.sqrt(Math.pow(point.x - otherPoint.x, 2) + Math.pow(point.y - otherPoint.y, 2));
-                            if (distance < gridSize * 1.5) {
-                                const opacity = Math.max(0, 1 - distance / (gridSize * 1.5));
-                                ctx.strokeStyle = "rgba(0, 212, 255, ".concat(opacity * 0.2, ")");
+                            // Decrease max connection distance for a crisper, tighter net
+                            const maxConnection = gridSize * 1.2; // was 1.5
+                            if (distance < maxConnection) {
+                                const opacity = Math.max(0, 1 - distance / maxConnection);
+                                ctx.strokeStyle = "rgba(0, 212, 255, ".concat(opacity * 0.25, ")");
                                 ctx.beginPath();
                                 ctx.moveTo(point.x, point.y);
                                 ctx.lineTo(otherPoint.x, otherPoint.y);
@@ -125,7 +128,7 @@ const AnimatedMesh = ()=>{
         }
     }, void 0, false, {
         fileName: "[project]/components/AnimatedMesh.tsx",
-        lineNumber: 135,
+        lineNumber: 138,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -387,17 +390,17 @@ const HeroSection = ()=>{
                         className: "w-1 h-3 bg-white/50 rounded-full mt-2"
                     }, void 0, false, {
                         fileName: "[project]/components/HeroSection.tsx",
-                        lineNumber: 109,
+                        lineNumber: 108,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/components/HeroSection.tsx",
-                    lineNumber: 104,
+                    lineNumber: 103,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/components/HeroSection.tsx",
-                lineNumber: 98,
+                lineNumber: 97,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
@@ -423,38 +426,33 @@ __turbopack_context__.s([
     ()=>__TURBOPACK__default__export__
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/external-link.js [app-client] (ecmascript) <export default as ExternalLink>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$code$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Code$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/code.js [app-client] (ecmascript) <export default as Code>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Sparkles$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/sparkles.js [app-client] (ecmascript) <export default as Sparkles>");
-;
-var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
 ;
 const ProjectCard = (param)=>{
-    let { project } = param;
-    _s();
-    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    let { project, onClick } = param;
     const getCategoryIcon = (category)=>{
-        return category === "Volatile Prototype" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Sparkles$3e$__["Sparkles"], {
+        return category === "Chaos Experiment" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Sparkles$3e$__["Sparkles"], {
             className: "w-4 h-4 text-white"
         }, void 0, false, {
             fileName: "[project]/components/ProjectCard.tsx",
-            lineNumber: 16,
+            lineNumber: 15,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$code$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Code$3e$__["Code"], {
             className: "w-4 h-4 text-white"
         }, void 0, false, {
             fileName: "[project]/components/ProjectCard.tsx",
-            lineNumber: 18,
+            lineNumber: 17,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0));
     };
     const getCategoryColor = (category)=>{
-        return category === "Volatile Prototype" ? "from-purple-500/20 via-pink-500/20 to-red-500/20 border-purple-500/30" : "from-cyan-500/20 via-blue-500/20 to-purple-500/20 border-cyan-500/30";
+        return category === "Chaos Experiment" ? "from-purple-500/20 via-pink-500/20 to-red-500/20 border-purple-500/30" : "from-cyan-500/20 via-blue-500/20 to-purple-500/20 border-cyan-500/30";
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
         whileHover: {
@@ -464,7 +462,7 @@ const ProjectCard = (param)=>{
         whileTap: {
             scale: 0.98
         },
-        onClick: ()=>router.push("/project/".concat(project.id)),
+        onClick: ()=>onClick(project),
         className: "cursor-pointer group",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "\n        relative overflow-hidden rounded-xl border bg-gradient-to-br backdrop-blur-sm\n        ".concat(getCategoryColor(project.category), "\n        hover:border-opacity-60 transition-all duration-300\n        hover:shadow-2xl hover:shadow-cyan-500/20\n      "),
@@ -478,17 +476,17 @@ const ProjectCard = (param)=>{
                             children: "🔥 Hot"
                         }, void 0, false, {
                             fileName: "[project]/components/ProjectCard.tsx",
-                            lineNumber: 47,
+                            lineNumber: 46,
                             columnNumber: 15
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/components/ProjectCard.tsx",
-                        lineNumber: 46,
+                        lineNumber: 45,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/components/ProjectCard.tsx",
-                    lineNumber: 45,
+                    lineNumber: 44,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0)),
                 project.isIncoming && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -500,7 +498,7 @@ const ProjectCard = (param)=>{
                                 className: "absolute inset-0 rounded-full bg-green-500/40 blur animate-ping"
                             }, void 0, false, {
                                 fileName: "[project]/components/ProjectCard.tsx",
-                                lineNumber: 54,
+                                lineNumber: 53,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -510,7 +508,7 @@ const ProjectCard = (param)=>{
                                         className: "w-2 h-2 rounded-full bg-green-400 animate-pulse"
                                     }, void 0, false, {
                                         fileName: "[project]/components/ProjectCard.tsx",
-                                        lineNumber: 56,
+                                        lineNumber: 55,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -518,24 +516,24 @@ const ProjectCard = (param)=>{
                                         children: "Incoming"
                                     }, void 0, false, {
                                         fileName: "[project]/components/ProjectCard.tsx",
-                                        lineNumber: 57,
+                                        lineNumber: 56,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/ProjectCard.tsx",
-                                lineNumber: 55,
+                                lineNumber: 54,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/ProjectCard.tsx",
-                        lineNumber: 53,
+                        lineNumber: 52,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/components/ProjectCard.tsx",
-                    lineNumber: 52,
+                    lineNumber: 51,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -547,20 +545,20 @@ const ProjectCard = (param)=>{
                             className: "w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                         }, void 0, false, {
                             fileName: "[project]/components/ProjectCard.tsx",
-                            lineNumber: 67,
+                            lineNumber: 66,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"
                         }, void 0, false, {
                             fileName: "[project]/components/ProjectCard.tsx",
-                            lineNumber: 72,
+                            lineNumber: 71,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/ProjectCard.tsx",
-                    lineNumber: 66,
+                    lineNumber: 65,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -575,13 +573,13 @@ const ProjectCard = (param)=>{
                                     children: project.category
                                 }, void 0, false, {
                                     fileName: "[project]/components/ProjectCard.tsx",
-                                    lineNumber: 80,
+                                    lineNumber: 79,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ProjectCard.tsx",
-                            lineNumber: 78,
+                            lineNumber: 77,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -589,7 +587,7 @@ const ProjectCard = (param)=>{
                             children: project.title
                         }, void 0, false, {
                             fileName: "[project]/components/ProjectCard.tsx",
-                            lineNumber: 86,
+                            lineNumber: 85,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -597,7 +595,7 @@ const ProjectCard = (param)=>{
                             children: project.tagline
                         }, void 0, false, {
                             fileName: "[project]/components/ProjectCard.tsx",
-                            lineNumber: 89,
+                            lineNumber: 88,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -608,7 +606,7 @@ const ProjectCard = (param)=>{
                                         children: tech
                                     }, index, false, {
                                         fileName: "[project]/components/ProjectCard.tsx",
-                                        lineNumber: 96,
+                                        lineNumber: 95,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))),
                                 project.techStack.length > 3 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -619,13 +617,13 @@ const ProjectCard = (param)=>{
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/ProjectCard.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 103,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ProjectCard.tsx",
-                            lineNumber: 94,
+                            lineNumber: 93,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -635,45 +633,40 @@ const ProjectCard = (param)=>{
                                     children: "Dive Deeper"
                                 }, void 0, false, {
                                     fileName: "[project]/components/ProjectCard.tsx",
-                                    lineNumber: 112,
+                                    lineNumber: 111,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__["ExternalLink"], {
                                     className: "w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"
                                 }, void 0, false, {
                                     fileName: "[project]/components/ProjectCard.tsx",
-                                    lineNumber: 113,
+                                    lineNumber: 112,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ProjectCard.tsx",
-                            lineNumber: 111,
+                            lineNumber: 110,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/ProjectCard.tsx",
-                    lineNumber: 76,
+                    lineNumber: 75,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/components/ProjectCard.tsx",
-            lineNumber: 35,
+            lineNumber: 34,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/components/ProjectCard.tsx",
-        lineNumber: 29,
+        lineNumber: 28,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(ProjectCard, "fN7XvhJ+p5oE6+Xlo0NJmXpxjC8=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
-    ];
-});
 _c = ProjectCard;
 const __TURBOPACK__default__export__ = ProjectCard;
 var _c;
@@ -693,6 +686,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$sparkles$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Sparkles$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/sparkles.js [app-client] (ecmascript) <export default as Sparkles>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ProjectCard$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ProjectCard.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
@@ -700,7 +696,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ProjectCard$2e
 ;
 const FeaturedProjects = (param)=>{
     let { projects } = param;
+    _s();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const featuredProjects = projects.filter((p)=>p.isFeatured);
+    const handleOpen = (project)=>router.push("/project/".concat(project.id));
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "py-20 bg-gradient-to-b from-gray-900 to-gray-800",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -730,7 +729,7 @@ const FeaturedProjects = (param)=>{
                                     className: "w-6 h-6 text-pink-400"
                                 }, void 0, false, {
                                     fileName: "[project]/components/FeaturedProjects.tsx",
-                                    lineNumber: 26,
+                                    lineNumber: 30,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -738,13 +737,13 @@ const FeaturedProjects = (param)=>{
                                     children: "Hall of Fame"
                                 }, void 0, false, {
                                     fileName: "[project]/components/FeaturedProjects.tsx",
-                                    lineNumber: 27,
+                                    lineNumber: 31,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/FeaturedProjects.tsx",
-                            lineNumber: 25,
+                            lineNumber: 29,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -754,12 +753,12 @@ const FeaturedProjects = (param)=>{
                                 children: "The Greatest Hits"
                             }, void 0, false, {
                                 fileName: "[project]/components/FeaturedProjects.tsx",
-                                lineNumber: 32,
+                                lineNumber: 36,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/components/FeaturedProjects.tsx",
-                            lineNumber: 31,
+                            lineNumber: 35,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -767,13 +766,13 @@ const FeaturedProjects = (param)=>{
                             children: "The projects that somehow didn't crash and burn (yet)"
                         }, void 0, false, {
                             fileName: "[project]/components/FeaturedProjects.tsx",
-                            lineNumber: 36,
+                            lineNumber: 40,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/FeaturedProjects.tsx",
-                    lineNumber: 18,
+                    lineNumber: 22,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -795,34 +794,40 @@ const FeaturedProjects = (param)=>{
                                 delay: index * 0.1
                             },
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ProjectCard$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                project: project
+                                project: project,
+                                onClick: handleOpen
                             }, void 0, false, {
                                 fileName: "[project]/components/FeaturedProjects.tsx",
-                                lineNumber: 50,
+                                lineNumber: 54,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         }, project.id, false, {
                             fileName: "[project]/components/FeaturedProjects.tsx",
-                            lineNumber: 43,
+                            lineNumber: 47,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0)))
                 }, void 0, false, {
                     fileName: "[project]/components/FeaturedProjects.tsx",
-                    lineNumber: 41,
+                    lineNumber: 45,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/components/FeaturedProjects.tsx",
-            lineNumber: 17,
+            lineNumber: 21,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/components/FeaturedProjects.tsx",
-        lineNumber: 16,
+        lineNumber: 20,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
+_s(FeaturedProjects, "fN7XvhJ+p5oE6+Xlo0NJmXpxjC8=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
+    ];
+});
 _c = FeaturedProjects;
 const __TURBOPACK__default__export__ = FeaturedProjects;
 var _c;
@@ -844,6 +849,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$mo
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$grid$2d$3x3$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Grid$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/grid-3x3.js [app-client] (ecmascript) <export default as Grid>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$filter$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Filter$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/filter.js [app-client] (ecmascript) <export default as Filter>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ProjectCard$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ProjectCard.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
@@ -851,15 +857,17 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+;
 const ProjectGallery = (param)=>{
     let { projects } = param;
     _s();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const [showAll, setShowAll] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [activeFilter, setActiveFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("All");
     const categories = [
         "All",
         "Public Utility",
-        "Volatile Prototype"
+        "Chaos Experiment"
     ];
     const filteredProjects = projects.filter((project)=>activeFilter === "All" || project.category === activeFilter);
     const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 4);
@@ -894,7 +902,7 @@ const ProjectGallery = (param)=>{
                                     className: "w-6 h-6 text-cyan-400"
                                 }, void 0, false, {
                                     fileName: "[project]/components/ProjectGallery.tsx",
-                                    lineNumber: 39,
+                                    lineNumber: 41,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -902,13 +910,13 @@ const ProjectGallery = (param)=>{
                                     children: "The Collection"
                                 }, void 0, false, {
                                     fileName: "[project]/components/ProjectGallery.tsx",
-                                    lineNumber: 40,
+                                    lineNumber: 42,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ProjectGallery.tsx",
-                            lineNumber: 38,
+                            lineNumber: 40,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -918,12 +926,12 @@ const ProjectGallery = (param)=>{
                                 children: "Digital Experiments Gone Wild"
                             }, void 0, false, {
                                 fileName: "[project]/components/ProjectGallery.tsx",
-                                lineNumber: 45,
+                                lineNumber: 47,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/components/ProjectGallery.tsx",
-                            lineNumber: 44,
+                            lineNumber: 46,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -931,7 +939,7 @@ const ProjectGallery = (param)=>{
                             children: "Where good ideas go to become questionable reality"
                         }, void 0, false, {
                             fileName: "[project]/components/ProjectGallery.tsx",
-                            lineNumber: 49,
+                            lineNumber: 51,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -941,7 +949,7 @@ const ProjectGallery = (param)=>{
                                     className: "w-5 h-5 text-gray-400 mr-2"
                                 }, void 0, false, {
                                     fileName: "[project]/components/ProjectGallery.tsx",
-                                    lineNumber: 55,
+                                    lineNumber: 57,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 categories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].button, {
@@ -956,19 +964,19 @@ const ProjectGallery = (param)=>{
                                         children: category
                                     }, category, false, {
                                         fileName: "[project]/components/ProjectGallery.tsx",
-                                        lineNumber: 57,
+                                        lineNumber: 59,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/ProjectGallery.tsx",
-                            lineNumber: 54,
+                            lineNumber: 56,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/ProjectGallery.tsx",
-                    lineNumber: 31,
+                    lineNumber: 33,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -991,20 +999,21 @@ const ProjectGallery = (param)=>{
                             },
                             layout: true,
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ProjectCard$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                project: project
+                                project: project,
+                                onClick: (p)=>router.push("/project/".concat(p.id))
                             }, void 0, false, {
                                 fileName: "[project]/components/ProjectGallery.tsx",
-                                lineNumber: 84,
+                                lineNumber: 86,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         }, project.id, false, {
                             fileName: "[project]/components/ProjectGallery.tsx",
-                            lineNumber: 76,
+                            lineNumber: 78,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0)))
                 }, void 0, false, {
                     fileName: "[project]/components/ProjectGallery.tsx",
-                    lineNumber: 74,
+                    lineNumber: 76,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 hasMoreProjects && !showAll && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1046,38 +1055,42 @@ const ProjectGallery = (param)=>{
                                     className: "w-5 h-5"
                                 }, void 0, false, {
                                     fileName: "[project]/components/ProjectGallery.tsx",
-                                    lineNumber: 111,
+                                    lineNumber: 116,
                                     columnNumber: 17
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/components/ProjectGallery.tsx",
-                                lineNumber: 103,
+                                lineNumber: 108,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/ProjectGallery.tsx",
-                        lineNumber: 96,
+                        lineNumber: 101,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/components/ProjectGallery.tsx",
-                    lineNumber: 90,
+                    lineNumber: 95,
                     columnNumber: 11
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/components/ProjectGallery.tsx",
-            lineNumber: 30,
+            lineNumber: 32,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/components/ProjectGallery.tsx",
-        lineNumber: 29,
+        lineNumber: 31,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(ProjectGallery, "NzrVDKzj7igxTmucQVT/o2Dw8LQ=");
+_s(ProjectGallery, "nfgRnRah3B+7iNFXiKz6ecdObwg=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
+    ];
+});
 _c = ProjectGallery;
 const __TURBOPACK__default__export__ = ProjectGallery;
 var _c;
@@ -1246,7 +1259,7 @@ const AboutSection = ()=>{
                                         " ",
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
                                             className: "text-purple-400",
-                                            children: "Volatile Prototypes"
+                                            children: "Chaos Experiments"
                                         }, void 0, false, {
                                             fileName: "[project]/components/AboutSection.tsx",
                                             lineNumber: 85,

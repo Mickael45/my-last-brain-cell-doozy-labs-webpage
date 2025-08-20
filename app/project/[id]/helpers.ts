@@ -11,8 +11,13 @@ interface Params {
   id: string;
 }
 
-export async function generateMetadata({ params }: { params: Params }) {
-  const project = await getProjectById(params.id);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { id } = await params;
+  const project = await getProjectById(id);
   if (!project) return { title: "Project Not Found" };
   return { title: `${project.title} – Doozy Labs` };
 }

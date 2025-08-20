@@ -6,9 +6,11 @@ export { revalidate, generateStaticParams, generateMetadata } from "./helpers";
 export default async function ProjectPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const project = await getProjectById(params.id);
+  // Next.js 15: params is a Promise now, must be awaited.
+  const { id } = await params;
+  const project = await getProjectById(id);
   if (!project) return notFound();
   return <ProjectDetailClient project={project} />;
 }

@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import ProjectCard from "./ProjectCard";
+import { useRouter } from "next/navigation";
 import { Project } from "../types";
 
 interface FeaturedProjectsProps {
@@ -10,7 +11,10 @@ interface FeaturedProjectsProps {
 }
 
 const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
+  const router = useRouter();
   const featuredProjects = projects.filter((p) => p.isFeatured);
+  const handleOpen = (project: Project) =>
+    router.push(`/project/${project.id}`);
 
   return (
     <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
@@ -47,7 +51,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <ProjectCard project={project} />
+              <ProjectCard project={project} onClick={handleOpen} />
             </motion.div>
           ))}
         </div>

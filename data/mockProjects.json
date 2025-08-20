@@ -1,0 +1,659 @@
+[
+    {
+        "title": "Doozy Vision",
+        "tagline": "Realtime AI-assisted debugging goggles for your codebase.",
+        "description": "An augmented reality inspired overlay for your IDE showing live data flow, hot paths, and suggested refactors powered by lightweight on-device models.",
+        "projectUrl": "https://example.com/doozy-vision",
+        "imageUrl": "https://picsum.photos/seed/doozyvision/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/doozyvision1/800/400",
+            "https://picsum.photos/seed/doozyvision2/800/400",
+            "https://picsum.photos/seed/doozyvision3/800/400"
+        ],
+        "challenges": [
+            "Maintaining sub-50ms overlay latency while tracing dynamic imports.",
+            "Balancing model accuracy with CPU-only edge constraints."
+        ],
+        "solutions": [
+            "Adaptive sampling profiler tied to IDE focus events.",
+            "Quantized attention layers reducing inference cost ~42%."
+        ],
+        "metrics": {
+            "users": "1.2K devs",
+            "performance": "47ms p95 overlay",
+            "impact": "22% faster bug localization"
+        },
+        "techStack": [
+            "Next.js",
+            "TypeScript",
+            "WebAssembly",
+            "Rust",
+            "ONNX"
+        ],
+        "category": "Public Utility",
+        "isFeatured": true,
+        "isIncoming": false,
+        "sortOrder": 1
+    },
+    {
+        "title": "Chaos Bot",
+        "tagline": "Autonomous pull request chaos engineering agent.",
+        "description": "Bot that opens safe-but-spicy PRs injecting controlled faults to harden resilience.",
+        "projectUrl": "https://example.com/chaos-bot",
+        "imageUrl": "https://picsum.photos/seed/chaosbot/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/chaosbot1/800/400",
+            "https://picsum.photos/seed/chaosbot2/800/400"
+        ],
+        "challenges": [
+            "Ensuring revert safety across monorepos.",
+            "Estimating blast radius before injection."
+        ],
+        "solutions": [
+            "Static slice analysis bounding dependency ripple set.",
+            "Pre-flight shadow run in ephemeral cluster."
+        ],
+        "metrics": {
+            "users": "34 repos",
+            "performance": "<5m experiment cycle",
+            "impact": "9 critical bugs pre-prod"
+        },
+        "techStack": [
+            "Node.js",
+            "Convex",
+            "Docker",
+            "LangChain"
+        ],
+        "category": "Chaos Experiment",
+        "isFeatured": false,
+        "isIncoming": true,
+        "sortOrder": 2
+    },
+    {
+        "title": "Latency Lens",
+        "tagline": "Distributed tracing heatmaps without vendor lock-in.",
+        "description": "Open instrumentation pipeline that ingests spans and renders adaptive heatmaps showing contention and tail spikes across services.",
+        "projectUrl": "https://example.com/latency-lens",
+        "imageUrl": "https://picsum.photos/seed/latencylens/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/latencylens1/800/400"
+        ],
+        "challenges": [
+            "Normalizing heterogeneous span schemas.",
+            "Avoiding storage blow-up for cardinality heavy tags."
+        ],
+        "solutions": [
+            "Dynamic downsampling with quantile retention.",
+            "Schema inference with on-the-fly canonical mapping."
+        ],
+        "metrics": {
+            "users": "210 teams",
+            "performance": "<2s p95 dashboard load",
+            "impact": "18% reduction in MTTR"
+        },
+        "techStack": [
+            "TypeScript",
+            "WebGL",
+            "ClickHouse",
+            "OpenTelemetry"
+        ],
+        "category": "Public Utility",
+        "isFeatured": true,
+        "isIncoming": false,
+        "sortOrder": 3
+    },
+    {
+        "title": "Prompt Forge",
+        "tagline": "Version-controlled prompt engineering workbench.",
+        "description": "Workspace to diff, branch, and evaluate LLM prompts against golden test suites with automatic regression scoring.",
+        "projectUrl": "https://example.com/prompt-forge",
+        "imageUrl": "https://picsum.photos/seed/promptforge/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/promptforge1/800/400",
+            "https://picsum.photos/seed/promptforge2/800/400"
+        ],
+        "challenges": [
+            "Non-deterministic output evaluation.",
+            "Managing noisy scoring signals."
+        ],
+        "solutions": [
+            "Ensemble of lightweight judges with consensus scoring.",
+            "Adaptive thresholding using historical drift."
+        ],
+        "metrics": {
+            "users": "480 workspaces",
+            "performance": "Batch eval 320 prompts/min",
+            "impact": "35% faster iteration"
+        },
+        "techStack": [
+            "Next.js",
+            "Convex",
+            "Python",
+            "Playwright"
+        ],
+        "category": "Public Utility",
+        "isFeatured": true,
+        "isIncoming": false,
+        "sortOrder": 4
+    },
+    {
+        "title": "State Surgeon",
+        "tagline": "Time-traveling surgical edits for live applications.",
+        "description": "Attach to a running process and apply reversible state patches with causality visualization to isolate logic faults.",
+        "projectUrl": "https://example.com/state-surgeon",
+        "imageUrl": "https://picsum.photos/seed/statesurgeon/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/statesurgeon1/800/400"
+        ],
+        "challenges": [
+            "Guaranteeing patch reversibility.",
+            "Minimizing pause-the-world impact."
+        ],
+        "solutions": [
+            "Shadow copy delta journaling.",
+            "Deterministic replay window around edit region."
+        ],
+        "metrics": {
+            "users": "320 engineers",
+            "performance": "<15ms patch apply",
+            "impact": "27% fewer hotfix rollbacks"
+        },
+        "techStack": [
+            "Rust",
+            "WebAssembly",
+            "TypeScript"
+        ],
+        "category": "Chaos Experiment",
+        "isFeatured": false,
+        "isIncoming": true,
+        "sortOrder": 5
+    },
+    {
+        "title": "Cache Composer",
+        "tagline": "Declarative multi-layer caching orchestrator.",
+        "description": "Compose memory, edge, and persistence caches with a small DSL that auto tunes TTL and invalidation based on access shape.",
+        "projectUrl": "https://example.com/cache-composer",
+        "imageUrl": "https://picsum.photos/seed/cachecomposer/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/cachecomposer1/800/400"
+        ],
+        "challenges": [
+            "Avoiding stampedes across tiers.",
+            "Balancing freshness vs cost."
+        ],
+        "solutions": [
+            "Probabilistic early refresh.",
+            "Bayesian TTL optimizer using request variance."
+        ],
+        "metrics": {
+            "users": "90 orgs",
+            "performance": "Hit rate 96%",
+            "impact": "40% infra cost reduction"
+        },
+        "techStack": [
+            "TypeScript",
+            "Redis",
+            "Edge Workers"
+        ],
+        "category": "Public Utility",
+        "isFeatured": false,
+        "isIncoming": false,
+        "sortOrder": 6
+    },
+    {
+        "title": "Spec Ghost",
+        "tagline": "Reverse-engineer OpenAPI specs from traffic.",
+        "description": "Passive capture of HTTP traffic that synthesizes evolving OpenAPI specs with change alerts and contract tests.",
+        "projectUrl": "https://example.com/spec-ghost",
+        "imageUrl": "https://picsum.photos/seed/specghost/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/specghost1/800/400",
+            "https://picsum.photos/seed/specghost2/800/400"
+        ],
+        "challenges": [
+            "Inferring schemas from partial samples.",
+            "Suppressing noise from transient fields."
+        ],
+        "solutions": [
+            "Incremental schema unification with confidence scores.",
+            "Entropy filter for ephemeral keys."
+        ],
+        "metrics": {
+            "users": "140 services",
+            "performance": "Spec gen <30s",
+            "impact": "Eliminated 70% undocumented endpoints"
+        },
+        "techStack": [
+            "Go",
+            "TypeScript",
+            "PostgreSQL"
+        ],
+        "category": "Public Utility",
+        "isFeatured": false,
+        "isIncoming": false,
+        "sortOrder": 7
+    },
+    {
+        "title": "Schema Sage",
+        "tagline": "Adaptive migration planner with zero downtime recipes.",
+        "description": "Analyzes relational schemas and proposes phased migration plans with automated shadow validation.",
+        "projectUrl": "https://example.com/schema-sage",
+        "imageUrl": "https://picsum.photos/seed/schemasage/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/schemasage1/800/400"
+        ],
+        "challenges": [
+            "Predicting lock contention risk.",
+            "Coordinating cross-service rollouts."
+        ],
+        "solutions": [
+            "Historical DDL simulation sandbox.",
+            "Dependency graph with critical path pruning."
+        ],
+        "metrics": {
+            "users": "58 orgs",
+            "performance": "Plan gen ~4s",
+            "impact": "65% fewer migration incidents"
+        },
+        "techStack": [
+            "Python",
+            "SQL",
+            "Next.js"
+        ],
+        "category": "Chaos Experiment",
+        "isFeatured": false,
+        "isIncoming": true,
+        "sortOrder": 8
+    },
+    {
+        "title": "Edge Synth",
+        "tagline": "On-the-fly synthetic data generator at the edge.",
+        "description": "Generates masked, statistically similar datasets in edge regions for safe experimentation.",
+        "projectUrl": "https://example.com/edge-synth",
+        "imageUrl": "https://picsum.photos/seed/edgesynth/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/edgesynth1/800/400",
+            "https://picsum.photos/seed/edgesynth2/800/400"
+        ],
+        "challenges": [
+            "Preserving distribution fidelity.",
+            "Budgeting compute across edge POPs."
+        ],
+        "solutions": [
+            "Differentially private histogram reweighting.",
+            "Adaptive batch sizing via latency feedback."
+        ],
+        "metrics": {
+            "users": "22 orgs",
+            "performance": "Gen 5K rows/s",
+            "impact": "Cut staging data prep 80%"
+        },
+        "techStack": [
+            "TypeScript",
+            "WASM",
+            "Convex"
+        ],
+        "category": "Chaos Experiment",
+        "isFeatured": false,
+        "isIncoming": false,
+        "sortOrder": 9
+    },
+    {
+        "title": "Telemetry Tailor",
+        "tagline": "Cost-aware telemetry sampler with intent detection.",
+        "description": "Learns which logs & spans are high-value and dynamically adjusts sampling per feature flag & release stage.",
+        "projectUrl": "https://example.com/telemetry-tailor",
+        "imageUrl": "https://picsum.photos/seed/telemetrytailor/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/telemetrytailor1/800/400"
+        ],
+        "challenges": [
+            "Label sparsity for supervised ranking.",
+            "Preventing sampling oscillation."
+        ],
+        "solutions": [
+            "Online bandit reward shaping.",
+            "Slew rate limiter on sampling factor."
+        ],
+        "metrics": {
+            "users": "8 orgs",
+            "performance": "Log volume -55%",
+            "impact": "MTTR unchanged"
+        },
+        "techStack": [
+            "Rust",
+            "Kafka",
+            "TypeScript"
+        ],
+        "category": "Public Utility",
+        "isFeatured": false,
+        "isIncoming": false,
+        "sortOrder": 10
+    },
+    {
+        "title": "Drift Doctor",
+        "tagline": "ML model and data drift triage console.",
+        "description": "Real-time drift detection with root-cause hypothesis generation and upstream feature lineage.",
+        "projectUrl": "https://example.com/drift-doctor",
+        "imageUrl": "https://picsum.photos/seed/driftdoctor/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/driftdoctor1/800/400",
+            "https://picsum.photos/seed/driftdoctor2/800/400"
+        ],
+        "challenges": [
+            "Latency bound on feature histograms.",
+            "Explaining multivariate drift intelligibly."
+        ],
+        "solutions": [
+            "Approximate quantile sketch merging.",
+            "Counterfactual feature attribution summaries."
+        ],
+        "metrics": {
+            "users": "37 models",
+            "performance": "Alert <3m",
+            "impact": "Reduced silent drift 60%"
+        },
+        "techStack": [
+            "Python",
+            "Convex",
+            "Next.js",
+            "PyTorch"
+        ],
+        "category": "Public Utility",
+        "isFeatured": true,
+        "isIncoming": false,
+        "sortOrder": 11
+    },
+    {
+        "title": "Vector Vault",
+        "tagline": "Policy-enforced vector storage with lineage.",
+        "description": "Store embeddings alongside provenance & usage policies; automatic purge when sources expire.",
+        "projectUrl": "https://example.com/vector-vault",
+        "imageUrl": "https://picsum.photos/seed/vectorvault/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/vectorvault1/800/400"
+        ],
+        "challenges": [
+            "Tracking provenance across transformations.",
+            "Enforcing TTL on derived embeddings."
+        ],
+        "solutions": [
+            "Content-addressed embedding DAG.",
+            "Cascading tombstone sweeper."
+        ],
+        "metrics": {
+            "users": "5 orgs",
+            "performance": "Vector GC <2m",
+            "impact": "Policy violations to 0"
+        },
+        "techStack": [
+            "TypeScript",
+            "SQLite",
+            "OpenAI"
+        ],
+        "category": "Chaos Experiment",
+        "isFeatured": false,
+        "isIncoming": true,
+        "sortOrder": 12
+    },
+    {
+        "title": "Infra Inkwell",
+        "tagline": "IaC change risk visualizer.",
+        "description": "Parses infra diffs and highlights blast radius, cost delta, and historical rollback probability.",
+        "projectUrl": "https://example.com/infra-inkwell",
+        "imageUrl": "https://picsum.photos/seed/infrainkwell/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/infrainkwell1/800/400",
+            "https://picsum.photos/seed/infrainkwell2/800/400"
+        ],
+        "challenges": [
+            "Mapping resource graph cycles.",
+            "Estimating cost pre-apply."
+        ],
+        "solutions": [
+            "Cycle break heuristic with anchor resources.",
+            "Historical usage modeling for ephemeral pricing."
+        ],
+        "metrics": {
+            "users": "12 teams",
+            "performance": "Diff analyze 1.8s",
+            "impact": "Rollback rate -30%"
+        },
+        "techStack": [
+            "Go",
+            "TypeScript",
+            "Terraform"
+        ],
+        "category": "Public Utility",
+        "isFeatured": false,
+        "isIncoming": false,
+        "sortOrder": 13
+    },
+    {
+        "title": "Commit Cartographer",
+        "tagline": "Map architectural drift from commit history.",
+        "description": "Generates evolving architecture graphs from semantic commit clustering and flags drift from documented diagrams.",
+        "projectUrl": "https://example.com/commit-cartographer",
+        "imageUrl": "https://picsum.photos/seed/commitcartographer/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/commitcartographer1/800/400"
+        ],
+        "challenges": [
+            "Embedding large commit diffs efficiently.",
+            "Aligning code clusters to architecture domains."
+        ],
+        "solutions": [
+            "Sparse token chunking with locality sensitive hashing.",
+            "Domain ontology assisted clustering."
+        ],
+        "metrics": {
+            "users": "18 repos",
+            "performance": "Graph update <90s",
+            "impact": "Early drift detection 45%"
+        },
+        "techStack": [
+            "Python",
+            "NetworkX",
+            "Next.js"
+        ],
+        "category": "Chaos Experiment",
+        "isFeatured": false,
+        "isIncoming": false,
+        "sortOrder": 14
+    },
+    {
+        "title": "Log Loom",
+        "tagline": "Semantic weaving of logs into incident storylines.",
+        "description": "Transforms raw logs into narrative threads grouped by causal linkage and impact surface.",
+        "projectUrl": "https://example.com/log-loom",
+        "imageUrl": "https://picsum.photos/seed/logloom/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/logloom1/800/400",
+            "https://picsum.photos/seed/logloom2/800/400"
+        ],
+        "challenges": [
+            "Disambiguating concurrent incidents.",
+            "Extracting causal edges from noisy text."
+        ],
+        "solutions": [
+            "Temporal window segmentation with cross-correlation.",
+            "LLM-assisted causal phrase tagging."
+        ],
+        "metrics": {
+            "users": "11 teams",
+            "performance": "Thread build 12s",
+            "impact": "Postmortem prep time -50%"
+        },
+        "techStack": [
+            "TypeScript",
+            "Convex",
+            "OpenAI"
+        ],
+        "category": "Public Utility",
+        "isFeatured": true,
+        "isIncoming": false,
+        "sortOrder": 15
+    },
+    {
+        "title": "Config Canvas",
+        "tagline": "Visual diff & policy engine for sprawling configs.",
+        "description": "Unified view across YAML/JSON/TOML with policy lint and blast radius previews.",
+        "projectUrl": "https://example.com/config-canvas",
+        "imageUrl": "https://picsum.photos/seed/configcanvas/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/configcanvas1/800/400"
+        ],
+        "challenges": [
+            "Normalizing heterogeneous formats.",
+            "Explaining policy violations simply."
+        ],
+        "solutions": [
+            "AST canonicalization layer.",
+            "Human readable diff heuristics."
+        ],
+        "metrics": {
+            "users": "55 repos",
+            "performance": "Diff render <400ms",
+            "impact": "Config drift -38%"
+        },
+        "techStack": [
+            "TypeScript",
+            "Tree-sitter",
+            "Next.js"
+        ],
+        "category": "Public Utility",
+        "isFeatured": false,
+        "isIncoming": false,
+        "sortOrder": 16
+    },
+    {
+        "title": "Perf Palette",
+        "tagline": "Color-coded flamegraph composer.",
+        "description": "Blend multiple profiling sources (CPU, IO, GPU) into a unified layered flame palette.",
+        "projectUrl": "https://example.com/perf-palette",
+        "imageUrl": "https://picsum.photos/seed/perfpalette/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/perfpalette1/800/400",
+            "https://picsum.photos/seed/perfpalette2/800/400"
+        ],
+        "challenges": [
+            "Clock skew across profilers.",
+            "Visual clutter in deep stacks."
+        ],
+        "solutions": [
+            "Trace alignment via anchor events.",
+            "Progressive focus drill-down."
+        ],
+        "metrics": {
+            "users": "600 engineers",
+            "performance": "Render p95 1.1s",
+            "impact": "Hotspot triage 2x speed"
+        },
+        "techStack": [
+            "WebGL",
+            "TypeScript",
+            "Rust"
+        ],
+        "category": "Public Utility",
+        "isFeatured": true,
+        "isIncoming": false,
+        "sortOrder": 17
+    },
+    {
+        "title": "Queue Quorum",
+        "tagline": "Queue topology visual auditor.",
+        "description": "Detects dead letter storms, fanout anomalies, and backpressure propagation paths.",
+        "projectUrl": "https://example.com/queue-quorum",
+        "imageUrl": "https://picsum.photos/seed/queuequorum/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/queuequorum1/800/400"
+        ],
+        "challenges": [
+            "Sampling high volume message traces.",
+            "Attributing lag to upstream nodes."
+        ],
+        "solutions": [
+            "Adaptive reservoir sampling.",
+            "Critical path attribution model."
+        ],
+        "metrics": {
+            "users": "28 clusters",
+            "performance": "Graph build 3.5s",
+            "impact": "Backlog incidents -33%"
+        },
+        "techStack": [
+            "Go",
+            "TypeScript",
+            "WebAssembly"
+        ],
+        "category": "Chaos Experiment",
+        "isFeatured": false,
+        "isIncoming": false,
+        "sortOrder": 18
+    },
+    {
+        "title": "Secret Sentinel",
+        "tagline": "Inline secret exfiltration defense.",
+        "description": "Hooks into runtime egress points and blocks anomalous secret-shaped data leaving the boundary.",
+        "projectUrl": "https://example.com/secret-sentinel",
+        "imageUrl": "https://picsum.photos/seed/secretsentinel/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/secretsentinel1/800/400",
+            "https://picsum.photos/seed/secretsentinel2/800/400"
+        ],
+        "challenges": [
+            "Minimizing false positives.",
+            "Keeping pattern database current."
+        ],
+        "solutions": [
+            "Contextual anomaly scoring.",
+            "Automatic pattern ingestion pipeline."
+        ],
+        "metrics": {
+            "users": "14 orgs",
+            "performance": "Overhead <3%",
+            "impact": "Exfiltration attempts blocked"
+        },
+        "techStack": [
+            "Rust",
+            "eBPF",
+            "TypeScript"
+        ],
+        "category": "Public Utility",
+        "isFeatured": true,
+        "isIncoming": false,
+        "sortOrder": 19
+    },
+    {
+        "title": "Replay Relay",
+        "tagline": "Deterministic replay harness for flaky tests.",
+        "description": "Captures nondeterministic sources and replays test executions under controlled time & IO virtualization.",
+        "projectUrl": "https://example.com/replay-relay",
+        "imageUrl": "https://picsum.photos/seed/replayrelay/1200/600",
+        "screenshots": [
+            "https://picsum.photos/seed/replayrelay1/800/400"
+        ],
+        "challenges": [
+            "Virtualizing system time across threads.",
+            "Isolating entropy sources."
+        ],
+        "solutions": [
+            "Deterministic scheduler shim.",
+            "Entropy capture & injection layer."
+        ],
+        "metrics": {
+            "users": "9 repos",
+            "performance": "Replay drift <1ms",
+            "impact": "Flake rate -70%"
+        },
+        "techStack": [
+            "Rust",
+            "TypeScript",
+            "Next.js"
+        ],
+        "category": "Chaos Experiment",
+        "isFeatured": false,
+        "isIncoming": true,
+        "sortOrder": 20
+    }
+]

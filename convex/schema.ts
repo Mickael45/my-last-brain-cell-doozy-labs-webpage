@@ -3,7 +3,6 @@ import { defineSchema, defineTable } from "convex/server";
 
 export default defineSchema({
   projects: defineTable({
-    legacyId: v.string(),
     title: v.string(),
     tagline: v.string(),
     description: v.string(),
@@ -25,7 +24,6 @@ export default defineSchema({
     isIncoming: v.optional(v.boolean()),
     sortOrder: v.number(),
   })
-    .index("by_legacyId", ["legacyId"])
     .index("by_sortOrder", ["sortOrder"])
     .index("by_isFeatured", ["isFeatured"])
     .index("by_isIncoming", ["isIncoming"])

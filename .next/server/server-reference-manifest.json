@@ -1,36 +1,5 @@
 {
-  "node": {
-    "004cb488a5aa4e0dfb19eaef8a486baefa28082e40": {
-      "workers": {
-        "app/page": {
-          "moduleId": "[project]/.next-internal/server/app/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/projects.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": false,
-          "exportedName": "getProjects",
-          "filename": "app/actions/projects.ts"
-        }
-      },
-      "layer": {
-        "app/page": "rsc"
-      },
-      "filename": "app/actions/projects.ts",
-      "exportedName": "getProjects"
-    },
-    "402192ec7858a6e1c965db906b9ba1fe3ff4f5f87a": {
-      "workers": {
-        "app/page": {
-          "moduleId": "[project]/.next-internal/server/app/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/projects.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": false,
-          "exportedName": "getProjectById",
-          "filename": "app/actions/projects.ts"
-        }
-      },
-      "layer": {
-        "app/page": "rsc"
-      },
-      "filename": "app/actions/projects.ts",
-      "exportedName": "getProjectById"
-    }
-  },
+  "node": {},
   "edge": {},
   "encryptionKey": "9DQh790l6VQU8qSCxeRgu7/9SbA3IB5/Luw7sDY4hIc="
 }

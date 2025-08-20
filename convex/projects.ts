@@ -19,15 +19,7 @@ export const get = query({
   },
 });
 
-export const getByLegacyId = query({
-  args: { legacyId: v.string() },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("projects")
-      .withIndex("by_legacyId", (q) => q.eq("legacyId", args.legacyId))
-      .first();
-  },
-});
+// Removed legacyId-based query (schema simplified).
 
 export const byCategory = query({
   args: { category: v.string() },
@@ -64,7 +56,6 @@ export const incoming = query({
 
 export const insert = mutation({
   args: {
-    legacyId: v.string(),
     title: v.string(),
     tagline: v.string(),
     description: v.string(),
@@ -96,7 +87,6 @@ export const update = mutation({
   args: {
     id: v.id("projects"),
     patch: v.object({
-      legacyId: v.optional(v.string()),
       title: v.optional(v.string()),
       tagline: v.optional(v.string()),
       description: v.optional(v.string()),

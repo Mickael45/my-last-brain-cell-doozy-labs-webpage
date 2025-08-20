@@ -21,8 +21,8 @@ const AnimatedMesh: React.FC = () => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Mesh properties
-    const gridSize = 80;
+    // Mesh properties (tighter mesh -> smaller gridSize, lower movement amplitude)
+    const gridSize = 30; // was 80
     const points: Array<{
       x: number;
       y: number;
@@ -53,24 +53,25 @@ const AnimatedMesh: React.FC = () => {
             Math.pow(point.originalY - mousePosition.current.y, 2)
         );
 
-        const influenceRadius = 200;
+        const influenceRadius = 180; // slightly smaller so mouse affects a more local area
         const influence = Math.max(0, 1 - distanceToMouse / influenceRadius);
 
-        const waveX = Math.sin(time + point.originalX * 0.01) * 10;
-        const waveY = Math.cos(time + point.originalY * 0.01) * 10;
+        // Reduce wave amplitude for a tighter / less wobbly look
+        const waveX = Math.sin(time + point.originalX * 0.012) * 6;
+        const waveY = Math.cos(time + point.originalY * 0.012) * 6;
 
         const mouseInfluenceX =
-          (mousePosition.current.x - point.originalX) * influence * 0.1;
+          (mousePosition.current.x - point.originalX) * influence * 0.06;
         const mouseInfluenceY =
-          (mousePosition.current.y - point.originalY) * influence * 0.1;
+          (mousePosition.current.y - point.originalY) * influence * 0.06;
 
         point.x = point.originalX + waveX + mouseInfluenceX;
         point.y = point.originalY + waveY + mouseInfluenceY;
       });
 
       // Draw connections
-      ctx.strokeStyle = "rgba(0, 212, 255, 0.1)";
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(0, 212, 255, 0.12)";
+      ctx.lineWidth = 0.9;
 
       for (let i = 0; i < points.length; i++) {
         const point = points[i];
@@ -83,9 +84,11 @@ const AnimatedMesh: React.FC = () => {
               Math.pow(point.y - otherPoint.y, 2)
           );
 
-          if (distance < gridSize * 1.5) {
-            const opacity = Math.max(0, 1 - distance / (gridSize * 1.5));
-            ctx.strokeStyle = `rgba(0, 212, 255, ${opacity * 0.2})`;
+          // Decrease max connection distance for a crisper, tighter net
+          const maxConnection = gridSize * 1.2; // was 1.5
+          if (distance < maxConnection) {
+            const opacity = Math.max(0, 1 - distance / maxConnection);
+            ctx.strokeStyle = `rgba(0, 212, 255, ${opacity * 0.25})`;
 
             ctx.beginPath();
             ctx.moveTo(point.x, point.y);

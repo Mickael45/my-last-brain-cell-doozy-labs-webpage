@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Grid, Filter } from "lucide-react";
 import ProjectCard from "./ProjectCard";
+import { useRouter } from "next/navigation";
 import { Project } from "../types";
 
 interface ProjectGalleryProps {
@@ -10,10 +11,11 @@ interface ProjectGalleryProps {
 }
 
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
+  const router = useRouter();
   const [showAll, setShowAll] = useState(false);
   const [activeFilter, setActiveFilter] = useState<string>("All");
 
-  const categories = ["All", "Public Utility", "Volatile Prototype"];
+  const categories = ["All", "Public Utility", "Chaos Experiment"];
 
   const filteredProjects = projects.filter(
     (project) => activeFilter === "All" || project.category === activeFilter
@@ -81,7 +83,10 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               layout
             >
-              <ProjectCard project={project} />
+              <ProjectCard
+                project={project}
+                onClick={(p) => router.push(`/project/${p.id}`)}
+              />
             </motion.div>
           ))}
         </div>

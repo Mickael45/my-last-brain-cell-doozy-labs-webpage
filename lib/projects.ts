@@ -30,9 +30,9 @@ export function assertConvexEnv() {
 /** Map a Convex project document to the local `Project` shape. */
 export function mapProject(doc: ConvexProjectDoc): Project {
   const narrowedCategory: Project["category"] =
-    doc.category === "Public Utility" || doc.category === "Volatile Prototype"
+    doc.category === "Public Utility" || doc.category === "Chaos Experiment"
       ? doc.category
-      : "Volatile Prototype";
+      : "Chaos Experiment";
   return {
     id: doc._id,
     title: doc.title,

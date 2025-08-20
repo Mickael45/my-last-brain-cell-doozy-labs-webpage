@@ -35,7 +35,7 @@ function assertConvexEnv() {
     ;
 }
 function mapProject(doc) {
-    const narrowedCategory = doc.category === "Public Utility" || doc.category === "Volatile Prototype" ? doc.category : "Volatile Prototype";
+    const narrowedCategory = doc.category === "Public Utility" || doc.category === "Chaos Experiment" ? doc.category : "Chaos Experiment";
     return {
         id: doc._id,
         title: doc.title,
@@ -432,7 +432,6 @@ async function HomePage() {
                         lineNumber: 30,
                         columnNumber: 9
                     }, this),
-                    " ",
                     "to see updates after rebuild."
                 ]
             }, void 0, true, {

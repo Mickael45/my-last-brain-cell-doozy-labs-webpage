@@ -29,7 +29,7 @@ export default async function HomePage() {
         Built with Next.js App Router (ISR). Data currently static –{" "}
         <Link className="underline" href="/">
           refresh
-        </Link>{" "}
+        </Link>
         to see updates after rebuild.
       </div>
     </main>

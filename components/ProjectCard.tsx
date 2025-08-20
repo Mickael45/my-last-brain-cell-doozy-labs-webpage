@@ -1,18 +1,17 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ExternalLink, Code, Sparkles } from "lucide-react";
 import { Project } from "../types";
 
 interface ProjectCardProps {
   project: Project;
+  onClick: (project: Project) => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
-  const router = useRouter();
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
   const getCategoryIcon = (category: string) => {
-    return category === "Volatile Prototype" ? (
+    return category === "Chaos Experiment" ? (
       <Sparkles className="w-4 h-4 text-white" />
     ) : (
       <Code className="w-4 h-4 text-white" />
@@ -20,7 +19,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   };
 
   const getCategoryColor = (category: string) => {
-    return category === "Volatile Prototype"
+    return category === "Chaos Experiment"
       ? "from-purple-500/20 via-pink-500/20 to-red-500/20 border-purple-500/30"
       : "from-cyan-500/20 via-blue-500/20 to-purple-500/20 border-cyan-500/30";
   };
@@ -29,7 +28,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     <motion.div
       whileHover={{ scale: 1.02, y: -4 }}
       whileTap={{ scale: 0.98 }}
-      onClick={() => router.push(`/project/${project.id}`)}
+      onClick={() => onClick(project)}
       className="cursor-pointer group"
     >
       <div

@@ -233,17 +233,21 @@ const ProjectDetail: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
                   <Lightbulb className="w-6 h-6 text-yellow-400" />
-                  <h3 className="text-2xl font-semibold text-white">Genesis Spark</h3>
+                  <h3 className="text-2xl font-semibold text-white">
+                    Genesis Spark
+                  </h3>
                 </div>
                 <p className="text-gray-300 leading-relaxed text-lg">
-                  {project.category === 'Volatile Prototype'
-                    ? 'Started as a borderline ridiculous experiment that somehow refused to die during refactors.'
-                    : 'Born out of repeated pain points and the refusal to accept mediocre tooling any longer.'}
+                  {project.category === "Volatile Prototype"
+                    ? "Started as a borderline ridiculous experiment that somehow refused to die during refactors."
+                    : "Born out of repeated pain points and the refusal to accept mediocre tooling any longer."}
                 </p>
                 <p className="text-gray-400 leading-relaxed">
-                  The first proof-of-concept was duct-taped together in under 48 hours. It broke. A lot. But the
-                  core loop felt magical enough to justify polishing instead of abandoning. That was the moment
-                  it graduated from \"random script\" to \"this might become real\".
+                  The first proof-of-concept was duct-taped together in under 48
+                  hours. It broke. A lot. But the core loop felt magical enough
+                  to justify polishing instead of abandoning. That was the
+                  moment it graduated from \"random script\" to \"this might
+                  become real\".
                 </p>
               </div>
 
@@ -251,11 +255,15 @@ const ProjectDetail: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
                   <Target className="w-6 h-6 text-red-400" />
-                  <h3 className="text-2xl font-semibold text-white">Core Problem & Insight</h3>
+                  <h3 className="text-2xl font-semibold text-white">
+                    Core Problem & Insight
+                  </h3>
                 </div>
                 <p className="text-gray-300 leading-relaxed text-lg">
-                  Beneath the jokes sits a very real friction: people kept wrestling with inefficient, boring,
-                  or psychologically draining workflows. That emotional tax became the design compass.
+                  Beneath the jokes sits a very real friction: people kept
+                  wrestling with inefficient, boring, or psychologically
+                  draining workflows. That emotional tax became the design
+                  compass.
                 </p>
                 <ul className="space-y-3">
                   {(project.challenges || []).slice(0, 3).map((c, i) => (
@@ -271,11 +279,14 @@ const ProjectDetail: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
                   <Layers className="w-6 h-6 text-cyan-400" />
-                  <h3 className="text-2xl font-semibold text-white">Architecture Philosophy</h3>
+                  <h3 className="text-2xl font-semibold text-white">
+                    Architecture Philosophy
+                  </h3>
                 </div>
                 <p className="text-gray-300 leading-relaxed text-lg">
-                  Pragmatic modularity over premature perfection. Each subsystem is isolated enough to be
-                  refactored ruthlessly, but integrated just enough to keep velocity absurdly high.
+                  Pragmatic modularity over premature perfection. Each subsystem
+                  is isolated enough to be refactored ruthlessly, but integrated
+                  just enough to keep velocity absurdly high.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-5">
                   {project.techStack.slice(0, 4).map((tech, i) => (
@@ -283,12 +294,14 @@ const ProjectDetail: React.FC = () => {
                       key={i}
                       className="p-4 rounded-xl bg-gradient-to-r from-gray-700/40 to-gray-600/30 border border-cyan-500/20"
                     >
-                      <p className="text-sm font-mono tracking-wide text-cyan-300">{tech}</p>
+                      <p className="text-sm font-mono tracking-wide text-cyan-300">
+                        {tech}
+                      </p>
                       <p className="text-xs text-gray-400 mt-2">
-                        {i === 0 && 'Foundation & primary interaction layer'}
-                        {i === 1 && 'Type safety + maintainable growth'}
-                        {i === 2 && 'Core engine / heavy lifting'}
-                        {i === 3 && 'Performance & scaling considerations'}
+                        {i === 0 && "Foundation & primary interaction layer"}
+                        {i === 1 && "Type safety + maintainable growth"}
+                        {i === 2 && "Core engine / heavy lifting"}
+                        {i === 3 && "Performance & scaling considerations"}
                       </p>
                     </div>
                   ))}
@@ -299,14 +312,28 @@ const ProjectDetail: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
                   <Clock className="w-6 h-6 text-green-400" />
-                  <h3 className="text-2xl font-semibold text-white">Iteration Rhythm</h3>
+                  <h3 className="text-2xl font-semibold text-white">
+                    Iteration Rhythm
+                  </h3>
                 </div>
                 <div className="space-y-4">
                   {[
-                    { label: 'Prototype', desc: 'Throw ideas at the wall. Keep what survives user sarcasm.' },
-                    { label: 'Stabilize', desc: 'Instrument everything. Kill flaky behavior without killing speed.' },
-                    { label: 'Delight Layer', desc: 'Micro-animations, copy personality, friction removal.' },
-                    { label: 'Scale Safety', desc: 'Hardening, perf profiling, graceful degradation paths.' },
+                    {
+                      label: "Prototype",
+                      desc: "Throw ideas at the wall. Keep what survives user sarcasm.",
+                    },
+                    {
+                      label: "Stabilize",
+                      desc: "Instrument everything. Kill flaky behavior without killing speed.",
+                    },
+                    {
+                      label: "Delight Layer",
+                      desc: "Micro-animations, copy personality, friction removal.",
+                    },
+                    {
+                      label: "Scale Safety",
+                      desc: "Hardening, perf profiling, graceful degradation paths.",
+                    },
                   ].map((phase, i) => (
                     <div key={i} className="relative pl-8">
                       <div className="absolute left-0 top-2 w-3 h-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
@@ -323,11 +350,14 @@ const ProjectDetail: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
                   <TrendingUp className="w-6 h-6 text-purple-400" />
-                  <h3 className="text-2xl font-semibold text-white">Impact So Far</h3>
+                  <h3 className="text-2xl font-semibold text-white">
+                    Impact So Far
+                  </h3>
                 </div>
                 <p className="text-gray-300 leading-relaxed text-lg">
-                  Early traction validated the intuition that humor + utility beats sterile tooling. People
-                  stayed not just because it worked, but because it felt alive.
+                  Early traction validated the intuition that humor + utility
+                  beats sterile tooling. People stayed not just because it
+                  worked, but because it felt alive.
                 </p>
                 {project.metrics && (
                   <div className="grid sm:grid-cols-3 gap-5">
@@ -363,22 +393,27 @@ const ProjectDetail: React.FC = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-3">
                   <Rocket className="w-6 h-6 text-orange-400" />
-                  <h3 className="text-2xl font-semibold text-white">What Comes Next</h3>
+                  <h3 className="text-2xl font-semibold text-white">
+                    What Comes Next
+                  </h3>
                 </div>
                 <p className="text-gray-300 leading-relaxed text-lg">
-                  Short-term roadmap focuses on improving core stability while shipping experimental side
-                  features behind feature flags. Long-term vision: evolve into an ecosystem of interoperable
+                  Short-term roadmap focuses on improving core stability while
+                  shipping experimental side features behind feature flags.
+                  Long-term vision: evolve into an ecosystem of interoperable
                   micro-capabilities that feel playful yet production-grade.
                 </p>
                 <div className="grid sm:grid-cols-3 gap-4">
-                  {['Feature Flags', 'Observability', 'Delight API'].map((item, i) => (
-                    <div
-                      key={i}
-                      className="px-4 py-3 rounded-lg bg-gradient-to-r from-gray-700/40 to-gray-600/30 border border-gray-500/30 text-sm text-gray-300 font-medium"
-                    >
-                      {item}
-                    </div>
-                  ))}
+                  {["Feature Flags", "Observability", "Delight API"].map(
+                    (item, i) => (
+                      <div
+                        key={i}
+                        className="px-4 py-3 rounded-lg bg-gradient-to-r from-gray-700/40 to-gray-600/30 border border-gray-500/30 text-sm text-gray-300 font-medium"
+                      >
+                        {item}
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -391,19 +426,23 @@ const ProjectDetail: React.FC = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="space-y-10"
             >
-              <h3 className="text-center text-2xl font-semibold text-white">Context Panels</h3>
+              <h3 className="text-center text-2xl font-semibold text-white">
+                Context Panels
+              </h3>
               <div className="grid md:grid-cols-3 gap-8">
                 {/* Risk & Chaos */}
                 <div className="p-6 rounded-2xl bg-gradient-to-br from-red-500/10 to-orange-500/10 border border-red-500/30 backdrop-blur-sm">
                   <div className="flex items-center gap-3 mb-4">
                     <AlertTriangle className="w-5 h-5 text-orange-300" />
-                    <h4 className="text-lg font-semibold text-white">Known Chaos</h4>
+                    <h4 className="text-lg font-semibold text-white">
+                      Known Chaos
+                    </h4>
                   </div>
                   <ul className="space-y-3 text-sm">
                     {[
-                      'Edge-case explosions under weird input combos',
-                      'Feature creep vs core simplicity tug-of-war',
-                      'Users loving experimental modes a bit too much',
+                      "Edge-case explosions under weird input combos",
+                      "Feature creep vs core simplicity tug-of-war",
+                      "Users loving experimental modes a bit too much",
                     ].map((r, i) => (
                       <li key={i} className="flex gap-2 text-gray-300">
                         <span className="w-1.5 h-1.5 mt-2 rounded-full bg-orange-400" />
@@ -417,7 +456,9 @@ const ProjectDetail: React.FC = () => {
                 <div className="p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/30 backdrop-blur-sm">
                   <div className="flex items-center gap-3 mb-4">
                     <Zap className="w-5 h-5 text-green-300" />
-                    <h4 className="text-lg font-semibold text-white">Solutions</h4>
+                    <h4 className="text-lg font-semibold text-white">
+                      Solutions
+                    </h4>
                   </div>
                   <ul className="space-y-3 text-sm">
                     {(project.solutions || []).slice(0, 3).map((s, i) => (
@@ -433,7 +474,9 @@ const ProjectDetail: React.FC = () => {
                 <div className="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 backdrop-blur-sm">
                   <div className="flex items-center gap-3 mb-4">
                     <Brain className="w-5 h-5 text-cyan-300" />
-                    <h4 className="text-lg font-semibold text-white">Principles</h4>
+                    <h4 className="text-lg font-semibold text-white">
+                      Principles
+                    </h4>
                   </div>
                   <ul className="space-y-3 text-sm text-gray-300">
                     <li className="flex gap-2">

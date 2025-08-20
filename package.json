@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "convex": "^1.14.0",
-    "framer-motion": "^12.23.12",
     "lucide-react": "^0.344.0",
     "dotenv": "^16.4.5",
     "next": "^15.0.0",

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { useReveal } from "../lib/useReveal";
 import { Brain, Lightbulb, Rocket, Code2 } from "lucide-react";
 
 const AboutSection: React.FC = () => {
@@ -31,15 +31,46 @@ const AboutSection: React.FC = () => {
     },
   ];
 
+  // Reveal hooks
+  const header = useReveal<HTMLDivElement>();
+  const story = useReveal<HTMLDivElement>();
+  const principlesReveal = useReveal<HTMLDivElement>();
+
+  const PrincipleCard: React.FC<{
+    principle: (typeof principles)[number];
+    index: number;
+  }> = ({ principle, index }) => {
+    const { ref, visible } = useReveal<HTMLDivElement>();
+    return (
+      <div
+        ref={ref}
+        className={`flex gap-4 p-6 rounded-xl bg-gradient-to-r from-gray-800/50 to-gray-700/30 border border-gray-600/30 backdrop-blur-sm hover:border-cyan-500/30 transition-all duration-300 opacity-0 ${visible && "animate-fade-up"}`}
+        style={{ animationDelay: `${index * 100 + 100}ms` }}
+      >
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center">
+            <principle.icon className="w-6 h-6 text-cyan-400" />
+          </div>
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold text-white mb-2">
+            {principle.title}
+          </h3>
+          <p className="text-gray-400">{principle.description}</p>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-800 to-gray-900">
+    <section
+      className="py-20 bg-gradient-to-b from-gray-800 to-gray-900"
+      id="about"
+    >
       <div className="max-w-7xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+        <div
+          ref={header.ref}
+          className={`text-center mb-16 opacity-0 ${header.visible && "animate-fade-up"}`}
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <Brain className="w-6 h-6 text-orange-400" />
@@ -52,16 +83,13 @@ const AboutSection: React.FC = () => {
               The Madness Behind the Method
             </span>
           </h2>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Story */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
+          <div
+            ref={story.ref}
+            className={`space-y-6 opacity-0 ${story.visible && "animate-fade-right"}`}
           >
             <p className="text-lg text-gray-300 leading-relaxed">
               This digital playground was born at 3 AM during a particularly
@@ -86,39 +114,17 @@ const AboutSection: React.FC = () => {
               (experimental chaos that might achieve sentience or crash
               spectacularly - no guarantees either way).
             </p>
-          </motion.div>
+          </div>
 
           {/* Principles */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
+          <div
+            ref={principlesReveal.ref}
+            className={`space-y-6 opacity-0 ${principlesReveal.visible && "animate-fade-left"}`}
           >
-            {principles.map((principle, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="flex gap-4 p-6 rounded-xl bg-gradient-to-r from-gray-800/50 to-gray-700/30 border border-gray-600/30 backdrop-blur-sm hover:border-cyan-500/30 transition-all duration-300"
-              >
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center">
-                    <principle.icon className="w-6 h-6 text-cyan-400" />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">
-                    {principle.title}
-                  </h3>
-                  <p className="text-gray-400">{principle.description}</p>
-                </div>
-              </motion.div>
+            {principles.map((p, i) => (
+              <PrincipleCard key={i} principle={p} index={i} />
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

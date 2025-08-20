@@ -4,23 +4,26 @@ import { fetchQuery } from "convex/nextjs";
 import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import { mapProject, assertConvexEnv } from "../../lib/projects";
+import { cache } from "react";
 
 /** Fetch all projects sorted by sortOrder */
-export async function getProjects(): Promise<Project[]> {
+export const getProjects = cache(async (): Promise<Project[]> => {
   assertConvexEnv();
   const docs = await fetchQuery(api.projects.list, {});
   return docs.map(mapProject);
-}
+});
 
 /** Fetch single project by its Convex _id */
-export async function getProjectById(id: string): Promise<Project | null> {
-  try {
-    assertConvexEnv();
-    const doc = await fetchQuery(api.projects.get, {
-      id: id as Id<"projects">,
-    });
-    return doc ? mapProject(doc) : null;
-  } catch {
-    return null; // treat invalid id format or fetch errors as not found
+export const getProjectById = cache(
+  async (id: string): Promise<Project | null> => {
+    try {
+      assertConvexEnv();
+      const doc = await fetchQuery(api.projects.get, {
+        id: id as Id<"projects">,
+      });
+      return doc ? mapProject(doc) : null;
+    } catch {
+      return null; // treat invalid id format or fetch errors as not found
+    }
   }
-}
+);

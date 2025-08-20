@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { useReveal } from "../lib/useReveal";
 import { Beaker, Github, Twitter, Linkedin } from "lucide-react";
 
 const Footer: React.FC = () => {
@@ -10,32 +10,24 @@ const Footer: React.FC = () => {
     { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
   ];
 
+  const left = useReveal<HTMLDivElement>();
+  const middle = useReveal<HTMLDivElement>();
+  const right = useReveal<HTMLDivElement>();
+  const bottom = useReveal<HTMLDivElement>();
+
   return (
     <footer className="bg-gray-900 border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid md:grid-cols-3 gap-8 items-center">
           {/* Logo and tagline */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center md:text-left"
+          <div
+            ref={left.ref}
+            className={`text-center md:text-left opacity-0 ${left.visible && "animate-fade-up"}`}
           >
             <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
-              <motion.div
-                animate={{
-                  rotate: 360,
-                }}
-                transition={{
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                className="p-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full border border-cyan-500/30"
-              >
+              <div className="p-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full border border-cyan-500/30 animate-rotate-slow">
                 <Beaker className="w-6 h-6 text-cyan-400" />
-              </motion.div>
+              </div>
               <div>
                 <div className="font-bold text-white text-lg">Doozy Labs</div>
                 <div className="text-xs text-gray-400 font-mono">
@@ -47,39 +39,33 @@ const Footer: React.FC = () => {
               Where good ideas go to become questionable reality, powered by
               caffeine and poor life choices.
             </p>
-          </motion.div>
+          </div>
 
           {/* Social links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex justify-center space-x-6"
+          <div
+            ref={middle.ref}
+            className={`flex justify-center space-x-6 opacity-0 ${middle.visible && "animate-fade-up"}`}
+            style={{ animationDelay: middle.visible ? "100ms" : undefined }}
           >
             {socialLinks.map((social, index) => (
-              <motion.a
+              <a
                 key={index}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-300 group"
+                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-300 group hover:-translate-y-1 hover:scale-110 active:scale-95"
                 aria-label={social.label}
               >
                 <social.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-              </motion.a>
+              </a>
             ))}
-          </motion.div>
+          </div>
 
           {/* Quick links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center md:text-right"
+          <div
+            ref={right.ref}
+            className={`text-center md:text-right opacity-0 ${right.visible && "animate-fade-up"}`}
+            style={{ animationDelay: right.visible ? "200ms" : undefined }}
           >
             <div className="space-y-2">
               <a
@@ -101,21 +87,19 @@ const Footer: React.FC = () => {
                 Contact
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Copyright */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="border-t border-gray-800 mt-12 pt-8 text-center"
+        <div
+          ref={bottom.ref}
+          className={`border-t border-gray-800 mt-12 pt-8 text-center opacity-0 ${bottom.visible && "animate-fade-up"}`}
+          style={{ animationDelay: bottom.visible ? "300ms" : undefined }}
         >
           <p className="text-gray-500 text-sm">
             © 2025 ML-BCD-Labs - All rights reserved.
           </p>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

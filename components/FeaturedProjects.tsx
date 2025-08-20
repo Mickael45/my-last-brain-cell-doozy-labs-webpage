@@ -1,30 +1,41 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import ProjectCard from "./ProjectCard";
-import { useRouter } from "next/navigation";
 import { Project } from "../types";
+import { useReveal } from "../lib/useReveal";
 
 interface FeaturedProjectsProps {
   projects: Project[];
 }
 
 const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
-  const router = useRouter();
   const featuredProjects = projects.filter((p) => p.isFeatured);
-  const handleOpen = (project: Project) =>
-    router.push(`/project/${project.id}`);
+
+  const header = useReveal<HTMLDivElement>();
+
+  const FeaturedCard: React.FC<{ project: Project; index: number }> = ({
+    project,
+    index,
+  }) => {
+    const { ref, visible } = useReveal<HTMLDivElement>();
+    return (
+      <div
+        ref={ref}
+        className={`opacity-0 ${visible && "animate-fade-up"}`}
+        style={{ animationDelay: `${index * 100}ms` }}
+      >
+        <ProjectCard project={project} href={`/project/${project.id}`} />
+      </div>
+    );
+  };
 
   return (
     <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
       <div className="max-w-7xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+        <div
+          ref={header.ref}
+          className={`text-center mb-16 opacity-0 ${header.visible && "animate-fade-up"}`}
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <Sparkles className="w-6 h-6 text-pink-400" />
@@ -40,19 +51,11 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             The projects that somehow didn't crash and burn (yet)
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProjects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <ProjectCard project={project} onClick={handleOpen} />
-            </motion.div>
+            <FeaturedCard key={project.id} project={project} index={index} />
           ))}
         </div>
       </div>

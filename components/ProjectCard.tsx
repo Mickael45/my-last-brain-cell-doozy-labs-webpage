@@ -1,15 +1,21 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
 import { ExternalLink, Code, Sparkles } from "lucide-react";
 import { Project } from "../types";
+import Image from "next/image";
+import Link from "next/link";
 
 interface ProjectCardProps {
   project: Project;
-  onClick: (project: Project) => void;
+  href?: string; // optional link destination
+  onClick?: (project: Project) => void; // fallback click handler
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({
+  project,
+  href,
+  onClick,
+}) => {
   const getCategoryIcon = (category: string) => {
     return category === "Chaos Experiment" ? (
       <Sparkles className="w-4 h-4 text-white" />
@@ -24,16 +30,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
       : "from-cyan-500/20 via-blue-500/20 to-purple-500/20 border-cyan-500/30";
   };
 
-  return (
-    <motion.div
-      whileHover={{ scale: 1.02, y: -4 }}
-      whileTap={{ scale: 0.98 }}
-      onClick={() => onClick(project)}
-      className="cursor-pointer group"
+  const Card = (
+    <div
+      onClick={() => !href && onClick?.(project)}
+      className="cursor-pointer group transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.02] active:scale-95"
     >
       <div
         className={`
-        relative overflow-hidden rounded-xl border bg-gradient-to-br backdrop-blur-sm
+        relative overflow-hidden rounded-xl border bg-gradient-to-br backdrop-blur-sm gradient-border-loop
         ${getCategoryColor(project.category)}
         hover:border-opacity-60 transition-all duration-300
         hover:shadow-2xl hover:shadow-cyan-500/20
@@ -63,12 +67,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
 
         {/* Project image */}
         <div className="relative h-48 overflow-hidden">
-          <img
+          <Image
             src={project.imageUrl}
             alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
+            className="object-cover transition-transform duration-300 group-hover:scale-110"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.15),transparent_60%)]" />
         </div>
 
         {/* Content */}
@@ -113,7 +121,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
+  );
+
+  return href ? (
+    <Link
+      href={href}
+      prefetch
+      aria-label={`Open project ${project.title}`}
+      className="block"
+    >
+      {Card}
+    </Link>
+  ) : (
+    Card
   );
 };
 

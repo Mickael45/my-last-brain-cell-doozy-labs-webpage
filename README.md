@@ -1,13 +1,13 @@
 ## My Last Brain Cell Doozy Labs – Portfolio
 
-Next.js (App Router) + Convex backend + Tailwind + Framer Motion.
+Next.js (App Router) + Convex backend + Tailwind.
 
 ### Tech Stack
 
 - Next.js 14 (App Router, ISR) – Turbopack for dev
 - Convex (data layer)
 - Tailwind CSS
-- Framer Motion, Lucide Icons
+- Lucide Icons
 
 ### Environment Variables
 

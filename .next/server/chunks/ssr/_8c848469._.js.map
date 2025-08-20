@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/mickael/Projects/public/ml-bcd-labs-webpage/app/layout.tsx"],"sourcesContent":["import \"../app/globals.css\";\nimport type { ReactNode } from \"react\";\n\nexport const metadata = {\n  title: \"My Last Brain Cell Doozy Labs\",\n  description: \"Portfolio / Lab showcase\",\n};\n\nexport default function RootLayout({ children }: { children: ReactNode }) {\n  return (\n    <html lang=\"en\" className=\"bg-gray-900\">\n      <body className=\"min-h-screen bg-gray-900 text-white\">{children}</body>\n    </html>\n  );\n}\n"],"names":[],"mappings":";;;;;;;;;AAGO,MAAM,WAAW;IACtB,OAAO;IACP,aAAa;AACf;AAEe,SAAS,WAAW,EAAE,QAAQ,EAA2B;IACtE,qBACE,8OAAC;QAAK,MAAK;QAAK,WAAU;kBACxB,cAAA,8OAAC;YAAK,WAAU;sBAAuC;;;;;;;;;;;AAG7D","debugId":null}},
-    {"offset": {"line": 39, "column": 0}, "map": {"version":3,"sources":["file:///Users/mickael/Projects/public/ml-bcd-labs-webpage/node_modules/next/src/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.ts"],"sourcesContent":["module.exports = (\n  require('../../module.compiled') as typeof import('../../module.compiled')\n).vendored['react-rsc']!.ReactJsxDevRuntime\n"],"names":["module","exports","require","vendored","ReactJsxDevRuntime"],"mappings":"AAAAA,OAAOC,OAAO,GACZC,QAAQ,4HACRC,QAAQ,CAAC,YAAY,CAAEC,kBAAkB","ignoreList":[0],"debugId":null}}]
-}

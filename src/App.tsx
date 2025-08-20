@@ -1,22 +1,57 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Toaster } from "sonner";
-import HomePage from "./pages/HomePage";
-import ProjectPage from "./pages/ProjectPage";
-import ContactPage from "./pages/ContactPage";
-import Navigation from "./components/Navigation";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HeroSection from './components/HeroSection';
+import FeaturedProjects from './components/FeaturedProjects';
+import ProjectGallery from './components/ProjectGallery';
+import AboutSection from './components/AboutSection';
+import ContactSection from './components/ContactSection';
+import Footer from './components/Footer';
+import ProjectDetail from './components/ProjectDetail';
+import { mockProjects } from './data/projects';
+import { Project } from './types';
 
-export default function App() {
+const HomePage: React.FC<{ onProjectClick: (project: Project) => void }> = ({ onProjectClick }) => (
+  <>
+    <HeroSection />
+    <FeaturedProjects 
+      projects={mockProjects}
+      onProjectClick={onProjectClick}
+    />
+    <ProjectGallery 
+      projects={mockProjects}
+      onProjectClick={onProjectClick}
+    />
+    <div id="about">
+      <AboutSection />
+    </div>
+    <div id="contact">
+      <ContactSection />
+    </div>
+    <Footer />
+  </>
+);
+
+function App() {
+  const handleProjectClick = (project: Project) => {
+    window.location.href = `/project/${project.id}`;
+  };
+
   return (
     <Router>
-      <div className="min-h-screen bg-gray-900 text-white">
-        <Navigation />
+      <div className="min-h-screen bg-gray-900">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/project/:slug" element={<ProjectPage />} />
-          <Route path="/contact" element={<ContactPage />} />
+          <Route 
+            path="/" 
+            element={<HomePage onProjectClick={handleProjectClick} />} 
+          />
+          <Route 
+            path="/project/:id" 
+            element={<ProjectDetail />} 
+          />
         </Routes>
-        <Toaster theme="dark" />
       </div>
     </Router>
   );
 }
+
+export default App;

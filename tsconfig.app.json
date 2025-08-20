@@ -20,5 +20,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/data/projects.js"]
+  "include": ["src", "src/data/projects.ts", "components", "types"]
 }

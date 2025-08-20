@@ -1,0 +1,3 @@
+module.exports=[33290,a=>{"use strict";a.s(["default",()=>d,"metadata",()=>c]);var b=a.i(7997);let c={title:"My Last Brain Cell Doozy Labs",description:"Portfolio / Lab showcase"};function d({children:a}){return(0,b.jsx)("html",{lang:"en",className:"bg-gray-900",children:(0,b.jsx)("body",{className:"min-h-screen bg-gray-900 text-white",children:a})})}}];
+
+//# sourceMappingURL=app_layout_tsx_271801d7._.js.map

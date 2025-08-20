@@ -1,12 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Beaker, Github, Twitter, Linkedin, ExternalLink } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { Beaker, Github, Twitter, Linkedin } from "lucide-react";
 
 const Footer: React.FC = () => {
   const socialLinks = [
-    { icon: Github, href: 'https://github.com', label: 'GitHub' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+    { icon: Github, href: "https://github.com", label: "GitHub" },
+    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
   ];
 
   return (
@@ -23,13 +23,13 @@ const Footer: React.FC = () => {
           >
             <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
               <motion.div
-                animate={{ 
+                animate={{
                   rotate: 360,
                 }}
-                transition={{ 
-                  duration: 20, 
-                  repeat: Infinity, 
-                  ease: "linear" 
+                transition={{
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "linear",
                 }}
                 className="p-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full border border-cyan-500/30"
               >
@@ -37,11 +37,14 @@ const Footer: React.FC = () => {
               </motion.div>
               <div>
                 <div className="font-bold text-white text-lg">Doozy Labs</div>
-                <div className="text-xs text-gray-400 font-mono">Chaos Engineering Dept.</div>
+                <div className="text-xs text-gray-400 font-mono">
+                  Chaos Engineering Dept.
+                </div>
               </div>
             </div>
             <p className="text-gray-400 text-sm max-w-xs mx-auto md:mx-0">
-              Where good ideas go to become questionable reality, powered by caffeine and poor life choices.
+              Where good ideas go to become questionable reality, powered by
+              caffeine and poor life choices.
             </p>
           </motion.div>
 

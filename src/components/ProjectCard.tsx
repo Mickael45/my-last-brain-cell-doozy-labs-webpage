@@ -46,6 +46,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
             </div>
           </div>
         )}
+        {project.isIncoming && (
+          <div className="absolute top-3 left-3 z-10">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-full bg-green-500/40 blur animate-ping" />
+              <div className="relative bg-green-500/20 border border-green-400/40 rounded-full px-2 py-1 backdrop-blur-sm flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-[10px] font-semibold tracking-wide text-green-300 uppercase">
+                  Incoming
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Project image */}
         <div className="relative h-48 overflow-hidden">

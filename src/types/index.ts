@@ -14,7 +14,8 @@ export interface Project {
     impact?: string;
   };
   techStack: string[];
-  category: 'Public Utility' | 'Volatile Prototype';
+  category: "Public Utility" | "Volatile Prototype";
   isFeatured: boolean;
+  isIncoming?: boolean; // currently being worked on / upcoming
   sortOrder: number;
 }

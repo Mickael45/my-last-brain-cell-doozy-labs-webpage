@@ -1,5 +1,4 @@
-import React, { useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useEffect } from "react";
 
 const AnimatedMesh: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -10,7 +9,7 @@ const AnimatedMesh: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const resizeCanvas = () => {
@@ -19,11 +18,16 @@ const AnimatedMesh: React.FC = () => {
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
     // Mesh properties
     const gridSize = 80;
-    const points: Array<{ x: number; y: number; originalX: number; originalY: number }> = [];
+    const points: Array<{
+      x: number;
+      y: number;
+      originalX: number;
+      originalY: number;
+    }> = [];
 
     // Initialize grid points
     for (let x = 0; x <= canvas.width; x += gridSize) {
@@ -45,40 +49,43 @@ const AnimatedMesh: React.FC = () => {
       points.forEach((point) => {
         const distanceToMouse = Math.sqrt(
           Math.pow(point.originalX - mousePosition.current.x, 2) +
-          Math.pow(point.originalY - mousePosition.current.y, 2)
+            Math.pow(point.originalY - mousePosition.current.y, 2)
         );
 
         const influenceRadius = 200;
         const influence = Math.max(0, 1 - distanceToMouse / influenceRadius);
-        
+
         const waveX = Math.sin(time + point.originalX * 0.01) * 10;
         const waveY = Math.cos(time + point.originalY * 0.01) * 10;
-        
-        const mouseInfluenceX = (mousePosition.current.x - point.originalX) * influence * 0.1;
-        const mouseInfluenceY = (mousePosition.current.y - point.originalY) * influence * 0.1;
+
+        const mouseInfluenceX =
+          (mousePosition.current.x - point.originalX) * influence * 0.1;
+        const mouseInfluenceY =
+          (mousePosition.current.y - point.originalY) * influence * 0.1;
 
         point.x = point.originalX + waveX + mouseInfluenceX;
         point.y = point.originalY + waveY + mouseInfluenceY;
       });
 
       // Draw connections
-      ctx.strokeStyle = 'rgba(0, 212, 255, 0.1)';
+      ctx.strokeStyle = "rgba(0, 212, 255, 0.1)";
       ctx.lineWidth = 1;
 
       for (let i = 0; i < points.length; i++) {
         const point = points[i];
-        
+
         // Connect to nearby points
         for (let j = i + 1; j < points.length; j++) {
           const otherPoint = points[j];
           const distance = Math.sqrt(
-            Math.pow(point.x - otherPoint.x, 2) + Math.pow(point.y - otherPoint.y, 2)
+            Math.pow(point.x - otherPoint.x, 2) +
+              Math.pow(point.y - otherPoint.y, 2)
           );
 
           if (distance < gridSize * 1.5) {
             const opacity = Math.max(0, 1 - distance / (gridSize * 1.5));
             ctx.strokeStyle = `rgba(0, 212, 255, ${opacity * 0.2})`;
-            
+
             ctx.beginPath();
             ctx.moveTo(point.x, point.y);
             ctx.lineTo(otherPoint.x, otherPoint.y);
@@ -89,12 +96,12 @@ const AnimatedMesh: React.FC = () => {
         // Draw points
         const distanceToMouse = Math.sqrt(
           Math.pow(point.x - mousePosition.current.x, 2) +
-          Math.pow(point.y - mousePosition.current.y, 2)
+            Math.pow(point.y - mousePosition.current.y, 2)
         );
-        
+
         const size = Math.max(1, 3 - distanceToMouse / 100);
         const glowIntensity = Math.max(0, 1 - distanceToMouse / 150);
-        
+
         ctx.fillStyle = `rgba(0, 212, 255, ${0.3 + glowIntensity * 0.7})`;
         ctx.beginPath();
         ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
@@ -111,12 +118,12 @@ const AnimatedMesh: React.FC = () => {
       };
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
     animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("mousemove", handleMouseMove);
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
       }

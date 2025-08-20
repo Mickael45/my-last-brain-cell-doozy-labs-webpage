@@ -1,21 +1,24 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown, Beaker } from 'lucide-react';
-import AnimatedMesh from './AnimatedMesh';
+import React from "react";
+import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import AnimatedMesh from "./AnimatedMesh";
 
 const HeroSection: React.FC = () => {
   const scrollToProjects = () => {
-    const projectsSection = document.getElementById('projects');
-    projectsSection?.scrollIntoView({ behavior: 'smooth' });
+    const projectsSection = document.getElementById("projects");
+    projectsSection?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
       {/* Animated Mesh Background */}
       <AnimatedMesh />
-      
+
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900/20 via-gray-900/40 to-gray-900/80" style={{ zIndex: 2 }} />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-gray-900/20 via-gray-900/40 to-gray-900/80"
+        style={{ zIndex: 2 }}
+      />
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
@@ -33,8 +36,7 @@ const HeroSection: React.FC = () => {
           >
             <span className="bg-gradient-to-r from-cyan-400 via-pink-500 to-orange-500 bg-clip-text text-transparent">
               My Last Brain Cell
-            </span>
-            {' '}
+            </span>{" "}
             <span className="bg-gradient-to-r from-purple-400 via-blue-500 to-green-400 bg-clip-text text-transparent">
               Doozy
             </span>
@@ -46,8 +48,9 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
           >
-            Where caffeine-fueled coding sessions meet questionable life choices. 
-            Building stuff that probably shouldn't exist, but somehow does.
+            Where caffeine-fueled coding sessions meet questionable life
+            choices. Building stuff that probably shouldn't exist, but somehow
+            does.
           </motion.p>
 
           <motion.button

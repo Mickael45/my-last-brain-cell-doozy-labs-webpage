@@ -18,12 +18,48 @@ import {
   Activity,
   Brain,
 } from "lucide-react";
-import { mockProjects } from "../data/projects";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const project = mockProjects.find((p) => p.id === id);
+  const doc = useQuery(
+    api.projects.getByLegacyId,
+    id ? { legacyId: id } : "skip"
+  );
+  const project = doc
+    ? {
+        id: doc.legacyId,
+        title: doc.title,
+        tagline: doc.tagline,
+        description: doc.description,
+        projectUrl: doc.projectUrl,
+        imageUrl: doc.imageUrl,
+        screenshots: doc.screenshots,
+        challenges: doc.challenges,
+        solutions: doc.solutions,
+        metrics: doc.metrics,
+        techStack: doc.techStack,
+        category: doc.category,
+        isFeatured: doc.isFeatured,
+        isIncoming: doc.isIncoming,
+        sortOrder: doc.sortOrder,
+      }
+    : null;
+
+  if (id && doc === undefined) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-300">
+        <div className="text-center animate-pulse">
+          <h1 className="text-3xl font-semibold mb-4">Loading Project...</h1>
+          <p className="text-gray-500">
+            Summoning data from the Convex dimension
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (!project) {
     return (

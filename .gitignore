@@ -1,3 +1,5 @@
+# Prevent accidental Node scripts inside convex backend
+convex/seed*.ts
 # Logs
 logs
 *.log

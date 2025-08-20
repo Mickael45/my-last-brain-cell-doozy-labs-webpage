@@ -1,29 +1,33 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Brain, Lightbulb, Rocket, Code2 } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { Brain, Lightbulb, Rocket, Code2 } from "lucide-react";
 
 const AboutSection: React.FC = () => {
   const principles = [
     {
       icon: Brain,
-      title: 'Curiosity-Driven',
-      description: 'Every project starts with a "what if?" and ends with a "why not?"'
+      title: "Curiosity-Driven",
+      description:
+        'Every project starts with a "what if?" and ends with a "why not?"',
     },
     {
       icon: Lightbulb,
-      title: 'Innovation First',
-      description: 'We build solutions that push boundaries and challenge conventions'
+      title: "Reckless Innovation",
+      description:
+        "I poke the impossible until it either breaks or becomes a feature",
     },
     {
       icon: Rocket,
-      title: 'Rapid Prototyping',
-      description: 'From concept to working prototype in record time'
+      title: "Prototype Goblin Mode",
+      description:
+        "Idea at breakfast, scrappy build by lunch, mildly stable by midnight",
     },
     {
       icon: Code2,
-      title: 'Quality Code',
-      description: 'Beautiful, maintainable, and performant code is our standard'
-    }
+      title: "Shameless Over‑Engineering",
+      description:
+        "Clean, typed, modular & benchmarked—half for performance, half so future me thinks past me was a genius",
+    },
   ];
 
   return (
@@ -59,21 +63,27 @@ const AboutSection: React.FC = () => {
             className="space-y-6"
           >
             <p className="text-lg text-gray-300 leading-relaxed">
-              This digital playground was born at 3 AM during a particularly questionable energy drink binge. 
-              The name? It's literally what happens when you're down to your last functioning brain cell 
-              but still somehow manage to ship code that doesn't immediately catch fire.
+              This digital playground was born at 3 AM during a particularly
+              questionable energy drink binge. The name? It's literally what
+              happens when you're down to your last functioning brain cell but
+              still somehow manage to ship code that doesn't immediately catch
+              fire.
             </p>
-            
+
             <p className="text-lg text-gray-300 leading-relaxed">
-              Here, we turn shower thoughts into actual products and somehow convince people to use them. 
-              Our specialty? Building things that make you go "wait, someone actually made this?" followed 
+              Here, I turn shower thoughts into actual products and somehow
+              convince people to use them. My specialty? Building things that
+              make you go "wait, someone actually made this?" followed
               immediately by "...but I kinda need it though."
             </p>
 
             <p className="text-lg text-gray-300 leading-relaxed">
-              We've got two flavors: <strong className="text-cyan-400">Public Utilities</strong> 
-              {' '}(stuff that actually works and won't break your workflow) and <strong className="text-purple-400">Volatile Prototypes</strong> 
-              {' '}(experimental chaos that might achieve sentience or crash spectacularly - no guarantees either way).
+              I've got two flavors:{" "}
+              <strong className="text-cyan-400">Public Utilities</strong> (stuff
+              that actually works and won't break your workflow) and{" "}
+              <strong className="text-purple-400">Volatile Prototypes</strong>{" "}
+              (experimental chaos that might achieve sentience or crash
+              spectacularly - no guarantees either way).
             </p>
           </motion.div>
 
@@ -100,7 +110,9 @@ const AboutSection: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{principle.title}</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    {principle.title}
+                  </h3>
                   <p className="text-gray-400">{principle.description}</p>
                 </div>
               </motion.div>

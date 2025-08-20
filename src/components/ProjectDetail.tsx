@@ -663,7 +663,7 @@ const ProjectDetail: React.FC = () => {
               Ready to Experience the Magic?
             </h2>
             <p className="text-xl text-gray-400 mb-12">
-              Don't just read about it, go play with it! (We're not responsible
+              Don't just read about it, go play with it! (I'm not responsible
               for productivity loss)
             </p>
 

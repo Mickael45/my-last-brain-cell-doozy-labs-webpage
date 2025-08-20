@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink, Code, Sparkles } from 'lucide-react';
-import { Project } from '../types';
+import React from "react";
+import { motion } from "framer-motion";
+import { ExternalLink, Code, Sparkles } from "lucide-react";
+import { Project } from "../types";
 
 interface ProjectCardProps {
   project: Project;
@@ -10,17 +10,17 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
   const getCategoryIcon = (category: string) => {
-    return category === 'Volatile Prototype' ? (
-      <Sparkles className="w-4 h-4 text-purple-400" />
+    return category === "Volatile Prototype" ? (
+      <Sparkles className="w-4 h-4 text-white" />
     ) : (
-      <Code className="w-4 h-4 text-blue-400" />
+      <Code className="w-4 h-4 text-white" />
     );
   };
 
   const getCategoryColor = (category: string) => {
-    return category === 'Volatile Prototype' 
-      ? 'from-purple-500/20 via-pink-500/20 to-red-500/20 border-purple-500/30' 
-      : 'from-cyan-500/20 via-blue-500/20 to-purple-500/20 border-cyan-500/30';
+    return category === "Volatile Prototype"
+      ? "from-purple-500/20 via-pink-500/20 to-red-500/20 border-purple-500/30"
+      : "from-cyan-500/20 via-blue-500/20 to-purple-500/20 border-cyan-500/30";
   };
 
   return (
@@ -30,12 +30,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
       onClick={() => onClick(project)}
       className="cursor-pointer group"
     >
-      <div className={`
+      <div
+        className={`
         relative overflow-hidden rounded-xl border bg-gradient-to-br backdrop-blur-sm
         ${getCategoryColor(project.category)}
         hover:border-opacity-60 transition-all duration-300
         hover:shadow-2xl hover:shadow-cyan-500/20
-      `}>
+      `}
+      >
         {/* Featured badge */}
         {project.isFeatured && (
           <div className="absolute top-3 right-3 z-10">
@@ -60,7 +62,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
           {/* Category */}
           <div className="flex items-center gap-2 mb-3">
             {getCategoryIcon(project.category)}
-            <span className="text-sm font-medium text-gray-300">
+            <span className="text-sm font-medium text-white">
               {project.category}
             </span>
           </div>

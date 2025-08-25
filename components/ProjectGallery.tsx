@@ -28,12 +28,12 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
     project,
     index,
   }) => {
-    const { ref, visible } = useReveal<HTMLDivElement>();
+    const { ref, visible } = useReveal<HTMLDivElement>({ threshold: 0.1 });
     return (
       <div
         ref={ref}
         className={`opacity-0 ${visible && "animate-fade-up"}`}
-        style={{ animationDelay: `${index * 100}ms` }}
+        style={{ animationDelay: `${index * 75}ms` }}
       >
         <ProjectCard project={project} href={`/project/${project.id}`} />
       </div>

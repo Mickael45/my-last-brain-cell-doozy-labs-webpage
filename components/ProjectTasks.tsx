@@ -1,6 +1,6 @@
 "use client";
 
-import type { GitHubIssue } from "@/types";
+import type { GitHubIssue } from "../types";
 import { CheckCircle, GitMerge, ArchiveX } from "lucide-react";
 
 const getContrastColor = (hexColor: string) => {
@@ -63,7 +63,7 @@ export default function ProjectTasks({ tasks }: { tasks: GitHubIssue[] }) {
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
-                {issue.labels.map((label) => (
+                {issue.labels.map((label: GitHubIssue["labels"][number]) => (
                   <span
                     key={label.name}
                     className="px-2 py-1 text-xs font-mono rounded"

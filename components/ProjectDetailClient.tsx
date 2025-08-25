@@ -82,6 +82,7 @@ export default function ProjectDetailClient({
                   className={`text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r ${getTypeColor(
                     project.type
                   )} bg-clip-text text-transparent`}
+                  style={{ viewTransitionName: `project-title-${project.id}` }}
                 >
                   {project.title}
                 </h1>
@@ -121,6 +122,7 @@ export default function ProjectDetailClient({
                     height={600}
                     priority
                     className="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ viewTransitionName: `project-image-${project.id}` }}
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${getTypeColor(

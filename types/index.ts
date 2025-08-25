@@ -36,5 +36,6 @@ export interface GitHubIssue {
   };
   labels: {
     name: string;
+    color: string;
   }[];
 }

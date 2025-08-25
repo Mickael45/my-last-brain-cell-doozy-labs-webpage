@@ -1,9 +1,10 @@
 "use client";
 import { useState, useTransition } from "react";
 import { createSeedData } from "../app/actions/seed";
+import { SeedResult } from "../types/actions";
 
 export default function SeedButton() {
-  const [result, setResult] = useState<null | { created: number; total: number; skipped?: boolean }>(null);
+  const [result, setResult] = useState<null | SeedResult>(null);
   const [pending, startTransition] = useTransition();
 
   return (
@@ -12,7 +13,7 @@ export default function SeedButton() {
         onClick={() => {
           startTransition(async () => {
             const r = await createSeedData();
-            setResult(r as any);
+            setResult(r);
             // Force reload to pick up ISR later; for dev just refresh client state
             if (typeof window !== "undefined") {
               window.location.reload();

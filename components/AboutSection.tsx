@@ -108,9 +108,9 @@ const AboutSection: React.FC = () => {
 
             <p className="text-lg text-gray-300 leading-relaxed">
               I've got two flavors:{" "}
-              <strong className="text-cyan-400">Public Utilities</strong> (stuff
+              <strong className="text-cyan-400">Sass-y Solution</strong> (stuff
               that actually works and won't break your workflow) and{" "}
-              <strong className="text-purple-400">Chaos Experiments</strong>{" "}
+              <strong className="text-purple-400">Forking Around</strong>{" "}
               (experimental chaos that might achieve sentience or crash
               spectacularly - no guarantees either way).
             </p>

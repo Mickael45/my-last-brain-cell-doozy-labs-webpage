@@ -12,11 +12,9 @@ interface ProjectGalleryProps {
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
   const [showAll, setShowAll] = useState(false);
   const [activeFilter, setActiveFilter] = useState<string>("All");
-
-  const categories = ["All", "Public Utility", "Chaos Experiment"];
-
+  const typeOptions = ["All", "Forking Around", "Sass-y Solution"];
   const filteredProjects = projects.filter(
-    (project) => activeFilter === "All" || project.category === activeFilter
+    (project) => activeFilter === "All" || project.type === activeFilter
   );
 
   const displayedProjects = showAll
@@ -67,17 +65,17 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
           {/* Category Filters */}
           <div className="flex items-center justify-center gap-2 mb-12">
             <Filter className="w-5 h-5 text-gray-400 mr-2" />
-            {categories.map((category) => (
+            {typeOptions.map((type) => (
               <button
-                key={category}
-                onClick={() => setActiveFilter(category)}
+                key={type}
+                onClick={() => setActiveFilter(type)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 active:scale-95 ${
-                  activeFilter === category
+                  activeFilter === type
                     ? "bg-gradient-to-r from-pink-500 to-cyan-500 text-white shadow-lg shadow-pink-500/25"
                     : "bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white"
                 }`}
               >
-                {category}
+                {type}
               </button>
             ))}
           </div>
@@ -100,9 +98,6 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 hover:from-orange-400 hover:via-pink-400 hover:to-purple-400 text-white rounded-full font-semibold text-lg transition-all duration-300 shadow-2xl hover:shadow-orange-500/25 hover:scale-105 active:scale-95"
             >
               Show Me More Chaos
-              <span className="animate-float-y inline-block">
-                <Grid className="w-5 h-5" />
-              </span>
             </button>
           </div>
         )}

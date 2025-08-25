@@ -12,8 +12,11 @@ export const mockProjects: Project[] = [
     challenges: [],
     solutions: [],
     techStack: ["React", "TypeScript"],
-    category: "Public Utility",
+    categories: ["web"],
+    type: "Forking Around",
+    status: "Released",
     isFeatured: true,
     sortOrder: 1,
+    mrr: 2500,
   },
 ];

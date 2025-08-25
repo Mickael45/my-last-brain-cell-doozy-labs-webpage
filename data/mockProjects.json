@@ -21,7 +21,8 @@
         "metrics": {
             "users": "1.2K devs",
             "performance": "47ms p95 overlay",
-            "impact": "22% faster bug localization"
+            "impact": "22% faster bug localization",
+            "mmr": 12000
         },
         "techStack": [
             "Next.js",
@@ -89,7 +90,8 @@
         "metrics": {
             "users": "210 teams",
             "performance": "<2s p95 dashboard load",
-            "impact": "18% reduction in MTTR"
+            "impact": "18% reduction in MTTR",
+            "mmr": 25000
         },
         "techStack": [
             "TypeScript",
@@ -123,7 +125,8 @@
         "metrics": {
             "users": "480 workspaces",
             "performance": "Batch eval 320 prompts/min",
-            "impact": "35% faster iteration"
+            "impact": "35% faster iteration",
+            "mmr": 50000
         },
         "techStack": [
             "Next.js",

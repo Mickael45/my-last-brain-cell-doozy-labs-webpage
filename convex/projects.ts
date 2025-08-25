@@ -21,34 +21,12 @@ export const get = query({
 
 // Removed legacyId-based query (schema simplified).
 
-export const byCategory = query({
-  args: { category: v.string() },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("projects")
-      .withIndex("by_category", (q) => q.eq("category", args.category))
-      .order("asc")
-      .collect();
-  },
-});
-
 export const featured = query({
   args: {},
   handler: async (ctx) => {
     return await ctx.db
       .query("projects")
       .withIndex("by_isFeatured", (q) => q.eq("isFeatured", true))
-      .order("asc")
-      .collect();
-  },
-});
-
-export const incoming = query({
-  args: {},
-  handler: async (ctx) => {
-    return await ctx.db
-      .query("projects")
-      .withIndex("by_isIncoming", (q) => q.eq("isIncoming", true))
       .order("asc")
       .collect();
   },
@@ -66,16 +44,26 @@ export const insert = mutation({
     solutions: v.array(v.string()),
     metrics: v.optional(
       v.object({
-        users: v.optional(v.string()),
+        users: v.optional(v.number()),
         performance: v.optional(v.string()),
         impact: v.optional(v.string()),
+        mrr: v.optional(v.number()),
       })
     ),
     techStack: v.array(v.string()),
-    category: v.string(),
     isFeatured: v.boolean(),
-    isIncoming: v.optional(v.boolean()),
+    status: v.union(
+      v.literal("Later...Maybe"),
+      v.literal("Next In Line"),
+      v.literal("Compiling..."),
+      v.literal("Released")
+    ),
+    type: v.union(v.literal("Forking Around"), v.literal("Sass-y Solution")),
+    categories: v.array(
+      v.union(v.literal("ai"), v.literal("web"), v.literal("meh"))
+    ),
     sortOrder: v.number(),
+    githubRepo: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const id = await ctx.db.insert("projects", args);
@@ -97,16 +85,30 @@ export const update = mutation({
       solutions: v.optional(v.array(v.string())),
       metrics: v.optional(
         v.object({
-          users: v.optional(v.string()),
+          users: v.optional(v.number()),
           performance: v.optional(v.string()),
           impact: v.optional(v.string()),
+          mrr: v.optional(v.number()),
         })
       ),
       techStack: v.optional(v.array(v.string())),
-      category: v.optional(v.string()),
       isFeatured: v.optional(v.boolean()),
-      isIncoming: v.optional(v.boolean()),
+      status: v.optional(
+        v.union(
+          v.literal("Later...Maybe"),
+          v.literal("Next In Line"),
+          v.literal("Compiling..."),
+          v.literal("Released")
+        )
+      ),
+      type: v.optional(
+        v.union(v.literal("Forking Around"), v.literal("Sass-y Solution"))
+      ),
+      categories: v.optional(
+        v.array(v.union(v.literal("ai"), v.literal("web"), v.literal("meh")))
+      ),
       sortOrder: v.optional(v.number()),
+      githubRepo: v.optional(v.string()),
     }),
   },
   handler: async (ctx, { id, patch }) => {
@@ -120,5 +122,60 @@ export const remove = mutation({
   handler: async (ctx, { id }) => {
     await ctx.db.delete(id);
     return id;
+  },
+});
+
+// Development helper: create up to 20 seed project documents if fewer exist.
+export const seed = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const existing = await ctx.db.query("projects").collect();
+    if (existing.length >= 20) {
+      return { created: 0, total: existing.length, skipped: true };
+    }
+    const baseProjects = Array.from({ length: 20 - existing.length }).map(
+      (_, i) => {
+        const idx = existing.length + i + 1;
+        const statusOptions = [
+          "Later...Maybe",
+          "Next In Line",
+          "Compiling...",
+          "Released",
+        ] as const;
+        const typeOptions = ["Forking Around", "Sass-y Solution"] as const;
+        const categoryPool = ["ai", "web", "meh"] as const;
+        return {
+          title: `Seed Project ${idx}`,
+          tagline: `Auto-generated seed project #${idx}`,
+            description:
+            "This is a seeded project used to populate the development database for UI testing.",
+          projectUrl: "https://example.com/seed",
+          imageUrl: `https://picsum.photos/seed/seed${idx}/1200/600`,
+          screenshots: [
+            `https://picsum.photos/seed/seed${idx}a/800/400`,
+            `https://picsum.photos/seed/seed${idx}b/800/400`,
+          ],
+          challenges: ["Make seeding easy", "Respect schema changes"],
+          solutions: ["Programmatic generator", "Strict schema mapping"],
+          metrics: {
+            users: 100 + idx,
+            performance: `${50 + (idx % 50)}ms p95`,
+            impact: `Demo impact metric ${idx}`,
+            mrr: 10 + idx,
+          },
+          techStack: ["Next.js", "TypeScript", "Convex"],
+          isFeatured: idx % 3 === 0,
+          status: statusOptions[idx % statusOptions.length],
+          type: typeOptions[idx % typeOptions.length],
+          categories: [categoryPool[idx % categoryPool.length]],
+          sortOrder: idx,
+            githubRepo: "https://github.com/Mickael45/LinkedIn-JobLens-AI",
+        };
+      }
+    );
+    for (const p of baseProjects) {
+      await ctx.db.insert("projects", p);
+    }
+    return { created: baseProjects.length, total: existing.length + baseProjects.length };
   },
 });

@@ -1,5 +1,6 @@
 import type { Project } from "../types";
 
+// Relaxed shape reflecting potential schema evolution; only required _id + minimal fields.
 interface ConvexProjectDoc {
   _id: string;
   title: string;
@@ -12,27 +13,36 @@ interface ConvexProjectDoc {
   solutions?: string[];
   metrics?: Project["metrics"];
   techStack?: string[];
-  category: string;
+  categories?: ("ai" | "web" | "meh")[];
+  type?: "Forking Around" | "Sass-y Solution";
+  status?: "Later...Maybe" | "Next In Line" | "Compiling..." | "Released";
   isFeatured?: boolean;
   isIncoming?: boolean;
   sortOrder?: number;
+  githubRepo?: string;
 }
 
-/** Guard to ensure Convex URL is present early with clearer messaging. */
-export function assertConvexEnv() {
+/** Returns true if Convex env is configured; logs a warning once if not. */
+let warned = false;
+export function assertConvexEnv(): boolean {
   if (!process.env.NEXT_PUBLIC_CONVEX_URL) {
-    throw new Error(
-      "NEXT_PUBLIC_CONVEX_URL is missing. Set it in .env.local or Vercel project settings."
-    );
+    if (!warned) {
+      console.warn(
+        "Convex disabled: NEXT_PUBLIC_CONVEX_URL missing. Falling back to mock data."
+      );
+      warned = true;
+    }
+    return false;
   }
+  return true;
 }
 
 /** Map a Convex project document to the local `Project` shape. */
 export function mapProject(doc: ConvexProjectDoc): Project {
-  const narrowedCategory: Project["category"] =
-    doc.category === "Public Utility" || doc.category === "Chaos Experiment"
-      ? doc.category
-      : "Chaos Experiment";
+  const narrowedType: Project["type"] =
+    doc.type === "Sass-y Solution" || doc.type === "Forking Around"
+      ? doc.type
+      : undefined;
   return {
     id: doc._id,
     title: doc.title,
@@ -45,9 +55,12 @@ export function mapProject(doc: ConvexProjectDoc): Project {
     solutions: doc.solutions || [],
     metrics: doc.metrics,
     techStack: doc.techStack || [],
-    category: narrowedCategory,
+    categories: doc.categories || [],
+    type: narrowedType,
+    status: doc.status || "Later...Maybe",
     isFeatured: doc.isFeatured ?? false,
     isIncoming: doc.isIncoming ?? false,
     sortOrder: doc.sortOrder ?? 0,
+    githubRepo: doc.githubRepo,
   };
 }

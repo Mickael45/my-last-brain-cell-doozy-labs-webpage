@@ -16,23 +16,31 @@ import {
   Target,
   TrendingUp,
   Users,
+  DollarSign,
 } from "lucide-react";
-import type { Project } from "../types";
+import type { Project, GitHubIssue } from "../types";
 import Image from "next/image";
 import InteractiveCard from "./InteractiveCard";
 import DetailBackground from "./DetailBackground";
+import ProjectTasks from "./ProjectTasks";
 
-export default function ProjectDetailClient({ project }: { project: Project }) {
+export default function ProjectDetailClient({
+  project,
+  tasks,
+}: {
+  project: Project;
+  tasks: GitHubIssue[];
+}) {
   const router = useRouter();
 
-  const getCategoryColor = (category: string) => {
-    return category === "Volatile Prototype"
+  const getTypeColor = (type: string) => {
+    return type === "Sass-y Solution"
       ? "from-purple-500 via-pink-500 to-red-500"
       : "from-cyan-500 via-blue-500 to-purple-500";
   };
 
-  const getCategoryBg = (category: string) => {
-    return category === "Volatile Prototype"
+  const getTypeBg = (type: string) => {
+    return type === "Sass-y Solution"
       ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-400/30"
       : "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border-cyan-400/30";
   };
@@ -62,14 +70,18 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="animate-fade-right">
                 <div
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 text-white ${getCategoryBg(project.category)}`}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 text-white ${getTypeBg(
+                    project.type
+                  )}`}
                 >
                   <Zap className="w-4 h-4 text-white" />
-                  {project.category}
+                  {project.type}
                 </div>
 
                 <h1
-                  className={`text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r ${getCategoryColor(project.category)} bg-clip-text text-transparent`}
+                  className={`text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r ${getTypeColor(
+                    project.type
+                  )} bg-clip-text text-transparent`}
                 >
                   {project.title}
                 </h1>
@@ -83,7 +95,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     href={project.projectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`relative overflow-hidden inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${getCategoryColor(project.category)} text-white rounded-xl font-semibold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in [animation-delay:80ms]`}
+                    className={`relative overflow-hidden inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${getTypeColor(
+                      project.type
+                    )} text-white rounded-xl font-semibold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in [animation-delay:80ms]`}
                   >
                     <span className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity" />
                     <ExternalLink className="w-5 h-5" />
@@ -109,7 +123,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     className="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div
-                    className={`absolute inset-0 bg-gradient-to-t ${getCategoryColor(project.category)} opacity-20 group-hover:opacity-30 transition-opacity`}
+                    className={`absolute inset-0 bg-gradient-to-t ${getTypeColor(
+                      project.type
+                    )} opacity-20 group-hover:opacity-30 transition-opacity`}
                   />
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
                 </div>
@@ -122,7 +138,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         {project.metrics && (
           <section className="py-16 bg-gray-800/30">
             <div className="max-w-7xl mx-auto px-4">
-              <div className="grid md:grid-cols-3 gap-8 animate-fade-up">
+              <div className={`grid md:grid-cols-2 lg:grid-cols-${project.metrics.mrr ? 4 : 3} gap-8 animate-fade-up`}>
                 <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl border border-cyan-500/20 animate-fade-up-scale">
                   <Users className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
                   <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
@@ -152,6 +168,19 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     {project.metrics.impact}
                   </div>
                 </InteractiveCard>
+                {project.metrics.mrr && (
+                  <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 rounded-2xl border border-yellow-500/20 animate-fade-up-scale [animation-delay:360ms]">
+                    <DollarSign className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
+                    <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
+                      MRR
+                    </div>
+                    <div className="text-3xl font-bold text-white">
+                      {typeof project.metrics.mrr === 'number'
+                        ? `$${project.metrics.mrr.toLocaleString()}`
+                        : project.metrics.mrr}
+                    </div>
+                  </InteractiveCard>
+                )}
               </div>
             </div>
           </section>
@@ -191,7 +220,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     </h3>
                   </div>
                   <p className="text-gray-300 leading-relaxed text-lg">
-                    {project.category === "Chaos Experiment"
+                    {project.type === "Forking Around"
                       ? "Started as a borderline ridiculous experiment that somehow refused to die during refactors."
                       : "Born out of repeated pain points and the refusal to accept mediocre tooling any longer."}
                   </p>
@@ -271,23 +300,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     </h3>
                   </div>
                   <div className="space-y-4">
-                    {[
-                      {
-                        label: "Prototype",
-                        desc: "Throw ideas at the wall. Keep what survives user sarcasm.",
-                      },
-                      {
-                        label: "Stabilize",
-                        desc: "Instrument everything. Kill flaky behavior without killing speed.",
-                      },
-                      {
-                        label: "Delight Layer",
-                        desc: "Micro-animations, copy personality, friction removal.",
-                      },
-                      {
-                        label: "Scale Safety",
-                        desc: "Hardening, perf profiling, graceful degradation paths.",
-                      },
+                    {[{"label": "Prototype", "desc": "Throw ideas at the wall. Keep what survives user sarcasm."}, {"label": "Stabilize", "desc": "Instrument everything. Kill flaky behavior without killing speed."}, {"label": "Delight Layer", "desc": "Micro-animations, copy personality, friction removal."}, {"label": "Scale Safety", "desc": "Hardening, perf profiling, graceful degradation paths."},
                     ].map((phase, i) => (
                       <div
                         key={i}
@@ -320,7 +333,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     worked, but because it felt alive.
                   </p>
                   {project.metrics && (
-                    <div className="grid sm:grid-cols-3 gap-5">
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
                       <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 animate-fade-up-scale">
                         <p className="text-xs uppercase tracking-wide text-cyan-300 font-medium mb-1">
                           Users
@@ -345,6 +358,18 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                           {project.metrics.impact}
                         </p>
                       </InteractiveCard>
+                      {project.metrics.mrr && (
+                        <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-yellow-500/10 to-amber-500/10 border border-yellow-500/20 animate-fade-up-scale [animation-delay:360ms]">
+                          <p className="text-xs uppercase tracking-wide text-yellow-300 font-medium mb-1">
+                            MRR
+                          </p>
+                          <p className="text-sm text-white font-semibold">
+                            {typeof project.metrics.mrr === 'number'
+                              ? `${project.metrics.mrr.toLocaleString()}`
+                              : project.metrics.mrr}
+                          </p>
+                        </InteractiveCard>
+                      )}
                     </div>
                   )}
                 </div>
@@ -521,7 +546,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               {project.techStack.map((tech, index) => (
                 <div
                   key={index}
-                  className={`px-6 py-3 bg-gradient-to-r ${getCategoryColor(project.category)} bg-opacity-20 border border-cyan-500/30 rounded-full text-white font-semibold shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 opacity-0 animate-fade-up-scale hover:-translate-y-1 hover:scale-110`}
+                  className={`px-6 py-3 bg-gradient-to-r ${getTypeColor(
+                    project.type
+                  )} bg-opacity-20 border border-cyan-500/30 rounded-full text-white font-semibold shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 opacity-0 animate-fade-up-scale hover:-translate-y-1 hover:scale-110`}
                   style={{ animationDelay: `${index * 70}ms` }}
                 >
                   {tech}
@@ -530,6 +557,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             </div>
           </div>
         </section>
+
+        {/* Live Tasks Section */}
+        {tasks && tasks.length > 0 && <ProjectTasks tasks={tasks} />}
 
         {/* CTA Section */}
         <section className="py-20">
@@ -548,7 +578,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   href={project.projectUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r ${getCategoryColor(project.category)} text-white rounded-2xl font-bold text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in`}
+                  className={`group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r ${getTypeColor(
+                    project.type
+                  )} text-white rounded-2xl font-bold text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in`}
                 >
                   <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity bg-white/10" />
                   <ExternalLink className="w-6 h-6 relative z-10" />

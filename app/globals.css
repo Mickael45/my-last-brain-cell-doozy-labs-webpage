@@ -92,3 +92,20 @@ html, body { scroll-behavior: smooth; }
 		transition: none !important;
 	}
 }
+
+/* View Transitions */
+@keyframes project-card-morph {
+  from {
+    clip-path: inset(0 0 0 0 round 0.75rem);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+  }
+}
+
+::view-transition-old(project-image),
+::view-transition-new(project-image) {
+  animation: project-card-morph 0.5s ease-in-out;
+  /* Fallback for browsers that don't support clip-path animation */
+  animation-name: project-card-morph, none;
+}

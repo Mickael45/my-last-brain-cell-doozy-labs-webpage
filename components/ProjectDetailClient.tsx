@@ -27,23 +27,40 @@ import ProjectTasks from "./ProjectTasks";
 export default function ProjectDetailClient({
   project,
   tasks,
-}: {
-  project: Project;
-  tasks: GitHubIssue[];
-}) {
+}: { project: Project; tasks: GitHubIssue[] }) {
   const router = useRouter();
 
   const getTypeColor = (type: string) => {
-    return type === "Sass-y Solution"
+    return type === "Forking Around"
       ? "from-purple-500 via-pink-500 to-red-500"
       : "from-cyan-500 via-blue-500 to-purple-500";
   };
 
   const getTypeBg = (type: string) => {
-    return type === "Sass-y Solution"
+    return type === "Forking Around"
       ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-400/30"
-      : "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border-cyan-400/30";
+            : "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border-cyan-400/30";
   };
+
+  const getTypeShadow = (type: string) => {
+    return type === "Forking Around"
+      ? "hover:shadow-purple-500/25"
+      : "hover:shadow-cyan-500/25";
+  };
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 overflow-hidden">
@@ -178,7 +195,7 @@ export default function ProjectDetailClient({
                     </div>
                     <div className="text-3xl font-bold text-white">
                       {typeof project.metrics.mrr === 'number'
-                        ? `$${project.metrics.mrr.toLocaleString()}`
+                        ? `${project.metrics.mrr.toLocaleString()}`
                         : project.metrics.mrr}
                     </div>
                   </InteractiveCard>
@@ -302,8 +319,7 @@ export default function ProjectDetailClient({
                     </h3>
                   </div>
                   <div className="space-y-4">
-                    {[{"label": "Prototype", "desc": "Throw ideas at the wall. Keep what survives user sarcasm."}, {"label": "Stabilize", "desc": "Instrument everything. Kill flaky behavior without killing speed."}, {"label": "Delight Layer", "desc": "Micro-animations, copy personality, friction removal."}, {"label": "Scale Safety", "desc": "Hardening, perf profiling, graceful degradation paths."},
-                    ].map((phase, i) => (
+                    {[{"label": "Prototype", "desc": "Throw ideas at the wall. Keep what survives user sarcasm."}, {"label": "Stabilize", "desc": "Instrument everything. Kill flaky behavior without killing speed."}, {"label": "Delight Layer", "desc": "Micro-animations, copy personality, friction removal."}, {"label": "Scale Safety", "desc": "Hardening, perf profiling, graceful degradation paths."},].map((phase, i) => (
                       <div
                         key={i}
                         className="relative pl-8 animate-fade-up-scale"
@@ -425,7 +441,7 @@ export default function ProjectDetailClient({
                       </h4>
                     </div>
                     <ul className="space-y-3 text-sm">
-                      {[
+                      {[ 
                         "Edge-case explosions under weird input combos",
                         "Feature creep vs core simplicity tug-of-war",
                         "Users loving experimental modes a bit too much",
@@ -550,7 +566,9 @@ export default function ProjectDetailClient({
                   key={index}
                   className={`px-6 py-3 bg-gradient-to-r ${getTypeColor(
                     project.type
-                  )} bg-opacity-20 border border-cyan-500/30 rounded-full text-white font-semibold shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 opacity-0 animate-fade-up-scale hover:-translate-y-1 hover:scale-110`}
+                  )} rounded-full text-white font-semibold shadow-lg ${getTypeShadow(
+                    project.type
+                  )} transition-all duration-300 opacity-0 animate-fade-up-scale hover:-translate-y-1 hover:scale-110`}
                   style={{ animationDelay: `${index * 70}ms` }}
                 >
                   {tech}

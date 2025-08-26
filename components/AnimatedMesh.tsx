@@ -13,26 +13,30 @@ const AnimatedMesh: React.FC = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.scale(dpr, dpr);
     };
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Mesh properties (tighter mesh -> smaller gridSize, lower movement amplitude)
-    const gridSize = 30; // was 80
+    const gridSize = 30;
     const points: Array<{
       x: number;
       y: number;
       originalX: number;
       originalY: number;
     }> = [];
+    const cols = Math.ceil(window.innerWidth / gridSize) + 1;
 
-    // Initialize grid points
-    for (let x = 0; x <= canvas.width; x += gridSize) {
-      for (let y = 0; y <= canvas.height; y += gridSize) {
+    for (let x = 0; x <= window.innerWidth; x += gridSize) {
+      for (let y = 0; y <= window.innerHeight; y += gridSize) {
         points.push({
           x,
           y,
@@ -42,21 +46,16 @@ const AnimatedMesh: React.FC = () => {
       }
     }
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Update point positions based on mouse and time
-      const time = Date.now() * 0.001;
+    const updatePoints = (time: number) => {
       points.forEach((point) => {
         const distanceToMouse = Math.sqrt(
           Math.pow(point.originalX - mousePosition.current.x, 2) +
             Math.pow(point.originalY - mousePosition.current.y, 2)
         );
 
-        const influenceRadius = 180; // slightly smaller so mouse affects a more local area
+        const influenceRadius = 180;
         const influence = Math.max(0, 1 - distanceToMouse / influenceRadius);
 
-        // Reduce wave amplitude for a tighter / less wobbly look
         const waveX = Math.sin(time + point.originalX * 0.012) * 6;
         const waveY = Math.cos(time + point.originalY * 0.012) * 6;
 
@@ -68,36 +67,46 @@ const AnimatedMesh: React.FC = () => {
         point.x = point.originalX + waveX + mouseInfluenceX;
         point.y = point.originalY + waveY + mouseInfluenceY;
       });
+    };
 
-      // Draw connections
-      ctx.strokeStyle = "rgba(0, 212, 255, 0.12)";
+    const drawConnections = () => {
       ctx.lineWidth = 0.9;
+      const maxConnection = gridSize * 1.5;
 
       for (let i = 0; i < points.length; i++) {
-        const point = points[i];
+        const p1 = points[i];
 
-        // Connect to nearby points
-        for (let j = i + 1; j < points.length; j++) {
-          const otherPoint = points[j];
+        // Check neighbors: right, bottom, bottom-right, bottom-left
+        const neighbors = [
+          points[i + 1],
+          points[i + cols],
+          points[i + cols + 1],
+          points[i + cols - 1],
+        ].filter(Boolean);
+
+        for (const p2 of neighbors) {
+          // Avoid wrapping connections from last to first column
+          if (p1.originalX > p2.originalX + gridSize * 1.5) continue;
+          if (p2.originalX > p1.originalX + gridSize * 1.5) continue;
+
           const distance = Math.sqrt(
-            Math.pow(point.x - otherPoint.x, 2) +
-              Math.pow(point.y - otherPoint.y, 2)
+            Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2)
           );
 
-          // Decrease max connection distance for a crisper, tighter net
-          const maxConnection = gridSize * 1.2; // was 1.5
           if (distance < maxConnection) {
             const opacity = Math.max(0, 1 - distance / maxConnection);
             ctx.strokeStyle = `rgba(0, 212, 255, ${opacity * 0.25})`;
-
             ctx.beginPath();
-            ctx.moveTo(point.x, point.y);
-            ctx.lineTo(otherPoint.x, otherPoint.y);
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
           }
         }
+      }
+    };
 
-        // Draw points
+    const drawPoints = () => {
+      points.forEach((point) => {
         const distanceToMouse = Math.sqrt(
           Math.pow(point.x - mousePosition.current.x, 2) +
             Math.pow(point.y - mousePosition.current.y, 2)
@@ -110,7 +119,16 @@ const AnimatedMesh: React.FC = () => {
         ctx.beginPath();
         ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
         ctx.fill();
-      }
+      });
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const time = Date.now() * 0.001;
+
+      updatePoints(time);
+      drawConnections();
+      drawPoints();
 
       animationFrameId.current = requestAnimationFrame(animate);
     };

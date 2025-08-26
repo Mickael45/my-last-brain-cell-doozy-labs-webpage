@@ -90,18 +90,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       className="cursor-pointer group relative rounded-xl overflow-hidden h-[450px] transition-all duration-300 hover:scale-[1.02] active:scale-95"
     >
       {/* Background Image */}
-      <Image
-        src={project.imageUrl}
-        alt={project.title}
-        fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        className="object-cover transition-transform duration-300 group-hover:scale-110"
-        loading="lazy"
+      <div
+        className="absolute inset-0 rounded-xl overflow-hidden"
         style={{ viewTransitionName: `project-image-${project.id}` }}
-      />
+      >
+        <Image
+          src={project.imageUrl}
+          alt={project.title}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover transition-transform duration-300 group-hover:scale-110"
+          loading="lazy"
+        />
+        {/* Content Overlay */}
+        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6" />
+      </div>
 
-      {/* Content Overlay */}
-      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6">
+      <div className="relative p-6 flex flex-col justify-end h-full">
         {/* Badges */}
         <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
           {project.isFeatured && (
@@ -139,13 +144,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             <div className="flex items-center gap-2">
               <Users className="w-5 h-5 text-cyan-400" />
               <span className="font-bold">
-                {project.metrics?.users ? formatNumber(Number(project.metrics.users)) : "N/A"}
+                {project.metrics?.users ? formatNumber(project.metrics.users) : "N/A"}
               </span>
             </div>
             <div className="flex items-center gap-2">
               <DollarSign className="w-5 h-5 text-green-400" />
               <span className="font-bold">
-                {project.mrr ? `${formatNumber(project.mrr)}` : "N/A"}
+                {project.metrics?.mrr ? `${formatNumber(project.metrics.mrr)}` : "N/A"}
               </span>
             </div>
             <div className={`flex items-center gap-2 ${statusInfo.colorClass}`}>

@@ -52,7 +52,7 @@ export default function ProjectDetailClient({
   };
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 overflow-hidden">
+    <div className="min-h-screen relative bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900">
       {/* Ambient animated background */}
       <DetailBackground />
       <div className="relative z-10">

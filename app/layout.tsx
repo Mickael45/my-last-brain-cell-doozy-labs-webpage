@@ -17,7 +17,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="bg-gray-900" suppressHydrationWarning>
-      <body className="min-h-screen bg-gray-900 text-white">
+      <body className="min-h-screen bg-gray-900 text-white overflow-x-hidden">
         {children}
         {/* Dev utility */}
         <DevOnlySeed />

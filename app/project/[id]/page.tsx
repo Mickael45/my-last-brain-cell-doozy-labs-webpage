@@ -25,7 +25,7 @@ export async function generateMetadata({
 }
 
 export default async function ProjectPage(props: {
-  params: Promise<{ id:string }>;
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await props.params;
   const project = await getProjectById(id);
@@ -39,7 +39,10 @@ export default async function ProjectPage(props: {
       const repoName = `mickael45/${project.githubRepo}`;
       tasks = await getGitHubIssues(repoName);
     } catch (error) {
-      console.error(`Failed to fetch GitHub issues for ${project.githubRepo}:`, error);
+      console.error(
+        `Failed to fetch GitHub issues for ${project.githubRepo}:`,
+        error,
+      );
       // Decide if you want to show an error to the user or just log it.
       // For now, we'll proceed with an empty tasks array.
     }

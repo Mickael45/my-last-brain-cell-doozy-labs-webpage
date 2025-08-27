@@ -6,7 +6,7 @@ export function useViewTransitionRouter() {
   const router = useRouter();
 
   const push = (href: string) => {
-    if (document.startViewTransition) {
+    if (typeof document.startViewTransition === "function") {
       startTransition(() => {
         router.push(href);
       });

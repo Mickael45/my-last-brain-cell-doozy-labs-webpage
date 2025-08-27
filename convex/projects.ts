@@ -48,7 +48,7 @@ export const insert = mutation({
         performance: v.optional(v.string()),
         impact: v.optional(v.string()),
         mrr: v.optional(v.number()),
-      })
+      }),
     ),
     techStack: v.array(v.string()),
     isFeatured: v.boolean(),
@@ -56,11 +56,11 @@ export const insert = mutation({
       v.literal("Later...Maybe"),
       v.literal("Next In Line"),
       v.literal("Compiling..."),
-      v.literal("Released")
+      v.literal("Released"),
     ),
     type: v.union(v.literal("Forking Around"), v.literal("Sass-y Solution")),
     categories: v.array(
-      v.union(v.literal("ai"), v.literal("web"), v.literal("meh"))
+      v.union(v.literal("ai"), v.literal("web"), v.literal("meh")),
     ),
     sortOrder: v.number(),
     githubRepo: v.optional(v.string()),
@@ -89,7 +89,7 @@ export const update = mutation({
           performance: v.optional(v.string()),
           impact: v.optional(v.string()),
           mrr: v.optional(v.number()),
-        })
+        }),
       ),
       techStack: v.optional(v.array(v.string())),
       isFeatured: v.optional(v.boolean()),
@@ -98,14 +98,14 @@ export const update = mutation({
           v.literal("Later...Maybe"),
           v.literal("Next In Line"),
           v.literal("Compiling..."),
-          v.literal("Released")
-        )
+          v.literal("Released"),
+        ),
       ),
       type: v.optional(
-        v.union(v.literal("Forking Around"), v.literal("Sass-y Solution"))
+        v.union(v.literal("Forking Around"), v.literal("Sass-y Solution")),
       ),
       categories: v.optional(
-        v.array(v.union(v.literal("ai"), v.literal("web"), v.literal("meh")))
+        v.array(v.union(v.literal("ai"), v.literal("web"), v.literal("meh"))),
       ),
       sortOrder: v.optional(v.number()),
       githubRepo: v.optional(v.string()),
@@ -147,7 +147,7 @@ export const seed = mutation({
         return {
           title: `Seed Project ${idx}`,
           tagline: `Auto-generated seed project #${idx}`,
-            description:
+          description:
             "This is a seeded project used to populate the development database for UI testing.",
           projectUrl: "https://example.com/seed",
           imageUrl: `https://picsum.photos/seed/seed${idx}/1200/600`,
@@ -169,13 +169,16 @@ export const seed = mutation({
           type: typeOptions[idx % typeOptions.length],
           categories: [categoryPool[idx % categoryPool.length]],
           sortOrder: idx,
-            githubRepo: "https://github.com/Mickael45/LinkedIn-JobLens-AI",
+          githubRepo: "https://github.com/Mickael45/LinkedIn-JobLens-AI",
         };
-      }
+      },
     );
     for (const p of baseProjects) {
       await ctx.db.insert("projects", p);
     }
-    return { created: baseProjects.length, total: existing.length + baseProjects.length };
+    return {
+      created: baseProjects.length,
+      total: existing.length + baseProjects.length,
+    };
   },
 });

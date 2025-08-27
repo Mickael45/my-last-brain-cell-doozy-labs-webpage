@@ -50,7 +50,7 @@ const AnimatedMesh: React.FC = () => {
       points.forEach((point) => {
         const distanceToMouse = Math.sqrt(
           Math.pow(point.originalX - mousePosition.current.x, 2) +
-            Math.pow(point.originalY - mousePosition.current.y, 2)
+            Math.pow(point.originalY - mousePosition.current.y, 2),
         );
 
         const influenceRadius = 180;
@@ -90,7 +90,7 @@ const AnimatedMesh: React.FC = () => {
           if (p2.originalX > p1.originalX + gridSize * 1.5) continue;
 
           const distance = Math.sqrt(
-            Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2)
+            Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2),
           );
 
           if (distance < maxConnection) {
@@ -109,7 +109,7 @@ const AnimatedMesh: React.FC = () => {
       points.forEach((point) => {
         const distanceToMouse = Math.sqrt(
           Math.pow(point.x - mousePosition.current.x, 2) +
-            Math.pow(point.y - mousePosition.current.y, 2)
+            Math.pow(point.y - mousePosition.current.y, 2),
         );
 
         const size = Math.max(1, 3 - distanceToMouse / 100);

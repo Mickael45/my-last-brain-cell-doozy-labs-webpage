@@ -27,10 +27,12 @@ export const getProjectById = cache(
       return mockProjects.find((p) => p.id === id) || null;
     }
     try {
-      const doc = await fetchQuery(api.projects.get, { id: id as Id<"projects"> });
+      const doc = await fetchQuery(api.projects.get, {
+        id: id as Id<"projects">,
+      });
       return doc ? mapProject(doc) : null;
     } catch {
       return null; // treat invalid id format or fetch errors as not found
     }
-  }
+  },
 );

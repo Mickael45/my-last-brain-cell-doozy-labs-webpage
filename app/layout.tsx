@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-  <html lang="en" className="bg-gray-900" suppressHydrationWarning>
+    <html lang="en" className="bg-gray-900" suppressHydrationWarning>
       <body className="min-h-screen bg-gray-900 text-white">
         {children}
         {/* Dev utility */}
-  <DevOnlySeed />
+        <DevOnlySeed />
       </body>
     </html>
   );

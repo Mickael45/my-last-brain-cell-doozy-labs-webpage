@@ -27,7 +27,9 @@ export default function SeedButton() {
       </button>
       {result && (
         <div className="text-xs text-gray-300 bg-gray-800/80 backdrop-blur px-3 py-1 rounded-md shadow">
-          {result.skipped ? "Already have 20+ projects" : `Created ${result.created}. Total now ${result.total}.`}
+          {result.skipped
+            ? "Already have 20+ projects"
+            : `Created ${result.created}. Total now ${result.total}.`}
         </div>
       )}
     </div>

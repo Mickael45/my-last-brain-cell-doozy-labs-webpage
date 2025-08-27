@@ -14,7 +14,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
   const [activeFilter, setActiveFilter] = useState<string>("All");
   const typeOptions = ["All", "Forking Around", "Sass-y Solution"];
   const filteredProjects = projects.filter(
-    (project) => activeFilter === "All" || project.type === activeFilter
+    (project) => activeFilter === "All" || project.type === activeFilter,
   );
 
   const displayedProjects = showAll

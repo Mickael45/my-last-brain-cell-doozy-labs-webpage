@@ -1,27 +1,27 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
+
+import nextPlugin from "@next/eslint-plugin-next";
 import tseslint from 'typescript-eslint';
-import nextPlugin from '@next/eslint-plugin-next';
+import globals from 'globals';
+
 
 export default tseslint.config(
-  { ignores: ['dist', '.next', 'convex/_generated'] },
-  {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+    {
+        ignores: ['dist', '.next', 'convex/_generated', 'next-env.d.ts']
     },
-    plugins: {
-      'react-hooks': reactHooks,
-      '@next/next': nextPlugin,
-      '@typescript-eslint': tseslint.plugin,
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs['core-web-vitals'].rules,
-    },
-  }
+    ...tseslint.configs.recommended,
+    {
+        plugins: {
+            '@next/next': nextPlugin
+        },
+        rules: {
+            ...nextPlugin.configs.recommended.rules,
+            ...nextPlugin.configs['core-web-vitals'].rules
+        },
+        languageOptions: {
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+            }
+        }
+    }
 );

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
  * Hook to reveal an element on first viewport entry (once) with intersection observer.
  */
 export function useReveal<T extends HTMLElement>(
-  options: { threshold?: number } = {}
+  options: { threshold?: number } = {},
 ) {
   const { threshold = 0.2 } = options;
   const ref = useRef<T | null>(null);
@@ -22,7 +22,7 @@ export function useReveal<T extends HTMLElement>(
           }
         }
       },
-      { threshold }
+      { threshold },
     );
     obs.observe(el);
     return () => obs.disconnect();

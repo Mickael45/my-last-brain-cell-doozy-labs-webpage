@@ -68,9 +68,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     }
   };
 
-  const formatNumber = (num: number) => {
-    if (num >= 1000) return `${(num / 1000).toFixed(1)}k`;
-    return num;
+  const formatNumber = (num: number | string) => {
+    const numericValue = typeof num === "string" ? parseFloat(num) : num;
+    if (isNaN(numericValue)) return num;
+    if (numericValue >= 1000) return `${(numericValue / 1000).toFixed(1)}k`;
+    return numericValue;
   };
 
   const statusInfo = getStatusInfo(project.status);
@@ -144,13 +146,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             <div className="flex items-center gap-2">
               <Users className="w-5 h-5 text-cyan-400" />
               <span className="font-bold">
-                {project.metrics?.users ? formatNumber(project.metrics.users) : "N/A"}
+                {project.metrics?.users
+                  ? formatNumber(project.metrics.users)
+                  : "N/A"}
               </span>
             </div>
             <div className="flex items-center gap-2">
               <DollarSign className="w-5 h-5 text-green-400" />
               <span className="font-bold">
-                {project.metrics?.mrr ? `${formatNumber(project.metrics.mrr)}` : "N/A"}
+                {project.metrics?.mrr
+                  ? `${formatNumber(project.metrics.mrr)}`
+                  : "N/A"}
               </span>
             </div>
             <div className={`flex items-center gap-2 ${statusInfo.colorClass}`}>

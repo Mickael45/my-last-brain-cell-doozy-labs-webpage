@@ -28,7 +28,7 @@ export function assertConvexEnv(): boolean {
   if (!process.env.NEXT_PUBLIC_CONVEX_URL) {
     if (!warned) {
       console.warn(
-        "Convex disabled: NEXT_PUBLIC_CONVEX_URL missing. Falling back to mock data."
+        "Convex disabled: NEXT_PUBLIC_CONVEX_URL missing. Falling back to mock data.",
       );
       warned = true;
     }
@@ -39,10 +39,10 @@ export function assertConvexEnv(): boolean {
 
 /** Map a Convex project document to the local `Project` shape. */
 export function mapProject(doc: ConvexProjectDoc): Project {
-  const narrowedType: Project["type"] =
+  const narrowedType =
     doc.type === "Sass-y Solution" || doc.type === "Forking Around"
       ? doc.type
-      : undefined;
+      : "Forking Around";
   return {
     id: doc._id,
     title: doc.title,

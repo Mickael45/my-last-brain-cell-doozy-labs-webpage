@@ -70,7 +70,7 @@ export default function ProjectDetailClient({
         </nav>
 
         {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden">
+        <section className="relative py-20">
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-transparent" />
           <div className="max-w-7xl mx-auto px-4 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">

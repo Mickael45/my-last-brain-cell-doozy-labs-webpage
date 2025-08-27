@@ -97,7 +97,7 @@ export default function ProjectDetailClient({
                   {project.tagline}
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row gap-4 w-full">
                   <a
                     href={project.projectUrl}
                     target="_blank"

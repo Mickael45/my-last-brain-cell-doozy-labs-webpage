@@ -97,12 +97,12 @@ export default function ProjectDetailClient({
                   {project.tagline}
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                <div className="flex flex-col sm:flex-row gap-4 w-full items-stretch">
                   <a
                     href={project.projectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`relative overflow-hidden inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r ${getTypeColor(
+                    className={`relative overflow-hidden inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r ${getTypeColor(
                       project.type,
                     )} text-white rounded-xl font-semibold text-base sm:text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in [animation-delay:80ms]`}
                   >
@@ -111,7 +111,7 @@ export default function ProjectDetailClient({
                     Launch Project
                   </a>
 
-                  <a href={project.githubRepo} target="_blank" rel="noopener noreferrer" className="relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
+                  <a href={project.githubRepo} target="_blank" rel="noopener noreferrer" className="relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
                     <Github className="w-5 h-5" />
                     View Code
                     <span className="absolute inset-0 rounded-xl ring-0 hover:animate-border-pulse" />
@@ -603,12 +603,12 @@ export default function ProjectDetailClient({
                 responsible for productivity loss)
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-6 justify-center w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center w-full sm:w-auto items-stretch">
                 <a
                   href={project.projectUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-5 bg-gradient-to-r ${getTypeColor(
+                  className={`group relative inline-flex items-center justify-center gap-3 px-6 sm:px-10 py-3 sm:py-5 bg-gradient-to-r ${getTypeColor(
                     project.type,
                   )} text-white rounded-2xl font-bold text-lg sm:text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in`}
                 >
@@ -619,7 +619,7 @@ export default function ProjectDetailClient({
 
                 <button
                   onClick={() => router.push("/")}
-                  className="relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-5 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-2xl font-bold text-lg sm:text-xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:120ms]"
+                  className="relative inline-flex items-center justify-center gap-3 px-6 sm:px-10 py-3 sm:py-5 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-2xl font-bold text-lg sm:text-xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:120ms]"
                 >
                   <ArrowLeft className="w-6 h-6" />
                   Back to Lab

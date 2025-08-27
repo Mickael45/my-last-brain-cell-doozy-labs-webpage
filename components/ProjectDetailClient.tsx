@@ -97,12 +97,12 @@ export default function ProjectDetailClient({
                   {project.tagline}
                 </p>
 
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-4">
                   <a
                     href={project.projectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`relative overflow-hidden inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${getTypeColor(
+                    className={`relative overflow-hidden inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${getTypeColor(
                       project.type,
                     )} text-white rounded-xl font-semibold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in [animation-delay:80ms]`}
                   >
@@ -111,7 +111,7 @@ export default function ProjectDetailClient({
                     Launch Project
                   </a>
 
-                  <button className="relative inline-flex items-center gap-2 px-8 py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
+                  <button className="relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
                     <Github className="w-5 h-5" />
                     View Code
                     <span className="absolute inset-0 rounded-xl ring-0 hover:animate-border-pulse" />

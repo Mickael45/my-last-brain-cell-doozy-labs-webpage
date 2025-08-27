@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from "react";
 
 const AnimatedMesh: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mousePosition = useRef({ x: 0, y: 0 });
+  const mousePosition = useRef({ x: -9999, y: -9999 });
   const animationFrameId = useRef<number>();
 
   useEffect(() => {
@@ -14,6 +14,38 @@ const AnimatedMesh: React.FC = () => {
     if (!ctx) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let gridSize = 30;
+    let points: Array<{
+      x: number;
+      y: number;
+      originalX: number;
+      originalY: number;
+    }> = [];
+    let cols = 0;
+
+    const calculateGrid = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 768) {
+        gridSize = 25; // Tighter mesh on small screens
+      } else if (screenWidth < 1024) {
+        gridSize = 30;
+      } else {
+        gridSize = 35; // Wider mesh on larger screens
+      }
+      
+      points = [];
+      cols = Math.ceil(window.innerWidth / gridSize) + 1;
+      for (let x = 0; x <= window.innerWidth; x += gridSize) {
+        for (let y = 0; y <= window.innerHeight; y += gridSize) {
+          points.push({
+            x,
+            y,
+            originalX: x,
+            originalY: y,
+          });
+        }
+      }
+    };
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth * dpr;
@@ -21,30 +53,11 @@ const AnimatedMesh: React.FC = () => {
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
       ctx.scale(dpr, dpr);
+      calculateGrid();
     };
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-
-    const gridSize = 30;
-    const points: Array<{
-      x: number;
-      y: number;
-      originalX: number;
-      originalY: number;
-    }> = [];
-    const cols = Math.ceil(window.innerWidth / gridSize) + 1;
-
-    for (let x = 0; x <= window.innerWidth; x += gridSize) {
-      for (let y = 0; y <= window.innerHeight; y += gridSize) {
-        points.push({
-          x,
-          y,
-          originalX: x,
-          originalY: y,
-        });
-      }
-    }
 
     const updatePoints = (time: number) => {
       points.forEach((point) => {
@@ -76,7 +89,6 @@ const AnimatedMesh: React.FC = () => {
       for (let i = 0; i < points.length; i++) {
         const p1 = points[i];
 
-        // Check neighbors: right, bottom, bottom-right, bottom-left
         const neighbors = [
           points[i + 1],
           points[i + cols],
@@ -85,9 +97,7 @@ const AnimatedMesh: React.FC = () => {
         ].filter(Boolean);
 
         for (const p2 of neighbors) {
-          // Avoid wrapping connections from last to first column
-          if (p1.originalX > p2.originalX + gridSize * 1.5) continue;
-          if (p2.originalX > p1.originalX + gridSize * 1.5) continue;
+          if (p1.originalX > p2.originalX + gridSize * 1.5 || p2.originalX > p1.originalX + gridSize * 1.5) continue;
 
           const distance = Math.sqrt(
             Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2),
@@ -134,18 +144,32 @@ const AnimatedMesh: React.FC = () => {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      mousePosition.current = {
-        x: e.clientX,
-        y: e.clientY,
-      };
+      mousePosition.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        mousePosition.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    };
+    
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        mousePosition.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    
     animate();
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
       }
@@ -155,8 +179,8 @@ const AnimatedMesh: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 1 }}
+      className="absolute inset-0 w-full h-full"
+      style={{ zIndex: 1, touchAction: 'none' }}
     />
   );
 };

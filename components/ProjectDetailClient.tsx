@@ -52,7 +52,7 @@ export default function ProjectDetailClient({
   };
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900">
+    <div className="min-h-screen relative bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 overflow-hidden">
       {/* Ambient animated background */}
       <DetailBackground />
       <div className="relative z-10">
@@ -97,24 +97,22 @@ export default function ProjectDetailClient({
                   {project.tagline}
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 w-full">
                   <a
                     href={project.projectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`relative overflow-hidden inline-flex items-center justify-center gap-2 flex-1 sm:flex-none px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r ${getTypeColor(
+                    className={`relative overflow-hidden inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r ${getTypeColor(
                       project.type,
                     )} text-white rounded-xl font-semibold text-base sm:text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in [animation-delay:80ms]`}
                   >
-                    <span className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity" />
                     <ExternalLink className="w-5 h-5" />
                     Launch Project
                   </a>
 
-                  <a href={project.githubRepo} target="_blank" rel="noopener noreferrer" className="relative inline-flex items-center justify-center gap-2 flex-1 sm:flex-none px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
+                  <a href={project.githubRepo} target="_blank" rel="noopener noreferrer" className="relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
                     <Github className="w-5 h-5" />
                     View Code
-                    <span className="absolute inset-0 rounded-xl ring-0 hover:animate-border-pulse" />
                   </a>
                 </div>
               </div>
@@ -603,27 +601,25 @@ export default function ProjectDetailClient({
                 responsible for productivity loss)
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center w-full">
                 <a
                   href={project.projectUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group relative inline-flex items-center justify-center gap-3 flex-1 sm:flex-none px-6 sm:px-10 py-3 sm:py-5 bg-gradient-to-r ${getTypeColor(
+                  className={`group relative inline-flex items-center justify-center gap-3 px-6 sm:px-10 py-3 sm:py-5 bg-gradient-to-r ${getTypeColor(
                     project.type,
                   )} text-white rounded-2xl font-bold text-lg sm:text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in`}
                 >
-                  <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity bg-white/10" />
-                  <ExternalLink className="w-6 h-6 relative z-10" />
-                  <span className="relative z-10">Launch {project.title}</span>
+                  <ExternalLink className="w-6 h-6" />
+                  Launch {project.title}
                 </a>
 
                 <button
                   onClick={() => router.push("/")}
-                  className="relative inline-flex items-center justify-center gap-3 flex-1 sm:flex-none px-6 sm:px-10 py-3 sm:py-5 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-2xl font-bold text-lg sm:text-xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:120ms]"
+                  className="relative inline-flex items-center justify-center gap-3 px-6 sm:px-10 py-3 sm:py-5 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-2xl font-bold text-lg sm:text-xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:120ms]"
                 >
                   <ArrowLeft className="w-6 h-6" />
                   Back to Lab
-                  <span className="absolute inset-0 rounded-2xl ring-0 hover:animate-border-pulse" />
                 </button>
               </div>
             </div>

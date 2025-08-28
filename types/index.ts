@@ -20,7 +20,6 @@ export interface Project {
   type: "Forking Around" | "Sass-y Solution";
   status: "Later...Maybe" | "Next In Line" | "Compiling..." | "Released";
   isFeatured: boolean;
-  isIncoming?: boolean; // currently being worked on / upcoming
   sortOrder: number;
   githubRepo?: string;
 }

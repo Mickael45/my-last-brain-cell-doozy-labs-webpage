@@ -27,7 +27,6 @@
     "techStack": ["Next.js", "TypeScript", "WebAssembly", "Rust", "ONNX"],
     "category": "Public Utility",
     "isFeatured": true,
-    "isIncoming": false,
     "sortOrder": 1
   },
   {
@@ -56,7 +55,6 @@
     "techStack": ["Node.js", "Convex", "Docker", "LangChain"],
     "category": "Chaos Experiment",
     "isFeatured": false,
-    "isIncoming": true,
     "sortOrder": 2
   },
   {
@@ -83,7 +81,6 @@
     "techStack": ["TypeScript", "WebGL", "ClickHouse", "OpenTelemetry"],
     "category": "Public Utility",
     "isFeatured": true,
-    "isIncoming": false,
     "sortOrder": 3
   },
   {
@@ -113,7 +110,6 @@
     "techStack": ["Next.js", "Convex", "Python", "Playwright"],
     "category": "Public Utility",
     "isFeatured": true,
-    "isIncoming": false,
     "sortOrder": 4
   },
   {
@@ -139,7 +135,6 @@
     "techStack": ["Rust", "WebAssembly", "TypeScript"],
     "category": "Chaos Experiment",
     "isFeatured": false,
-    "isIncoming": true,
     "sortOrder": 5
   },
   {
@@ -165,7 +160,6 @@
     "techStack": ["TypeScript", "Redis", "Edge Workers"],
     "category": "Public Utility",
     "isFeatured": false,
-    "isIncoming": false,
     "sortOrder": 6
   },
   {
@@ -194,7 +188,6 @@
     "techStack": ["Go", "TypeScript", "PostgreSQL"],
     "category": "Public Utility",
     "isFeatured": false,
-    "isIncoming": false,
     "sortOrder": 7
   },
   {
@@ -220,7 +213,6 @@
     "techStack": ["Python", "SQL", "Next.js"],
     "category": "Chaos Experiment",
     "isFeatured": false,
-    "isIncoming": true,
     "sortOrder": 8
   },
   {
@@ -249,7 +241,6 @@
     "techStack": ["TypeScript", "WASM", "Convex"],
     "category": "Chaos Experiment",
     "isFeatured": false,
-    "isIncoming": false,
     "sortOrder": 9
   },
   {
@@ -275,7 +266,6 @@
     "techStack": ["Rust", "Kafka", "TypeScript"],
     "category": "Public Utility",
     "isFeatured": false,
-    "isIncoming": false,
     "sortOrder": 10
   },
   {
@@ -304,7 +294,6 @@
     "techStack": ["Python", "Convex", "Next.js", "PyTorch"],
     "category": "Public Utility",
     "isFeatured": true,
-    "isIncoming": false,
     "sortOrder": 11
   },
   {
@@ -330,7 +319,6 @@
     "techStack": ["TypeScript", "SQLite", "OpenAI"],
     "category": "Chaos Experiment",
     "isFeatured": false,
-    "isIncoming": true,
     "sortOrder": 12
   },
   {
@@ -359,7 +347,6 @@
     "techStack": ["Go", "TypeScript", "Terraform"],
     "category": "Public Utility",
     "isFeatured": false,
-    "isIncoming": false,
     "sortOrder": 13
   },
   {
@@ -385,7 +372,6 @@
     "techStack": ["Python", "NetworkX", "Next.js"],
     "category": "Chaos Experiment",
     "isFeatured": false,
-    "isIncoming": false,
     "sortOrder": 14
   },
   {
@@ -414,7 +400,6 @@
     "techStack": ["TypeScript", "Convex", "OpenAI"],
     "category": "Public Utility",
     "isFeatured": true,
-    "isIncoming": false,
     "sortOrder": 15
   },
   {
@@ -440,7 +425,6 @@
     "techStack": ["TypeScript", "Tree-sitter", "Next.js"],
     "category": "Public Utility",
     "isFeatured": false,
-    "isIncoming": false,
     "sortOrder": 16
   },
   {
@@ -469,7 +453,6 @@
     "techStack": ["WebGL", "TypeScript", "Rust"],
     "category": "Public Utility",
     "isFeatured": true,
-    "isIncoming": false,
     "sortOrder": 17
   },
   {
@@ -495,7 +478,6 @@
     "techStack": ["Go", "TypeScript", "WebAssembly"],
     "category": "Chaos Experiment",
     "isFeatured": false,
-    "isIncoming": false,
     "sortOrder": 18
   },
   {
@@ -524,7 +506,6 @@
     "techStack": ["Rust", "eBPF", "TypeScript"],
     "category": "Public Utility",
     "isFeatured": true,
-    "isIncoming": false,
     "sortOrder": 19
   },
   {
@@ -550,7 +531,6 @@
     "techStack": ["Rust", "TypeScript", "Next.js"],
     "category": "Chaos Experiment",
     "isFeatured": false,
-    "isIncoming": true,
     "sortOrder": 20
   }
 ]

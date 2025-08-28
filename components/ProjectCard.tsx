@@ -127,14 +127,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               <span className="text-xs font-bold text-pink-300">🔥 Hot</span>
             </div>
           )}
-          {project.isIncoming && (
-            <div className="bg-black/50 backdrop-blur-md border border-white/10 rounded-full px-3 py-1 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-xs font-semibold tracking-wide text-green-300 uppercase">
-                Incoming
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Main Content */}

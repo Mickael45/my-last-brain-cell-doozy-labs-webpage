@@ -17,7 +17,6 @@ interface ConvexProjectDoc {
   type?: "Forking Around" | "Sass-y Solution";
   status?: "Later...Maybe" | "Next In Line" | "Compiling..." | "Released";
   isFeatured?: boolean;
-  isIncoming?: boolean;
   sortOrder?: number;
   githubRepo?: string;
 }
@@ -59,7 +58,6 @@ export function mapProject(doc: ConvexProjectDoc): Project {
     type: narrowedType,
     status: doc.status || "Later...Maybe",
     isFeatured: doc.isFeatured ?? false,
-    isIncoming: doc.isIncoming ?? false,
     sortOrder: doc.sortOrder ?? 0,
     githubRepo: doc.githubRepo,
   };

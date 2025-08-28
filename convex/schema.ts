@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { defineSchema, defineTable } from "convex/server";
+import { CATEGORIES } from "../lib/constants";
 
 export default defineSchema({
   projects: defineTable({
@@ -28,9 +29,7 @@ export default defineSchema({
       v.literal("Released"),
     ),
     type: v.union(v.literal("Forking Around"), v.literal("Sass-y Solution")),
-    categories: v.array(
-      v.union(v.literal("ai"), v.literal("web"), v.literal("meh")),
-    ),
+    categories: v.array(v.union(...CATEGORIES.map((c) => v.literal(c)))),
     sortOrder: v.number(),
     githubRepo: v.optional(v.string()),
   })

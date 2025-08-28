@@ -1,3 +1,7 @@
+import { CATEGORIES } from "@/lib/constants";
+
+export type Category = (typeof CATEGORIES)[number];
+
 export interface Project {
   id: string;
   title: string;
@@ -16,7 +20,7 @@ export interface Project {
     mrr?: number | string;
   };
   techStack: string[];
-  categories: ("ai" | "web" | "meh")[];
+  categories: Category[];
   type: "Forking Around" | "Sass-y Solution";
   status: "Later...Maybe" | "Next In Line" | "Compiling..." | "Released";
   isFeatured: boolean;

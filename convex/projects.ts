@@ -1,5 +1,6 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { CATEGORIES } from "../lib/constants";
 
 export const list = query({
   args: {},
@@ -59,9 +60,7 @@ export const insert = mutation({
       v.literal("Released"),
     ),
     type: v.union(v.literal("Forking Around"), v.literal("Sass-y Solution")),
-    categories: v.array(
-      v.union(v.literal("ai"), v.literal("web"), v.literal("meh")),
-    ),
+    categories: v.array(v.union(...CATEGORIES.map((c) => v.literal(c)))),
     sortOrder: v.number(),
     githubRepo: v.optional(v.string()),
   },
@@ -105,7 +104,7 @@ export const update = mutation({
         v.union(v.literal("Forking Around"), v.literal("Sass-y Solution")),
       ),
       categories: v.optional(
-        v.array(v.union(v.literal("ai"), v.literal("web"), v.literal("meh"))),
+        v.array(v.union(...CATEGORIES.map((c) => v.literal(c)))),
       ),
       sortOrder: v.optional(v.number()),
       githubRepo: v.optional(v.string()),
@@ -143,7 +142,7 @@ export const seed = mutation({
           "Released",
         ] as const;
         const typeOptions = ["Forking Around", "Sass-y Solution"] as const;
-        const categoryPool = ["ai", "web", "meh"] as const;
+        const categoryPool = CATEGORIES;
         return {
           title: `Seed Project ${idx}`,
           tagline: `Auto-generated seed project #${idx}`,

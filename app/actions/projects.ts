@@ -1,5 +1,5 @@
 "use server";
-import type { Project } from "../../types";
+import type { Category, Project } from "../../types";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
@@ -10,22 +10,51 @@ import { cache } from "react";
 export const getProjects = cache(async (): Promise<Project[]> => {
   try {
     const docs = await fetchQuery(api.projects.list, {});
-    return docs.map(mapProject);
+    return docs.map((doc) =>
+      mapProject({
+        ...doc,
+        categories: (doc.categories || []).map((c) => {
+          switch (c) {
+            case "Chrome Extension":
+            case "AI":
+            case "Productivity":
+            case "Web":
+              return c;
+            default:
+              return "Web";
+          }
+        }) as Category[]
+      }),
+    );
   } catch {
-    return []; // graceful fallback on runtime errors
+    return [];
   }
 });
 
-/** Fetch single project by its Convex _id */
 export const getProjectById = cache(
   async (id: string): Promise<Project | null> => {
     try {
       const doc = await fetchQuery(api.projects.get, {
         id: id as Id<"projects">,
       });
-      return doc ? mapProject(doc) : null;
+      return doc
+        ? mapProject({
+            ...doc,
+            categories: (doc.categories || []).map((c) => {
+              switch (c) {
+                case "Chrome Extension":
+                case "AI":
+                case "Productivity":
+                case "Web":
+                  return c;
+                default:
+                  return "Web";
+              }
+            }) as Category[]
+          })
+        : null;
     } catch {
-      return null; // treat invalid id format or fetch errors as not found
+      return null;
     }
   },
 );

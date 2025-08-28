@@ -12,7 +12,7 @@ export const mockProjects: Project[] = [
     challenges: [],
     solutions: [],
     techStack: ["React", "TypeScript"],
-    categories: ["web"],
+    categories: ["AI"],
     type: "Forking Around",
     status: "Released",
     isFeatured: true,

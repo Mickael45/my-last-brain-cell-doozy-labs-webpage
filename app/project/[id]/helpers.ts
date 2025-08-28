@@ -61,6 +61,8 @@ const backend = [
   { name: "Ruby On Rails", description: "A server-side web application framework written in Ruby under the MIT License." },
   { name: "NestJS", description: "A progressive Node.js framework for building efficient, reliable and scalable server-side applications." },
   { name: "Kotlin Multiplatform", description: "A feature of the Kotlin programming language that allows developers to share code between different platforms." },
+  { name: "Stripe", description: "A suite of payment APIs that powers commerce for online businesses of all sizes." },
+  { name: "Clerk", description: "A developer-first authentication and user management platform." },
 ];
 
 const mobile = [

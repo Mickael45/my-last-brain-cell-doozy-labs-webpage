@@ -197,7 +197,6 @@ export const migrateCategories = mutation({
     };
 
     for (const project of projects) {
-      // @ts-ignore
       const oldCategories = project.categories || [];
       const newCategories = oldCategories
         .map((c: string) => categoryMap[c.toLowerCase()])

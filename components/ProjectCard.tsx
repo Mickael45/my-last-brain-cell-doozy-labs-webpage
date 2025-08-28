@@ -8,6 +8,7 @@ import {
   Clock,
   Package,
   XCircle,
+  ImageIcon,
 } from "lucide-react";
 import { Project } from "../types";
 import Image from "next/image";
@@ -25,11 +26,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   onClick,
 }) => {
   const router = useViewTransitionRouter();
-  const [imgSrc, setImgSrc] = useState(project.imageUrl);
+  const [imageError, setImageError] = useState(false);
 
-  const handleImageError = () => {
-    setImgSrc("https://via.placeholder.com/1200x600");
-  };
   const getTypeStyling = (type: string) => {
     return type === "Forking Around"
       ? {
@@ -98,20 +96,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     >
       {/* Background Image */}
       <div
-        className="absolute inset-0 rounded-xl overflow-hidden"
+        className="absolute inset-0 rounded-xl overflow-hidden bg-gray-800"
         style={{ viewTransitionName: `project-image-${project.id}` }}
       >
-        <Image
-          src={imgSrc}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-110 bg-gray-300"
-          loading="lazy"
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8//VrPQAJDgNaKV16OwAAAABJRU5ErkJggg=="
-          onError={handleImageError}
-        />
+        {imageError ? (
+          <div className="w-full h-full flex flex-col items-center justify-center text-gray-500">
+            <ImageIcon className="w-16 h-16 mb-2" />
+            <span>Image failed to load</span>
+          </div>
+        ) : (
+          <Image
+            src={project.imageUrl}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-110"
+            loading="lazy"
+            onError={() => setImageError(true)}
+          />
+        )}
         {/* Content Overlay */}
         <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6" />
       </div>

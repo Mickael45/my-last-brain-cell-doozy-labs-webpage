@@ -17,6 +17,7 @@ import {
   TrendingUp,
   Users,
   DollarSign,
+  ImageIcon,
 } from "lucide-react";
 import type { Project, GitHubIssue } from "../types";
 import Image from "next/image";
@@ -33,18 +34,13 @@ export default function ProjectDetailClient({
   tasks: GitHubIssue[];
 }) {
   const router = useRouter();
-  const [imgSrc, setImgSrc] = useState(project.imageUrl);
-
-  const handleImageError = () => {
-    setImgSrc("https://via.placeholder.com/1200x600");
-  };
-
-  const [screenshotSrcs, setScreenshotSrcs] = useState(project.screenshots || []);
+  const [heroImageError, setHeroImageError] = useState(false);
+  const [screenshotErrors, setScreenshotErrors] = useState<Set<number>>(
+    new Set(),
+  );
 
   const handleScreenshotError = (index: number) => {
-    const newSrcs = [...screenshotSrcs];
-    newSrcs[index] = "https://via.placeholder.com/800x400";
-    setScreenshotSrcs(newSrcs);
+    setScreenshotErrors((prev) => new Set(prev).add(index));
   };
 
   const getTypeColor = (type: string) => {
@@ -64,6 +60,15 @@ export default function ProjectDetailClient({
       ? "hover:shadow-purple-500/25"
       : "hover:shadow-cyan-500/25";
   };
+
+  const Placeholder = ({ className }: { className?: string }) => (
+    <div
+      className={`w-full h-full flex flex-col items-center justify-center bg-gray-800 text-gray-500 ${className}`}
+    >
+      <ImageIcon className="w-16 h-16 mb-2" />
+      <span>Image failed to load</span>
+    </div>
+  );
 
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 overflow-hidden">
@@ -124,7 +129,12 @@ export default function ProjectDetailClient({
                     Launch Project
                   </a>
 
-                  <a href={project.githubRepo} target="_blank" rel="noopener noreferrer" className="relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
+                  <a
+                    href={project.githubRepo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]"
+                  >
                     <Github className="w-5 h-5" />
                     View Code
                   </a>
@@ -132,21 +142,23 @@ export default function ProjectDetailClient({
               </div>
 
               <div className="relative animate-fade-left [animation-delay:200ms]">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
-                  <Image
-                    src={imgSrc}
-                    alt={project.title}
-                    width={1200}
-                    height={600}
-                    priority
-                    className="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105 bg-gray-300"
-                    style={{
-                      viewTransitionName: `project-image-${project.id}`,
-                    }}
-                    placeholder="blur"
-                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8//VrPQAJDgNaKV16OwAAAABJRU5ErkJggg=="
-                    onError={handleImageError}
-                  />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-96">
+                  {heroImageError ? (
+                    <Placeholder />
+                  ) : (
+                    <Image
+                      src={project.imageUrl}
+                      alt={project.title}
+                      width={1200}
+                      height={600}
+                      priority
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      style={{
+                        viewTransitionName: `project-image-${project.id}`,
+                      }}
+                      onError={() => setHeroImageError(true)}
+                    />
+                  )}
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${getTypeColor(
                       project.type,
@@ -164,7 +176,9 @@ export default function ProjectDetailClient({
           <section className="py-16 bg-gray-800/30">
             <div className="max-w-7xl mx-auto px-4">
               <div
-                className={`grid md:grid-cols-2 lg:grid-cols-${project.metrics.mrr ? 4 : 3} gap-8 animate-fade-up`}
+                className={`grid md:grid-cols-2 lg:grid-cols-${
+                  project.metrics.mrr ? 4 : 3
+                } gap-8 animate-fade-up`}
               >
                 <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl border border-cyan-500/20 animate-fade-up-scale">
                   <Users className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
@@ -187,7 +201,9 @@ export default function ProjectDetailClient({
                 </InteractiveCard>
 
                 <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl border border-purple-500/20 animate-fade-up-scale [animation-delay:240ms]">
-                  <TrendingUp className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+                  <TrendingUp
+                    className="w-12 h-12 text-purple-400 mx-auto mb-4"
+                  />
                   <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
                     Impact
                   </div>
@@ -197,7 +213,9 @@ export default function ProjectDetailClient({
                 </InteractiveCard>
                 {project.metrics.mrr && (
                   <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 rounded-2xl border border-yellow-500/20 animate-fade-up-scale [animation-delay:360ms]">
-                    <DollarSign className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
+                    <DollarSign
+                      className="w-12 h-12 text-yellow-400 mx-auto mb-4"
+                    />
                     <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
                       MRR
                     </div>
@@ -308,10 +326,12 @@ export default function ProjectDetailClient({
                           {tech}
                         </p>
                         <p className="text-xs text-gray-400 mt-2">
-                          {i === 0 && "Foundation & primary interaction layer"}
+                          {i === 0 &&
+                            "Foundation & primary interaction layer"}
                           {i === 1 && "Type safety + maintainable growth"}
                           {i === 2 && "Core engine / heavy lifting"}
-                          {i === 3 && "Performance & scaling considerations"}
+                          {i === 3 &&
+                            "Performance & scaling considerations"}
                         </p>
                       </InteractiveCard>
                     ))}
@@ -327,23 +347,7 @@ export default function ProjectDetailClient({
                     </h3>
                   </div>
                   <div className="space-y-4">
-                    {[
-                      {
-                        label: "Prototype",
-                        desc: "Throw ideas at the wall. Keep what survives user sarcasm.",
-                      },
-                      {
-                        label: "Stabilize",
-                        desc: "Instrument everything. Kill flaky behavior without killing speed.",
-                      },
-                      {
-                        label: "Delight Layer",
-                        desc: "Micro-animations, copy personality, friction removal.",
-                      },
-                      {
-                        label: "Scale Safety",
-                        desc: "Hardening, perf profiling, graceful degradation paths.",
-                      },
+                    {[{"label": "Prototype", "desc": "Throw ideas at the wall. Keep what survives user sarcasm."}, {"label": "Stabilize", "desc": "Instrument everything. Kill flaky behavior without killing speed."}, {"label": "Delight Layer", "desc": "Micro-animations, copy personality, friction removal."}, {"label": "Scale Safety", "desc": "Hardening, perf profiling, graceful degradation paths."}
                     ].map((phase, i) => (
                       <div
                         key={i}
@@ -546,24 +550,26 @@ export default function ProjectDetailClient({
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {screenshotSrcs.map((screenshot, index) => (
+                {(project.screenshots || []).map((screenshot, index) => (
                   <div
                     key={index}
                     className="relative group cursor-pointer opacity-0 animate-fade-up hover:scale-[1.02] transition-transform duration-500"
                     style={{ animationDelay: `${index * 90}ms` }}
                   >
-                    <div className="relative rounded-xl overflow-hidden shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-tr before:from-white/5 before:via-transparent before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
-                      <Image
-                        src={screenshot}
-                        alt={`${project.title} screenshot ${index + 1}`}
-                        width={800}
-                        height={400}
-                        className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110 bg-gray-300"
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8//VrPQAJDgNaKV16OwAAAABJRU5ErkJggg=="
-                        onError={() => handleScreenshotError(index)}
-                      />
+                    <div className="relative rounded-xl overflow-hidden shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-tr before:from-white/5 before:via-transparent before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity h-64">
+                      {screenshotErrors.has(index) ? (
+                        <Placeholder />
+                      ) : (
+                        <Image
+                          src={screenshot}
+                          alt={`${project.title} screenshot ${index + 1}`}
+                          width={800}
+                          height={400}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          loading="lazy"
+                          onError={() => handleScreenshotError(index)}
+                        />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
                   </div>

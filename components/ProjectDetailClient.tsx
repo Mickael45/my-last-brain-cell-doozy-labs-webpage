@@ -17,14 +17,12 @@ import {
   TrendingUp,
   Users,
   DollarSign,
-  ImageIcon,
 } from "lucide-react";
 import type { Project, GitHubIssue } from "../types";
 import Image from "next/image";
 import InteractiveCard from "./InteractiveCard";
 import DetailBackground from "./DetailBackground";
 import ProjectTasks from "./ProjectTasks";
-import { useState } from "react";
 
 export default function ProjectDetailClient({
   project,
@@ -34,14 +32,6 @@ export default function ProjectDetailClient({
   tasks: GitHubIssue[];
 }) {
   const router = useRouter();
-  const [heroImageError, setHeroImageError] = useState(false);
-  const [screenshotErrors, setScreenshotErrors] = useState<Set<number>>(
-    new Set(),
-  );
-
-  const handleScreenshotError = (index: number) => {
-    setScreenshotErrors((prev) => new Set(prev).add(index));
-  };
 
   const getTypeColor = (type: string) => {
     return type === "Forking Around"
@@ -60,15 +50,6 @@ export default function ProjectDetailClient({
       ? "hover:shadow-purple-500/25"
       : "hover:shadow-cyan-500/25";
   };
-
-  const Placeholder = ({ className }: { className?: string }) => (
-    <div
-      className={`w-full h-full flex flex-col items-center justify-center bg-gray-800 text-gray-500 ${className}`}
-    >
-      <ImageIcon className="w-16 h-16 mb-2" />
-      <span>Image failed to load</span>
-    </div>
-  );
 
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 overflow-hidden">
@@ -89,7 +70,7 @@ export default function ProjectDetailClient({
         </nav>
 
         {/* Hero Section */}
-        <section className="relative py-20">
+        <section className="relative py-20 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-transparent" />
           <div className="max-w-7xl mx-auto px-4 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -116,49 +97,41 @@ export default function ProjectDetailClient({
                   {project.tagline}
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                <div className="flex gap-4">
                   <a
                     href={project.projectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`relative overflow-hidden inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r ${getTypeColor(
+                    className={`relative overflow-hidden inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${getTypeColor(
                       project.type,
-                    )} text-white rounded-xl font-semibold text-base sm:text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in [animation-delay:80ms]`}
+                    )} text-white rounded-xl font-semibold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in [animation-delay:80ms]`}
                   >
+                    <span className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity" />
                     <ExternalLink className="w-5 h-5" />
                     Launch Project
                   </a>
 
-                  <a
-                    href={project.githubRepo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]"
-                  >
+                  <button className="relative inline-flex items-center gap-2 px-8 py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
                     <Github className="w-5 h-5" />
                     View Code
-                  </a>
+                    <span className="absolute inset-0 rounded-xl ring-0 hover:animate-border-pulse" />
+                  </button>
                 </div>
               </div>
 
               <div className="relative animate-fade-left [animation-delay:200ms]">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-96">
-                  {heroImageError ? (
-                    <Placeholder />
-                  ) : (
-                    <Image
-                      src={project.imageUrl}
-                      alt={project.title}
-                      width={1200}
-                      height={600}
-                      priority
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      style={{
-                        viewTransitionName: `project-image-${project.id}`,
-                      }}
-                      onError={() => setHeroImageError(true)}
-                    />
-                  )}
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
+                  <Image
+                    src={project.imageUrl}
+                    alt={project.title}
+                    width={1200}
+                    height={600}
+                    priority
+                    className="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{
+                      viewTransitionName: `project-image-${project.id}`,
+                    }}
+                  />
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${getTypeColor(
                       project.type,
@@ -176,9 +149,7 @@ export default function ProjectDetailClient({
           <section className="py-16 bg-gray-800/30">
             <div className="max-w-7xl mx-auto px-4">
               <div
-                className={`grid md:grid-cols-2 lg:grid-cols-${
-                  project.metrics.mrr ? 4 : 3
-                } gap-8 animate-fade-up`}
+                className={`grid md:grid-cols-2 lg:grid-cols-${project.metrics.mrr ? 4 : 3} gap-8 animate-fade-up`}
               >
                 <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl border border-cyan-500/20 animate-fade-up-scale">
                   <Users className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
@@ -201,9 +172,7 @@ export default function ProjectDetailClient({
                 </InteractiveCard>
 
                 <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl border border-purple-500/20 animate-fade-up-scale [animation-delay:240ms]">
-                  <TrendingUp
-                    className="w-12 h-12 text-purple-400 mx-auto mb-4"
-                  />
+                  <TrendingUp className="w-12 h-12 text-purple-400 mx-auto mb-4" />
                   <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
                     Impact
                   </div>
@@ -213,9 +182,7 @@ export default function ProjectDetailClient({
                 </InteractiveCard>
                 {project.metrics.mrr && (
                   <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 rounded-2xl border border-yellow-500/20 animate-fade-up-scale [animation-delay:360ms]">
-                    <DollarSign
-                      className="w-12 h-12 text-yellow-400 mx-auto mb-4"
-                    />
+                    <DollarSign className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
                     <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
                       MRR
                     </div>
@@ -273,8 +240,8 @@ export default function ProjectDetailClient({
                     The first proof-of-concept was duct-taped together in under
                     48 hours. It broke. A lot. But the core loop felt magical
                     enough to justify polishing instead of abandoning. That was
-                    the moment it graduated from \"random script\" to \"this
-                    might become real\".
+                    the moment it graduated from &quot;random script&quot; to
+                    &quot;this might become real&quot;.
                   </p>
                 </div>
 
@@ -315,27 +282,6 @@ export default function ProjectDetailClient({
                     subsystem is isolated enough to be refactored ruthlessly,
                     but integrated just enough to keep velocity absurdly high.
                   </p>
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    {project.techStack.slice(0, 4).map((tech, i) => (
-                      <InteractiveCard
-                        key={i}
-                        className="group p-4 rounded-xl bg-gradient-to-r from-gray-700/40 to-gray-600/30 border border-cyan-500/20 animate-fade-up-scale"
-                        style={{ animationDelay: `${i * 90}ms` }}
-                      >
-                        <p className="text-sm font-mono tracking-wide text-cyan-300">
-                          {tech}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-2">
-                          {i === 0 &&
-                            "Foundation & primary interaction layer"}
-                          {i === 1 && "Type safety + maintainable growth"}
-                          {i === 2 && "Core engine / heavy lifting"}
-                          {i === 3 &&
-                            "Performance & scaling considerations"}
-                        </p>
-                      </InteractiveCard>
-                    ))}
-                  </div>
                 </div>
 
                 {/* Iteration Timeline */}
@@ -347,7 +293,23 @@ export default function ProjectDetailClient({
                     </h3>
                   </div>
                   <div className="space-y-4">
-                    {[{"label": "Prototype", "desc": "Throw ideas at the wall. Keep what survives user sarcasm."}, {"label": "Stabilize", "desc": "Instrument everything. Kill flaky behavior without killing speed."}, {"label": "Delight Layer", "desc": "Micro-animations, copy personality, friction removal."}, {"label": "Scale Safety", "desc": "Hardening, perf profiling, graceful degradation paths."}
+                    {[
+                      {
+                        label: "Prototype",
+                        desc: "Throw ideas at the wall. Keep what survives user sarcasm.",
+                      },
+                      {
+                        label: "Stabilize",
+                        desc: "Instrument everything. Kill flaky behavior without killing speed.",
+                      },
+                      {
+                        label: "Delight Layer",
+                        desc: "Micro-animations, copy personality, friction removal.",
+                      },
+                      {
+                        label: "Scale Safety",
+                        desc: "Hardening, perf profiling, graceful degradation paths.",
+                      },
                     ].map((phase, i) => (
                       <div
                         key={i}
@@ -379,46 +341,6 @@ export default function ProjectDetailClient({
                     beats sterile tooling. People stayed not just because it
                     worked, but because it felt alive.
                   </p>
-                  {project.metrics && (
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                      <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 animate-fade-up-scale">
-                        <p className="text-xs uppercase tracking-wide text-cyan-300 font-medium mb-1">
-                          Users
-                        </p>
-                        <p className="text-sm text-white font-semibold">
-                          {project.metrics.users}
-                        </p>
-                      </InteractiveCard>
-                      <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 animate-fade-up-scale [animation-delay:120ms]">
-                        <p className="text-xs uppercase tracking-wide text-green-300 font-medium mb-1">
-                          Performance
-                        </p>
-                        <p className="text-sm text-white font-semibold">
-                          {project.metrics.performance}
-                        </p>
-                      </InteractiveCard>
-                      <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-pink-500/10 to-purple-500/10 border border-pink-500/20 animate-fade-up-scale [animation-delay:240ms]">
-                        <p className="text-xs uppercase tracking-wide text-pink-300 font-medium mb-1">
-                          Impact
-                        </p>
-                        <p className="text-sm text-white font-semibold">
-                          {project.metrics.impact}
-                        </p>
-                      </InteractiveCard>
-                      {project.metrics.mrr && (
-                        <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-yellow-500/10 to-amber-500/10 border border-yellow-500/20 animate-fade-up-scale [animation-delay:360ms]">
-                          <p className="text-xs uppercase tracking-wide text-yellow-300 font-medium mb-1">
-                            MRR
-                          </p>
-                          <p className="text-sm text-white font-semibold">
-                            {typeof project.metrics.mrr === "number"
-                              ? `${project.metrics.mrr.toLocaleString()}`
-                              : project.metrics.mrr}
-                          </p>
-                        </InteractiveCard>
-                      )}
-                    </div>
-                  )}
                 </div>
 
                 {/* Forward Vision */}
@@ -542,7 +464,7 @@ export default function ProjectDetailClient({
             <div className="max-w-7xl mx-auto px-4">
               <div className="text-center mb-16 animate-fade-up">
                 <h2 className="text-4xl font-bold text-white mb-4">
-                  Screenshots That Don't Lie
+                  Screenshots That Don&apos;t Lie
                 </h2>
                 <p className="text-xl text-gray-400">
                   Visual proof that this thing actually works
@@ -550,26 +472,21 @@ export default function ProjectDetailClient({
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {(project.screenshots || []).map((screenshot, index) => (
+                {project.screenshots.map((screenshot, index) => (
                   <div
                     key={index}
                     className="relative group cursor-pointer opacity-0 animate-fade-up hover:scale-[1.02] transition-transform duration-500"
                     style={{ animationDelay: `${index * 90}ms` }}
                   >
-                    <div className="relative rounded-xl overflow-hidden shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-tr before:from-white/5 before:via-transparent before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity h-64">
-                      {screenshotErrors.has(index) ? (
-                        <Placeholder />
-                      ) : (
-                        <Image
-                          src={screenshot}
-                          alt={`${project.title} screenshot ${index + 1}`}
-                          width={800}
-                          height={400}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          loading="lazy"
-                          onError={() => handleScreenshotError(index)}
-                        />
-                      )}
+                    <div className="relative rounded-xl overflow-hidden shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-tr before:from-white/5 before:via-transparent before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
+                      <Image
+                        src={screenshot}
+                        alt={`${project.title} screenshot ${index + 1}`}
+                        width={800}
+                        height={400}
+                        className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
                   </div>
@@ -623,29 +540,31 @@ export default function ProjectDetailClient({
                 Ready to Experience the Magic?
               </h2>
               <p className="text-xl text-gray-400 mb-12">
-                Don't just read about it, go play with it! (We're not
+                Don&apos;t just read about it, go play with it! (We&apos;re not
                 responsible for productivity loss)
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-6 justify-center w-full">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <a
                   href={project.projectUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group relative inline-flex items-center justify-center gap-3 px-6 sm:px-10 py-3 sm:py-5 bg-gradient-to-r ${getTypeColor(
+                  className={`group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r ${getTypeColor(
                     project.type,
-                  )} text-white rounded-2xl font-bold text-lg sm:text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in`}
+                  )} text-white rounded-2xl font-bold text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in`}
                 >
-                  <ExternalLink className="w-6 h-6" />
-                  Launch {project.title}
+                  <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity bg-white/10" />
+                  <ExternalLink className="w-6 h-6 relative z-10" />
+                  <span className="relative z-10">Launch {project.title}</span>
                 </a>
 
                 <button
                   onClick={() => router.push("/")}
-                  className="relative inline-flex items-center justify-center gap-3 px-6 sm:px-10 py-3 sm:py-5 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-2xl font-bold text-lg sm:text-xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:120ms]"
+                  className="relative inline-flex items-center gap-3 px-10 py-5 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-2xl font-bold text-xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:120ms]"
                 >
                   <ArrowLeft className="w-6 h-6" />
                   Back to Lab
+                  <span className="absolute inset-0 rounded-2xl ring-0 hover:animate-border-pulse" />
                 </button>
               </div>
             </div>

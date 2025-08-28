@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 import { useReveal } from "../lib/useReveal";
-import { Beaker, Github, Twitter, Linkedin } from "lucide-react";
+import { Beaker } from "lucide-react";
+import { FaGithub, FaLinkedin, FaBriefcase } from "react-icons/fa";
 
 const Footer: React.FC = () => {
   const socialLinks = [
-    { icon: Github, href: "https://github.com", label: "GitHub" },
-    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+    { icon: FaGithub, href: "https://github.com", label: "GitHub" },
+    { icon: FaBriefcase, href: "https://www.mickael-gomes.com", label: "Portfolio" },
+    { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
   ];
 
   const left = useReveal<HTMLDivElement>();

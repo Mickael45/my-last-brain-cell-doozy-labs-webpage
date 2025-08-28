@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   ArrowRight,
   Users,
@@ -25,6 +25,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   onClick,
 }) => {
   const router = useViewTransitionRouter();
+  const [imgSrc, setImgSrc] = useState(project.imageUrl);
+
+  const handleImageError = () => {
+    setImgSrc("https://via.placeholder.com/1200x600");
+  };
   const getTypeStyling = (type: string) => {
     return type === "Forking Around"
       ? {
@@ -97,12 +102,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         style={{ viewTransitionName: `project-image-${project.id}` }}
       >
         <Image
-          src={project.imageUrl}
+          src={imgSrc}
           alt={project.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-110"
+          className="object-cover transition-transform duration-300 group-hover:scale-110 bg-gray-300"
           loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8//VrPQAJDgNaKV16OwAAAABJRU5ErkJggg=="
+          onError={handleImageError}
         />
         {/* Content Overlay */}
         <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6" />

@@ -23,6 +23,7 @@ import Image from "next/image";
 import InteractiveCard from "./InteractiveCard";
 import DetailBackground from "./DetailBackground";
 import ProjectTasks from "./ProjectTasks";
+import { useState } from "react";
 
 export default function ProjectDetailClient({
   project,
@@ -32,6 +33,19 @@ export default function ProjectDetailClient({
   tasks: GitHubIssue[];
 }) {
   const router = useRouter();
+  const [imgSrc, setImgSrc] = useState(project.imageUrl);
+
+  const handleImageError = () => {
+    setImgSrc("https://via.placeholder.com/1200x600");
+  };
+
+  const [screenshotSrcs, setScreenshotSrcs] = useState(project.screenshots || []);
+
+  const handleScreenshotError = (index: number) => {
+    const newSrcs = [...screenshotSrcs];
+    newSrcs[index] = "https://via.placeholder.com/800x400";
+    setScreenshotSrcs(newSrcs);
+  };
 
   const getTypeColor = (type: string) => {
     return type === "Forking Around"
@@ -120,15 +134,18 @@ export default function ProjectDetailClient({
               <div className="relative animate-fade-left [animation-delay:200ms]">
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
                   <Image
-                    src={project.imageUrl}
+                    src={imgSrc}
                     alt={project.title}
                     width={1200}
                     height={600}
                     priority
-                    className="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105 bg-gray-300"
                     style={{
                       viewTransitionName: `project-image-${project.id}`,
                     }}
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8//VrPQAJDgNaKV16OwAAAABJRU5ErkJggg=="
+                    onError={handleImageError}
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${getTypeColor(
@@ -529,7 +546,7 @@ export default function ProjectDetailClient({
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {project.screenshots.map((screenshot, index) => (
+                {screenshotSrcs.map((screenshot, index) => (
                   <div
                     key={index}
                     className="relative group cursor-pointer opacity-0 animate-fade-up hover:scale-[1.02] transition-transform duration-500"
@@ -541,8 +558,11 @@ export default function ProjectDetailClient({
                         alt={`${project.title} screenshot ${index + 1}`}
                         width={800}
                         height={400}
-                        className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110 bg-gray-300"
                         loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8//VrPQAJDgNaKV16OwAAAABJRU5ErkJggg=="
+                        onError={() => handleScreenshotError(index)}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>

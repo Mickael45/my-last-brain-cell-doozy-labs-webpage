@@ -29,7 +29,7 @@ export default defineSchema({
       v.literal("Released"),
     ),
     type: v.union(v.literal("Forking Around"), v.literal("Sass-y Solution")),
-    categories: v.array(v.union(...CATEGORIES.map((c) => v.literal(c)))),
+    categories: v.array(v.string()),
     sortOrder: v.number(),
     githubRepo: v.optional(v.string()),
   })

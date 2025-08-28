@@ -181,3 +181,40 @@ export const seed = mutation({
     };
   },
 });
+
+export const migrateCategories = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const projects = await ctx.db.query("projects").collect();
+    let updatedCount = 0;
+
+    const categoryMap: Record<string, (typeof CATEGORIES)[number]> = {
+      web: "Web",
+      ai: "AI",
+      "Public Utility": "Productivity",
+      "Chaos Experiment": "Web", // Or map to another valid category
+      meh: "Web", // Or map to another valid category
+    };
+
+    for (const project of projects) {
+      // @ts-ignore
+      const oldCategories = project.categories || [];
+      const newCategories = oldCategories
+        .map((c: string) => categoryMap[c.toLowerCase()])
+        .filter(Boolean); // Filter out any null/undefined values
+
+      // Remove duplicates
+      const uniqueNewCategories = [...new Set(newCategories)];
+
+      // Check if there are actual changes to avoid unnecessary writes
+      if (
+        JSON.stringify(oldCategories.sort()) !==
+        JSON.stringify(uniqueNewCategories.sort())
+      ) {
+        await ctx.db.patch(project._id, { categories: uniqueNewCategories });
+        updatedCount++;
+      }
+    }
+    return { updated: updatedCount };
+  },
+});

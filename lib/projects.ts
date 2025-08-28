@@ -1,4 +1,4 @@
-import type { Project } from "../types";
+import type { Category, Project } from "../types";
 
 // Relaxed shape reflecting potential schema evolution; only required _id + minimal fields.
 interface ConvexProjectDoc {
@@ -13,7 +13,7 @@ interface ConvexProjectDoc {
   solutions?: string[];
   metrics?: Project["metrics"];
   techStack?: string[];
-  categories?: ("ai" | "web" | "meh")[];
+  categories?: Category[];
   type?: "Forking Around" | "Sass-y Solution";
   status?: "Later...Maybe" | "Next In Line" | "Compiling..." | "Released";
   isFeatured?: boolean;

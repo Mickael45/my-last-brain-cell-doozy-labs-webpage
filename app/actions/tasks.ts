@@ -10,7 +10,7 @@ export async function getGitHubIssues(
     console.error("GITHUB_PAT is not set in the environment variables.");
     throw new Error("Server configuration error: Missing GitHub PAT.");
   }
-
+  console.log("Github", process.env.GITHUB_PAT)
   try {
     const response = await fetch(
       `https://api.github.com/repos/${repoName}/issues`,

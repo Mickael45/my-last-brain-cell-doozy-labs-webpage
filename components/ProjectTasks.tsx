@@ -14,7 +14,7 @@ const getContrastColor = (hexColor: string) => {
 
 export default function ProjectTasks({ tasks }: { tasks: GitHubIssue[] }) {
   return (
-    <section className="py-20 bg-gray-800/30">
+    <section className="py-20">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-16 animate-fade-up">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -28,7 +28,7 @@ export default function ProjectTasks({ tasks }: { tasks: GitHubIssue[] }) {
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className={`space-y-4 ${tasks.length > 10 ? 'max-h-[480px] overflow-y-auto pr-2' : ''}`}>
           {tasks.map((issue, index) => (
             <a
               key={issue.id}

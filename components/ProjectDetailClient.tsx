@@ -14,14 +14,14 @@ import {
   TrendingUp,
   Users,
   DollarSign,
+  Info,
 } from "lucide-react";
 import type { Project, GitHubIssue } from "../types";
 import Image from "next/image";
 import InteractiveCard from "./InteractiveCard";
 import DetailBackground from "./DetailBackground";
 import ProjectTasks from "./ProjectTasks";
-import { getTechCategory, getCategoryStyle } from "@/app/project/[id]/helpers";
-import { techDescriptions } from "@/app/project/[id]/techDescriptions";
+import { getTechCategory, getCategoryStyle, techDescriptions } from "@/app/project/[id]/helpers";
 
 export default function ProjectDetailClient({
   project,
@@ -260,25 +260,30 @@ export default function ProjectDetailClient({
                     subsystem is isolated enough to be refactored ruthlessly,
                     but integrated just enough to keep velocity absurdly high.
                   </p>
-                  <div className="flex flex-wrap gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {project.techStack.map((tech, i) => {
                       const category = getTechCategory(tech);
                       const style = getCategoryStyle(category);
+                      const cleanedTech = tech.replace(/\s*\(.*\)\s*/, '');
                       const description = techDescriptions[tech] || "A cool technology.";
                       return (
                         <div
                           key={i}
-                          className={`group relative px-4 py-2 rounded-lg
-                                      ${style.bg} ${style.border} ${style.shadow}
+                          className={`group relative rounded-lg
+                                      ${style.shadow} ${style.bg} border ${style.border}
                                       transition-all duration-300`}
                           style={{ animationDelay: `${i * 70}ms` }}
                         >
-                          <span
-                            className={`font-mono text-sm tracking-wide ${style.text}`}
-                          >
-                            {tech}
-                          </span>
-                          <div className="p-3 text-sm text-gray-300">
+                          <div className="relative h-full w-full rounded-lg p-4 flex justify-between items-center">
+                            <span
+                              className={`font-mono text-sm tracking-wide font-bold ${style.text}`}
+                            >
+                              {cleanedTech}
+                            </span>
+                            <Info className="w-4 h-4 text-gray-500" />
+                          </div>
+                          <div className={`absolute bottom-full mb-2 w-max max-w-xs p-3 rounded-lg bg-gray-900 border border-gray-700 shadow-lg text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10`}>
+                            <h4 className={`font-bold mb-1 ${style.text}`}>{cleanedTech}</h4>
                             <p className="leading-relaxed">{description}</p>
                           </div>
                         </div>

@@ -149,7 +149,9 @@ export default function ProjectDetailClient({
           <section className="py-16 bg-gray-800/30">
             <div className="max-w-7xl mx-auto px-4">
               <div
-                className={`grid md:grid-cols-2 lg:grid-cols-${project.metrics.mrr ? 4 : 3} gap-8 animate-fade-up`}
+                className={`grid md:grid-cols-2 lg:grid-cols-${
+                  project.metrics.mrr ? 4 : 3
+                } gap-8 animate-fade-up`}
               >
                 <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl border border-cyan-500/20 animate-fade-up-scale">
                   <Users className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
@@ -172,7 +174,9 @@ export default function ProjectDetailClient({
                 </InteractiveCard>
 
                 <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl border border-purple-500/20 animate-fade-up-scale [animation-delay:240ms]">
-                  <TrendingUp className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+                  <TrendingUp
+                    className="w-12 h-12 text-purple-400 mx-auto mb-4"
+                  />
                   <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
                     Impact
                   </div>
@@ -182,7 +186,9 @@ export default function ProjectDetailClient({
                 </InteractiveCard>
                 {project.metrics.mrr && (
                   <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 rounded-2xl border border-yellow-500/20 animate-fade-up-scale [animation-delay:360ms]">
-                    <DollarSign className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
+                    <DollarSign
+                      className="w-12 h-12 text-yellow-400 mx-auto mb-4"
+                    />
                     <div className="text-gray-400 mb-2 uppercase tracking-wide text-sm font-medium">
                       MRR
                     </div>
@@ -282,6 +288,27 @@ export default function ProjectDetailClient({
                     subsystem is isolated enough to be refactored ruthlessly,
                     but integrated just enough to keep velocity absurdly high.
                   </p>
+                                    <div className="grid sm:grid-cols-2 gap-5">
+                    {project.techStack.slice(0, 4).map((tech, i) => (
+                      <InteractiveCard
+                        key={i}
+                        className="group p-4 rounded-xl bg-gradient-to-r from-gray-700/40 to-gray-600/30 border border-cyan-500/20 animate-fade-up-scale"
+                        style={{ animationDelay: `${i * 90}ms` }}
+                      >
+                        <p className="text-sm font-mono tracking-wide text-cyan-300">
+                          {tech}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-2">
+                          {i === 0 &&
+                            "Foundation & primary interaction layer"}
+                          {i === 1 && "Type safety + maintainable growth"}
+                          {i === 2 && "Core engine / heavy lifting"}
+                          {i === 3 &&
+                            "Performance & scaling considerations"}
+                        </p>
+                      </InteractiveCard>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Iteration Timeline */}
@@ -341,6 +368,46 @@ export default function ProjectDetailClient({
                     beats sterile tooling. People stayed not just because it
                     worked, but because it felt alive.
                   </p>
+                                    {project.metrics && (
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                      <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 animate-fade-up-scale">
+                        <p className="text-xs uppercase tracking-wide text-cyan-300 font-medium mb-1">
+                          Users
+                        </p>
+                        <p className="text-sm text-white font-semibold">
+                          {project.metrics.users}
+                        </p>
+                      </InteractiveCard>
+                      <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 animate-fade-up-scale [animation-delay:120ms]">
+                        <p className="text-xs uppercase tracking-wide text-green-300 font-medium mb-1">
+                          Performance
+                        </p>
+                        <p className="text-sm text-white font-semibold">
+                          {project.metrics.performance}
+                        </p>
+                      </InteractiveCard>
+                      <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-pink-500/10 to-purple-500/10 border border-pink-500/20 animate-fade-up-scale [animation-delay:240ms]">
+                        <p className="text-xs uppercase tracking-wide text-pink-300 font-medium mb-1">
+                          Impact
+                        </p>
+                        <p className="text-sm text-white font-semibold">
+                          {project.metrics.impact}
+                        </p>
+                      </InteractiveCard>
+                      {project.metrics.mrr && (
+                        <InteractiveCard className="group p-5 rounded-xl bg-gradient-to-br from-yellow-500/10 to-amber-500/10 border border-yellow-500/20 animate-fade-up-scale [animation-delay:360ms]">
+                          <p className="text-xs uppercase tracking-wide text-yellow-300 font-medium mb-1">
+                            MRR
+                          </p>
+                          <p className="text-sm text-white font-semibold">
+                            {typeof project.metrics.mrr === "number"
+                              ? `${project.metrics.mrr.toLocaleString()}`
+                              : project.metrics.mrr}
+                          </p>
+                        </InteractiveCard>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Forward Vision */}

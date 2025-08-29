@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import {
   ArrowLeft,
@@ -31,6 +32,7 @@ export default function ProjectDetailClient({
   tasks: GitHubIssue[];
 }) {
   const router = useRouter();
+  const [imageError, setImageError] = useState(false);
 
   const getTypeColor = (type: string) => {
     return type === "Forking Around"
@@ -115,7 +117,7 @@ export default function ProjectDetailClient({
 
               <div className="relative animate-fade-left [animation-delay:200ms]">
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-96">
-                  {project.imageUrl ? (
+                  {project.imageUrl && !imageError ? (
                     <>
                       <Image
                         src={project.imageUrl}
@@ -127,6 +129,7 @@ export default function ProjectDetailClient({
                         style={{
                           viewTransitionName: `project-image-${project.id}`,
                         }}
+                        onError={() => setImageError(true)}
                       />
                       <div
                         className={`absolute inset-0 bg-gradient-to-t ${getTypeColor(

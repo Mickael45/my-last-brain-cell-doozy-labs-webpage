@@ -67,7 +67,7 @@ export default function ProjectDetailClient({
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-transparent" />
           <div className="max-w-7xl mx-auto px-4 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="animate-fade-right">
+              <div className="animate-fade-right min-w-0">
                 <div
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 text-white ${getTypeBg(
                     project.type,

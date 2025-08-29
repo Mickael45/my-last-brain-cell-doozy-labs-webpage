@@ -114,24 +114,35 @@ export default function ProjectDetailClient({
               </div>
 
               <div className="relative animate-fade-left [animation-delay:200ms]">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
-                  <Image
-                    src={project.imageUrl}
-                    alt={project.title}
-                    width={1200}
-                    height={600}
-                    priority
-                    className="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105"
-                    style={{
-                      viewTransitionName: `project-image-${project.id}`,
-                    }}
-                  />
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-t ${getTypeColor(
-                      project.type,
-                    )} opacity-20 group-hover:opacity-30 transition-opacity`}
-                  />
-                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-96">
+                  {project.imageUrl ? (
+                    <>
+                      <Image
+                        src={project.imageUrl}
+                        alt={project.title}
+                        width={1200}
+                        height={600}
+                        priority
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        style={{
+                          viewTransitionName: `project-image-${project.id}`,
+                        }}
+                      />
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-t ${getTypeColor(
+                          project.type,
+                        )} opacity-20 group-hover:opacity-30 transition-opacity`}
+                      />
+                      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+                    </>
+                  ) : (
+                    <div className="w-full h-full bg-gray-800/50 border-2 border-dashed border-gray-700 flex items-center justify-center">
+                      <div className="text-center text-gray-500">
+                        <Layers className="w-12 h-12 mx-auto mb-2" />
+                        <p>No Image Available</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

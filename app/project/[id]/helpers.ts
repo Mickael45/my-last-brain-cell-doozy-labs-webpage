@@ -10,6 +10,7 @@ const programmingLanguages = [
   { name: "C++", description: "A general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or 'C with Classes'." },
   { name: "C", description: "A general-purpose, procedural computer programming language supporting structured programming, lexical variable scope, and recursion, with a static type system." },
   { name: "Go", description: "A statically typed, compiled programming language designed at Google." },
+  { name: "Vanilla JavaScript", description: "Plain JavaScript without any frameworks or libraries, using the core language and browser APIs directly." },
 ];
 
 const frontend = [
@@ -50,6 +51,12 @@ const frontend = [
   { name: "XState", description: "A library for creating, interpreting, and executing finite state machines and statecharts." },
   { name: "Tanstack Virtual", description: "A library for virtualizing large lists and grids in React, Solid, Svelte and Vue." },
   { name: "SSG", description: "Static Site Generation is the process of generating a full static HTML website based on raw data and a set of templates." },
+  { name: "Next.js", description: "A React framework for building server-side rendered and static web applications." },
+  { name: "React", description: "A JavaScript library for building user interfaces using a component-based architecture." },
+  { name: "Tailwind", description: "A utility-first CSS framework for rapidly building custom user interfaces." },
+  { name: "Recharts", description: "A composable charting library built on React components and powered by D3." },
+  { name: "React Context API", description: "A React feature for sharing state across the component tree without prop drilling." },
+  { name: "Astro", description: "A web framework for building fast, content-driven websites using an islands architecture." },
 ];
 
 const backend = [
@@ -63,6 +70,9 @@ const backend = [
   { name: "Kotlin Multiplatform", description: "A feature of the Kotlin programming language that allows developers to share code between different platforms." },
   { name: "Stripe", description: "A suite of payment APIs that powers commerce for online businesses of all sizes." },
   { name: "Clerk", description: "A developer-first authentication and user management platform." },
+  { name: "Convex", description: "A full-stack TypeScript development platform with a real-time reactive database." },
+  { name: "Convex Auth", description: "An authentication solution built for Convex applications." },
+  { name: "Express", description: "A minimal and flexible Node.js web application framework for building APIs and web apps." },
 ];
 
 const mobile = [
@@ -115,6 +125,9 @@ const ai = [
   { name: "Upscaler.js (ESRGAN-Slim)", description: "A library for upscaling images in JavaScript." },
   { name: "crewAI", description: "A framework for orchestrating role-playing, autonomous AI agents." },
   { name: "GitHub Copilot", description: "An AI pair programmer that helps you write code faster and with less work." },
+  { name: "TensorFlow.js", description: "A library for machine learning in JavaScript, enabling training and deployment of ML models in the browser and Node.js." },
+  { name: "Upscaler.js", description: "A JavaScript library for upscaling images using neural network models." },
+  { name: "Ollama", description: "A tool for running large language models locally on your machine." },
 ];
 
 const ide = [

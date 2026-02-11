@@ -94,18 +94,20 @@ export default function ProjectDetailClient({
                 </p>
 
                 <div className="flex gap-4">
-                  <a
-                    href={project.projectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`relative overflow-hidden inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${getTypeColor(
-                      project.type,
-                    )} text-white rounded-xl font-semibold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in [animation-delay:80ms]`}
-                  >
-                    <span className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity" />
-                    <ExternalLink className="w-5 h-5" />
-                    Launch Project
-                  </a>
+                  {project.projectUrl && project.projectUrl !== "#" && (
+                    <a
+                      href={project.projectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`relative overflow-hidden inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${getTypeColor(
+                        project.type,
+                      )} text-white rounded-xl font-semibold text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in [animation-delay:80ms]`}
+                    >
+                      <span className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity" />
+                      <ExternalLink className="w-5 h-5" />
+                      Launch Project
+                    </a>
+                  )}
 
                   <a href={`https://github.com/Mickael45/${project.githubRepo}`} target="_blank"
                     rel="noopener noreferrer" className="relative inline-flex items-center gap-2 px-8 py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
@@ -432,18 +434,20 @@ export default function ProjectDetailClient({
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <a
-                  href={project.projectUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r ${getTypeColor(
-                    project.type,
-                  )} text-white rounded-2xl font-bold text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in`}
-                >
-                  <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity bg-white/10" />
-                  <ExternalLink className="w-6 h-6 relative z-10" />
-                  <span className="relative z-10">Launch {project.title}</span>
-                </a>
+                {project.projectUrl && project.projectUrl !== "#" && (
+                  <a
+                    href={project.projectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r ${getTypeColor(
+                      project.type,
+                    )} text-white rounded-2xl font-bold text-xl shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 animate-scale-in`}
+                  >
+                    <span className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity bg-white/10" />
+                    <ExternalLink className="w-6 h-6 relative z-10" />
+                    <span className="relative z-10">Launch {project.title}</span>
+                  </a>
+                )}
 
                 <button
                   onClick={() => router.push("/")}

@@ -39,18 +39,6 @@ export default function ProjectDetailClient({
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
-  const showPrev = () =>
-    setLightboxIndex((prev) =>
-      prev !== null && project.screenshots
-        ? (prev - 1 + project.screenshots.length) % project.screenshots.length
-        : null,
-    );
-  const showNext = () =>
-    setLightboxIndex((prev) =>
-      prev !== null && project.screenshots
-        ? (prev + 1) % project.screenshots.length
-        : null,
-    );
 
   // Instantly start at the top — prevents the browser from restoring the
   // previous scroll position and visibly scrolling up.
@@ -451,8 +439,7 @@ export default function ProjectDetailClient({
                   currentIndex={lightboxIndex}
                   alt={project.title}
                   onClose={closeLightbox}
-                  onPrev={showPrev}
-                  onNext={showNext}
+                  onNavigate={setLightboxIndex}
                 />
               )}
             </div>

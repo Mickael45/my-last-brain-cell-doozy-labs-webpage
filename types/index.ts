@@ -20,6 +20,8 @@ export interface Project {
     mrr?: number | string;
   };
   techStack: string[];
+  genesisSpark?: string;
+  coreProblem?: string;
   categories: Category[];
   type: "Forking Around" | "Sass-y Solution";
   status: "Later...Maybe" | "Next In Line" | "Compiling..." | "Released";

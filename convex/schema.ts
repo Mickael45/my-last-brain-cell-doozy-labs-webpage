@@ -20,6 +20,8 @@ export default defineSchema({
       }),
     ),
     techStack: v.array(v.string()),
+    genesisSpark: v.optional(v.string()),
+    coreProblem: v.optional(v.string()),
     isFeatured: v.boolean(),
     status: v.union(
       v.literal("Later...Maybe"),

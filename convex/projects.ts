@@ -52,6 +52,8 @@ export const insert = mutation({
       }),
     ),
     techStack: v.array(v.string()),
+    genesisSpark: v.optional(v.string()),
+    coreProblem: v.optional(v.string()),
     isFeatured: v.boolean(),
     status: v.union(
       v.literal("Later...Maybe"),
@@ -91,6 +93,8 @@ export const update = mutation({
         }),
       ),
       techStack: v.optional(v.array(v.string())),
+      genesisSpark: v.optional(v.string()),
+      coreProblem: v.optional(v.string()),
       isFeatured: v.optional(v.boolean()),
       status: v.optional(
         v.union(

@@ -13,6 +13,8 @@ interface ConvexProjectDoc {
   solutions?: string[];
   metrics?: Project["metrics"];
   techStack?: string[];
+  genesisSpark?: string;
+  coreProblem?: string;
   categories?: Category[];
   type?: "Forking Around" | "Sass-y Solution";
   status?: "Later...Maybe" | "Next In Line" | "Compiling..." | "Released";
@@ -54,6 +56,8 @@ export function mapProject(doc: ConvexProjectDoc): Project {
     solutions: doc.solutions || [],
     metrics: doc.metrics,
     techStack: doc.techStack || [],
+    genesisSpark: doc.genesisSpark,
+    coreProblem: doc.coreProblem,
     categories: doc.categories || [],
     type: narrowedType,
     status: doc.status || "Later...Maybe",

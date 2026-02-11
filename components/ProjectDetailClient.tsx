@@ -198,18 +198,11 @@ export default function ProjectDetailClient({
                       Genesis Spark
                     </h3>
                   </div>
-                  <p className="text-gray-300 leading-relaxed text-lg">
-                    {project.type === "Forking Around"
-                      ? "Started as a borderline ridiculous experiment that somehow refused to die during refactors."
-                      : "Born out of repeated pain points and the refusal to accept mediocre tooling any longer."}
-                  </p>
-                  <p className="text-gray-400 leading-relaxed">
-                    The first proof-of-concept was duct-taped together in under
-                    48 hours. It broke. A lot. But the core loop felt magical
-                    enough to justify polishing instead of abandoning. That was
-                    the moment it graduated from &quot;random script&quot; to
-                    &quot;this might become real&quot;.
-                  </p>
+                  {project.genesisSpark && (
+                    <p className="text-gray-300 leading-relaxed text-lg">
+                      {project.genesisSpark}
+                    </p>
+                  )}
                 </div>
 
                 {/* Problem & Insight */}
@@ -220,12 +213,11 @@ export default function ProjectDetailClient({
                       Core Problem & Insight
                     </h3>
                   </div>
-                  <p className="text-gray-300 leading-relaxed text-lg">
-                    Beneath the jokes sits a very real friction: people kept
-                    wrestling with inefficient, boring, or psychologically
-                    draining workflows. That emotional tax became the design
-                    compass.
-                  </p>
+                  {project.coreProblem && (
+                    <p className="text-gray-300 leading-relaxed text-lg">
+                      {project.coreProblem}
+                    </p>
+                  )}
                   {/* Context Panels */}
                   <div className="space-y-10 animate-fade-up [animation-delay:100ms] pt-10">
                     <div className="grid md:grid-cols-2 gap-8">
@@ -279,14 +271,9 @@ export default function ProjectDetailClient({
                   <div className="flex items-center gap-3">
                     <Layers className="w-6 h-6 text-cyan-400" />
                     <h3 className="text-2xl font-semibold text-white">
-                      Architecture Philosophy
+                      Arsenal
                     </h3>
                   </div>
-                  <p className="text-gray-300 leading-relaxed text-lg">
-                    Pragmatic modularity over premature perfection. Each
-                    subsystem is isolated enough to be refactored ruthlessly,
-                    but integrated just enough to keep velocity absurdly high.
-                  </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {project.techStack.map((tech, i) => {
                       const category = getTechCategory(tech);
@@ -453,11 +440,22 @@ export default function ProjectDetailClient({
           <div className="max-w-4xl mx-auto px-4 text-center">
             <div className="animate-fade-up">
               <h2 className="text-4xl font-bold text-white mb-6">
-                Ready to Experience the Magic?
+                {project.projectUrl && project.projectUrl !== "#"
+                  ? "Ready to Experience the Magic?"
+                  : "Thanks for Peeking Behind the Curtain!"}
               </h2>
               <p className="text-xl text-gray-400 mb-12">
-                Don&apos;t just read about it, go play with it! (We&apos;re not
-                responsible for productivity loss)
+                {project.projectUrl && project.projectUrl !== "#" ? (
+                  <>
+                    Don&apos;t just read about it, go play with it! (We&apos;re
+                    not responsible for productivity loss)
+                  </>
+                ) : (
+                  <>
+                    This one&apos;s still brewing in the lab. Head back and
+                    explore more chaotic creations!
+                  </>
+                )}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center">

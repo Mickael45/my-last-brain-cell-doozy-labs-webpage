@@ -35,6 +35,8 @@
         "HTML5 Canvas",
         "Astro (planned migration)"
     ],
+    "genesisSpark": "Born from the sheer audacity of Etsy expecting me to manually create 300 product listings like it's 2005. The dream was full automation — image in, live listing out. Reality? The Printify API had other plans and still forces parts of the flow to stay manual. But the hours of copy-paste-upload-repeat? Those got automated into oblivion.",
+    "coreProblem": "Every Etsy listing is a 15-step obstacle course: upscale the image, crop for each format, write SEO copy, generate tags, set prices, map variants. Do it once — fine. Do it 300 times and you start questioning every life choice that led you to this moment. The pain wasn't the complexity; it was the soul-crushing repetition.",
     "isFeatured": false,
     "status": "Compiling...",
     "type": "Forking Around",

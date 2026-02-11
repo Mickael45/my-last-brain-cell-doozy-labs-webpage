@@ -13,6 +13,7 @@
     "add-project": "sh -c 'convex run projects:insert \"$(cat \"$0\")\"'"
   },
   "dependencies": {
+    "@next/third-parties": "^16.1.6",
     "convex": "^1.31.7",
     "dotenv": "^16.4.5",
     "lucide-react": "^0.542.0",

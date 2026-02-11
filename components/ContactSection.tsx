@@ -3,7 +3,7 @@ import React from "react";
 import { useReveal } from "../lib/useReveal";
 import { Mail } from "lucide-react";
 
-const CONTACT_EMAIL = "contact@ml-bcd-labs.com"; // Change if needed
+const CONTACT_EMAIL = "mickaelgomesconsulting@gmail.com"; // Change if needed
 const SUBJECT = encodeURIComponent("Project / Collaboration Inquiry");
 const BODY = encodeURIComponent(
   `Hey Doozy Labs team,%0D%0A%0D%0AI'd like to chat about ...%0D%0A%0D%0A—`,

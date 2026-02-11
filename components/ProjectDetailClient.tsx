@@ -131,13 +131,14 @@ export default function ProjectDetailClient({
                       Launch Project
                     </a>
                   )}
-
-                  <a href={`https://github.com/Mickael45/${project.githubRepo}`} target="_blank"
-                    rel="noopener noreferrer" className="relative inline-flex items-center gap-2 px-8 py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
-                    <FaGithub className="w-5 h-5" />
-                    View Code
-                    <span className="absolute inset-0 rounded-xl ring-0 hover:animate-border-pulse" />
-                  </a>
+                  {project.githubRepo &&
+                    <a href={`https://github.com/Mickael45/${project.githubRepo}`} target="_blank"
+                      rel="noopener noreferrer" className="relative inline-flex items-center gap-2 px-8 py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
+                      <FaGithub className="w-5 h-5" />
+                      View Code
+                      <span className="absolute inset-0 rounded-xl ring-0 hover:animate-border-pulse" />
+                    </a>
+                  }
                 </div>
               </div>
 

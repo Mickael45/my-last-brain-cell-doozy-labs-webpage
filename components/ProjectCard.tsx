@@ -86,10 +86,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     if (href && (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1)) {
       return;
     }
-    
+
     // Prevent default navigation for regular clicks
     e.preventDefault();
-    
+
     if (href) {
       router.push(href);
     } else if (onClick) {
@@ -148,22 +148,26 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
           {/* Metrics */}
           <div className="flex items-center gap-6 text-white mb-4">
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-cyan-400" />
-              <span className="font-bold">
-                {project.metrics?.users
-                  ? formatNumber(project.metrics.users)
-                  : "N/A"}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <DollarSign className="w-5 h-5 text-green-400" />
-              <span className="font-bold">
-                {project.metrics?.mrr
-                  ? `${formatNumber(project.metrics.mrr)}`
-                  : "N/A"}
-              </span>
-            </div>
+            {(project.type !== "Forking Around" || project.metrics?.users) && (
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-cyan-400" />
+                <span className="font-bold">
+                  {project.metrics?.users
+                    ? formatNumber(project.metrics.users)
+                    : "N/A"}
+                </span>
+              </div>
+            )}
+            {(project.type !== "Forking Around" || project.metrics?.mrr) && (
+              <div className="flex items-center gap-2">
+                <DollarSign className="w-5 h-5 text-green-400" />
+                <span className="font-bold">
+                  {project.metrics?.mrr
+                    ? `${formatNumber(project.metrics.mrr)}`
+                    : "N/A"}
+                </span>
+              </div>
+            )}
             <div className={`flex items-center gap-2 ${statusInfo.colorClass}`}>
               {statusInfo.icon}
               <span className="font-bold">{statusInfo.label}</span>

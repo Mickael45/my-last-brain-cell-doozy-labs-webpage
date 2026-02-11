@@ -6,8 +6,17 @@ import type { Id } from "../../convex/_generated/dataModel";
 import { mapProject } from "../../lib/projects";
 import { mockProjects } from "../../data/projects";
 
+/** Status display order: furthest from release → already released. */
+const STATUS_ORDER: Record<Project["status"], number> = {
+  "Later...Maybe": 0,
+  "Compiling...": 1,
+  "Next In Line": 2,
+  "Released": 3,
+};
+
 /**
- * Fetch all projects sorted by sortOrder.
+ * Fetch all projects sorted by release closeness (ascending), then by
+ * sortOrder within the same status group.
  *
  * Convex's `fetchQuery` internally sets `cache: "no-store"`, which would force
  * the page into dynamic rendering. Wrapping in `unstable_cache` adds a
@@ -18,7 +27,7 @@ export const getProjects = unstable_cache(
   async (): Promise<Project[]> => {
     try {
       const docs = await fetchQuery(api.projects.list, {});
-      return docs.map((doc) =>
+      const projects = docs.map((doc) =>
         mapProject({
           ...doc,
           categories: (doc.categories || []).map((c) => {
@@ -33,6 +42,11 @@ export const getProjects = unstable_cache(
             }
           }) as Category[],
         }),
+      );
+      return projects.sort(
+        (a, b) =>
+          STATUS_ORDER[a.status] - STATUS_ORDER[b.status] ||
+          a.sortOrder - b.sortOrder,
       );
     } catch {
       return mockProjects;

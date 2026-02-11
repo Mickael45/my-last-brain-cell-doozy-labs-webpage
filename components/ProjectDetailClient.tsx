@@ -23,6 +23,7 @@ import InteractiveCard from "./InteractiveCard";
 import DetailBackground from "./DetailBackground";
 import ProjectTasks from "./ProjectTasks";
 import StatusPlaceholder from "./StatusPlaceholder";
+import ImageLightbox from "./ImageLightbox";
 import { getTechCategory, getCategoryStyle, techDescriptions } from "@/app/project/[id]/helpers";
 
 export default function ProjectDetailClient({
@@ -34,6 +35,22 @@ export default function ProjectDetailClient({
 }) {
   const router = useRouter();
   const [imageError, setImageError] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const openLightbox = (index: number) => setLightboxIndex(index);
+  const closeLightbox = () => setLightboxIndex(null);
+  const showPrev = () =>
+    setLightboxIndex((prev) =>
+      prev !== null && project.screenshots
+        ? (prev - 1 + project.screenshots.length) % project.screenshots.length
+        : null,
+    );
+  const showNext = () =>
+    setLightboxIndex((prev) =>
+      prev !== null && project.screenshots
+        ? (prev + 1) % project.screenshots.length
+        : null,
+    );
 
   // Instantly start at the top — prevents the browser from restoring the
   // previous scroll position and visibly scrolling up.
@@ -406,6 +423,7 @@ export default function ProjectDetailClient({
                     key={index}
                     className="relative group cursor-pointer opacity-0 animate-fade-up hover:scale-[1.02] transition-transform duration-500"
                     style={{ animationDelay: `${index * 90}ms` }}
+                    onClick={() => openLightbox(index)}
                   >
                     <div className="relative rounded-xl overflow-hidden shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-tr before:from-white/5 before:via-transparent before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
                       <Image
@@ -416,11 +434,26 @@ export default function ProjectDetailClient({
                         className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span className="text-white/80 text-sm font-medium tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                          Click to enlarge
+                        </span>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
+
+              {lightboxIndex !== null && (
+                <ImageLightbox
+                  images={project.screenshots}
+                  currentIndex={lightboxIndex}
+                  alt={project.title}
+                  onClose={closeLightbox}
+                  onPrev={showPrev}
+                  onNext={showNext}
+                />
+              )}
             </div>
           </section>
         )}

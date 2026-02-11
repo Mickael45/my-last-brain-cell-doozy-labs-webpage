@@ -1,0 +1,47 @@
+{
+    "title": "Etsy Automation",
+    "tagline": "From 'nice picture' to 'live on Etsy' without lifting more than one finger.",
+    "description": "A full-stack automation tool that turns the soul-crushing grind of listing print-on-demand products into a single guided flow. Upload a raw image, and the pipeline takes over: an 8x ESRGAN super-resolution model (TensorFlow.js, running locally) upscales it to print quality, a local Ollama vision model analyzes the image and writes a natural-language description, then a second LLM pass churns out SEO-optimized titles, descriptions, and exactly 13 tags — all respecting Etsy's character limits, formatting rules, and festivity-aware context.\n\nThe image gets smart-cropped to product-specific aspect ratios (jigsaw puzzles, shower curtains, and whatever else Printify supports) and submitted with full variant and pricing configuration. Everything runs locally — no OpenAI bills, no cloud dependency, no API key anxiety. What used to be a multi-step, tab-juggling, copy-paste nightmare is now one flow from image to draft product.",
+    "projectUrl": "",
+    "imageUrl": "",
+    "screenshots": [],
+    "challenges": [
+        "Getting print-quality resolution from low-res source images without turning everything into an impressionist painting of artifacts.",
+        "Generating SEO-friendly metadata that actually follows Etsy's character limits and doesn't read like a keyword salad.",
+        "Pushing large image payloads (up to 100MB) through the full upscale-crop-upload pipeline without the server tapping out on memory.",
+        "Mapping a single source image to multiple product types — each with different aspect ratios, variant structures, and pricing — without hardcoding everything into oblivion.",
+        "Orchestrating multiple AI model calls (vision + text generation) and keeping the whole workflow fast enough that it doesn't feel like watching paint dry."
+    ],
+    "solutions": [
+        "ESRGAN-slim 8x via Upscaler.js with patched inference (patch size 64, padding 6) handles the upscaling reliably on a Node.js backend. The images come out clean.",
+        "A prompt-engineering layer with strict formatting rules, shop-context injection, and product-type suffixes keeps the local LLM on a leash — consistently outputting Etsy-ready metadata instead of creative writing exercises.",
+        "Express with a 100MB body-parser limit and TensorFlow.js GPU acceleration handles the heavy lifting server-side. Big images, no drama.",
+        "A product-config architecture with per-type blueprint IDs, print provider IDs, aspect ratios, and variant/pricing maps means adding a new product type is just adding data — no code changes.",
+        "Image description and upscaling run in parallel, and quantized models (q8_0) keep local inference fast without sacrificing output quality. The bottleneck is your GPU, not the pipeline."
+    ],
+    "metrics": {
+        "performance": "8x image upscaling with local AI metadata generation in a single workflow",
+        "impact": "Turned a multi-step manual Etsy listing process into one guided flow — from image to draft product."
+    },
+    "techStack": [
+        "Node.js",
+        "Express",
+        "TensorFlow.js",
+        "Upscaler.js (ESRGAN 8x)",
+        "Ollama (Llama 3.2 Vision + Instruct)",
+        "Printify API",
+        "Bootstrap 5",
+        "Vanilla JavaScript",
+        "HTML5 Canvas",
+        "Astro (planned migration)"
+    ],
+    "isFeatured": false,
+    "status": "Compiling...",
+    "type": "Forking Around",
+    "categories": [
+        "AI",
+        "Productivity"
+    ],
+    "sortOrder": 0,
+    "githubRepo": ""
+}

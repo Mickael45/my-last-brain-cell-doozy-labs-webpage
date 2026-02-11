@@ -91,6 +91,16 @@ body {
     }
   }
 
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
   @keyframes scale-in {
     0% {
       opacity: 0;
@@ -199,6 +209,10 @@ body {
     animation: pulse-rotate-slow 20s linear infinite;
   }
 
+  .animate-fade-in {
+    animation: fade-in 0.25s ease-out both;
+  }
+
   .animate-scale-in {
     animation: scale-in 0.55s cubic-bezier(0.16, 0.84, 0.44, 1) both;
   }
@@ -283,6 +297,7 @@ body {
     .animate-fade-down,
     .animate-fade-left,
     .animate-fade-right,
+    .animate-fade-in,
     .animate-float-y,
     .animate-bob,
     .animate-rotate-slow,

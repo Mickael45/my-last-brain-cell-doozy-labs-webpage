@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import {
   ArrowLeft,
@@ -34,6 +34,12 @@ export default function ProjectDetailClient({
 }) {
   const router = useRouter();
   const [imageError, setImageError] = useState(false);
+
+  // Instantly start at the top — prevents the browser from restoring the
+  // previous scroll position and visibly scrolling up.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, []);
 
   const getTypeColor = (type: string) => {
     return type === "Forking Around"

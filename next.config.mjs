@@ -3,6 +3,7 @@ const nextConfig = {
   // Next.js 16: Turbopack is the default bundler — no CLI flag needed.
 
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

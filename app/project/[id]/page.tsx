@@ -1,15 +1,20 @@
-import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import ProjectDetailClient from "@/components/ProjectDetailClient";
-import { getProjectById } from "@/app/actions/projects";
+import { getProjectById, getProjects } from "@/app/actions/projects";
 import { getGitHubIssues } from "@/app/actions/tasks";
 import type { GitHubIssue } from "@/types";
 
-// On-demand static generation: pages are rendered on first request and then
-// cached by the "use cache" data-fetching layer (ISR-like). No build-time
-// pre-rendering since the Convex DB is remote and may not be reachable during CI.
+// ISR: revalidate every hour — same cadence as the home page.
+export const revalidate = 3600;
 
-// Dynamic metadata — params are async in Next.js 15+ / 16.
+// Pre-render all known project pages at build time (SSG).
+// Unknown IDs are rendered on-demand at request time (dynamic ISR).
+export async function generateStaticParams() {
+  const projects = await getProjects();
+  return projects.map((p) => ({ id: p.id }));
+}
+
+// Dynamic metadata — params are async in Next.js 16.
 export async function generateMetadata({
   params,
 }: {
@@ -21,25 +26,12 @@ export async function generateMetadata({
   return { title: `${project.title} – Doozy Labs` };
 }
 
-export default function ProjectPage(props: {
+export default async function ProjectPage(props: {
   params: Promise<{ id: string }>;
 }) {
-  return (
-    <Suspense>
-      <ProjectContent params={props.params} />
-    </Suspense>
-  );
-}
-
-/** Async server component — all dynamic/data access happens inside Suspense. */
-async function ProjectContent({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+  const { id } = await props.params;
   const project = await getProjectById(id);
-  if (!project) notFound();
+  if (!project) return notFound();
 
   let tasks: GitHubIssue[] = [];
   if (project.githubRepo) {

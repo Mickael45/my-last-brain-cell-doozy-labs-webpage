@@ -14,190 +14,272 @@ body {
       opacity: 0;
       transform: translateY(24px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+
   @keyframes fade-down {
     from {
       opacity: 0;
       transform: translateY(-16px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+
   @keyframes fade-left {
     from {
       opacity: 0;
       transform: translateX(40px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
     }
   }
+
   @keyframes fade-right {
     from {
       opacity: 0;
       transform: translateX(-40px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
     }
   }
+
   @keyframes float-y {
+
     0%,
     100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(10px);
     }
   }
+
   @keyframes bob {
+
     0%,
     100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(12px);
     }
   }
+
   @keyframes pulse-rotate-slow {
     from {
       transform: rotate(0deg);
     }
+
     to {
       transform: rotate(360deg);
     }
   }
+
   @keyframes scale-in {
     0% {
       opacity: 0;
       transform: scale(0.94);
     }
+
     100% {
       opacity: 1;
       transform: scale(1);
     }
   }
+
   @keyframes fade-up-scale {
     0% {
       opacity: 0;
       transform: translateY(28px) scale(0.94);
     }
+
     100% {
       opacity: 1;
       transform: translateY(0) scale(1);
     }
   }
+
   @keyframes shimmer {
     0% {
       background-position: 0% 50%;
     }
+
     100% {
       background-position: 200% 50%;
     }
   }
+
   @keyframes border-pulse {
+
     0%,
     100% {
       box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.35);
     }
+
     50% {
       box-shadow: 0 0 0 6px rgba(34, 211, 238, 0);
     }
   }
+
   /* Organic blob drift */
   @keyframes blob {
     0% {
       transform: translate3d(0, 0, 0) scale(1);
     }
+
     33% {
       transform: translate3d(40px, -60px, 0) scale(1.15);
     }
+
     66% {
       transform: translate3d(-30px, 50px, 0) scale(0.9);
     }
+
     100% {
       transform: translate3d(0, 0, 0) scale(1);
     }
   }
+
   /* Slow diagonal gradient pan */
   @keyframes gradient-pan {
     0% {
       transform: translate3d(0, 0, 0);
     }
+
     50% {
       transform: translate3d(-6%, 4%, 0);
     }
+
     100% {
       transform: translate3d(0, 0, 0);
     }
   }
+
   .animate-fade-up {
     animation: fade-up 0.7s ease-out both;
   }
+
   .animate-fade-down {
     animation: fade-down 0.7s ease-out both;
   }
+
   .animate-fade-left {
     animation: fade-left 0.8s ease-out both;
   }
+
   .animate-fade-right {
     animation: fade-right 0.8s ease-out both;
   }
+
   .animate-float-y {
     animation: float-y 2s ease-in-out infinite;
   }
+
   .animate-bob {
     animation: bob 2s ease-in-out infinite;
   }
+
   .animate-rotate-slow {
     animation: pulse-rotate-slow 20s linear infinite;
   }
+
   .animate-scale-in {
     animation: scale-in 0.55s cubic-bezier(0.16, 0.84, 0.44, 1) both;
   }
+
   .animate-fade-up-scale {
     animation: fade-up-scale 0.75s cubic-bezier(0.16, 0.84, 0.44, 1) both;
   }
+
   .animate-shimmer {
-    background-image: linear-gradient(
-      110deg,
-      rgba(255, 255, 255, 0.05) 0%,
-      rgba(255, 255, 255, 0.15) 20%,
-      rgba(255, 255, 255, 0.05) 40%
-    );
+    background-image: linear-gradient(110deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0.15) 20%,
+        rgba(255, 255, 255, 0.05) 40%);
     background-size: 200% 100%;
     animation: shimmer 2.2s linear infinite;
   }
+
   .animate-border-pulse {
     animation: border-pulse 2.4s ease-in-out infinite;
   }
+
   .animate-blob {
     animation: blob 24s ease-in-out infinite;
   }
+
   .animate-blob-delay-1 {
     animation: blob 30s ease-in-out infinite 4s;
   }
+
   .animate-blob-delay-2 {
     animation: blob 36s ease-in-out infinite 8s;
   }
+
   .animate-gradient-slow {
     animation: gradient-pan 28s linear infinite;
+  }
+
+  /* Status placeholder animated gradient */
+  @keyframes status-gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes status-icon-pulse {
+
+    0%,
+    100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+  }
+
+  .animate-status-gradient {
+    background-size: 200% 200%;
+    animation: status-gradient 8s ease-in-out infinite;
+  }
+
+  .animate-status-icon-pulse {
+    animation: status-icon-pulse 3s ease-in-out infinite;
   }
 }
 
 /* Utility: delay variables via arbitrary values e.g. [animation-delay:400ms] */
 
 @media (prefers-reduced-motion: reduce) {
-  *:where(
-    .animate-fade-up,
+
+  *:where(.animate-fade-up,
     .animate-fade-down,
     .animate-fade-left,
     .animate-fade-right,
@@ -211,8 +293,9 @@ body {
     .animate-blob,
     .animate-blob-delay-1,
     .animate-blob-delay-2,
-    .animate-gradient-slow
-  ) {
+    .animate-gradient-slow,
+    .animate-status-gradient,
+    .animate-status-icon-pulse) {
     animation: none !important;
     transition: none !important;
   }
@@ -223,6 +306,7 @@ body {
   from {
     clip-path: inset(0 0 0 0 round 0.75rem);
   }
+
   to {
     clip-path: inset(0 0 0 0 round 0);
   }

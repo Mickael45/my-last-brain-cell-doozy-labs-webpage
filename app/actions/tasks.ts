@@ -1,14 +1,10 @@
-import { cacheLife, cacheTag } from "next/cache";
 import type { GitHubIssue } from "@/types";
 
-/** Fetch open GitHub issues for a repo — cached via "use cache" (ISR). */
+/** Fetch open GitHub issues for a repo.
+ *  ISR caching is handled by `revalidate` on the consuming page. */
 export async function getGitHubIssues(
   repoName: string,
 ): Promise<GitHubIssue[]> {
-  "use cache";
-  cacheLife("issues");
-  cacheTag("github-issues", `issues-${repoName}`);
-
   if (!process.env.GITHUB_PAT) {
     console.error("GITHUB_PAT is not set in the environment variables.");
     throw new Error("Server configuration error: Missing GitHub PAT.");

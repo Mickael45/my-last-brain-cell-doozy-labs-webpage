@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import type { Project } from "../types";
 import HeroSection from "../components/HeroSection";
 import FeaturedProjects from "../components/FeaturedProjects";
@@ -9,16 +8,17 @@ import Footer from "../components/Footer";
 import Link from "next/link";
 import { getProjects } from "./actions/projects";
 
-// The static shell is pre-rendered at build time.
-// Project data streams in via Suspense and is cached by the "use cache"
-// data-fetching layer (ISR-like, revalidates hourly — see cacheLife("static")).
-export default function HomePage() {
+// ISR: page is statically generated at build-time and revalidated every hour.
+export const revalidate = 3600;
+
+export default async function HomePage() {
+  const projects: Project[] = await getProjects();
+
   return (
     <main className="min-h-screen bg-gray-900">
       <HeroSection />
-      <Suspense>
-        <ProjectSections />
-      </Suspense>
+      <FeaturedProjects projects={projects} />
+      <ProjectGallery projects={projects} />
       <div id="about">
         <AboutSection />
       </div>
@@ -27,24 +27,12 @@ export default function HomePage() {
       </div>
       <Footer />
       <div className="text-center py-10 text-xs text-gray-500">
-        Built with Next.js 16 &amp; Cache Components. Data statically cached –{" "}
+        Built with Next.js 16 (ISR). Data statically cached –{" "}
         <Link className="underline" href="/">
           refresh
         </Link>{" "}
         to see updates after revalidation.
       </div>
     </main>
-  );
-}
-
-/** Async server component that fetches and renders project data. */
-async function ProjectSections() {
-  const projects: Project[] = await getProjects();
-
-  return (
-    <>
-      <FeaturedProjects projects={projects} />
-      <ProjectGallery projects={projects} />
-    </>
   );
 }

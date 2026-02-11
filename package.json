@@ -9,15 +9,16 @@
     "start": "next start",
     "lint": "eslint .",
     "convex:dev": "convex dev",
-    "convex:codegen": "convex codegen"
+    "convex:codegen": "convex codegen",
+    "add-project": "sh -c 'convex run projects:insert \"$(cat \"$0\")\"'"
   },
   "dependencies": {
     "convex": "^1.31.7",
     "dotenv": "^16.4.5",
     "lucide-react": "^0.542.0",
     "next": "^16.1.6",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-icons": "^5.5.0"
   },
   "devDependencies": {

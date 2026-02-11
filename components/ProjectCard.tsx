@@ -8,11 +8,11 @@ import {
   Clock,
   Package,
   XCircle,
-  ImageIcon,
 } from "lucide-react";
 import { Project } from "../types";
 import Image from "next/image";
 import { useViewTransitionRouter } from "../lib/useViewTransitionRouter";
+import StatusPlaceholder from "./StatusPlaceholder";
 
 interface ProjectCardProps {
   project: Project;
@@ -31,13 +31,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const getTypeStyling = (type: string) => {
     return type === "Forking Around"
       ? {
-          textColor: "text-purple-300",
-          borderColor: "border-purple-500/30",
-        }
+        textColor: "text-purple-300",
+        borderColor: "border-purple-500/30",
+      }
       : {
-          textColor: "text-cyan-300",
-          borderColor: "border-cyan-500/30",
-        };
+        textColor: "text-cyan-300",
+        borderColor: "border-cyan-500/30",
+      };
   };
 
   const getStatusInfo = (status: Project["status"]) => {
@@ -99,11 +99,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         className="absolute inset-0 rounded-xl overflow-hidden bg-gray-800"
         style={{ viewTransitionName: `project-image-${project.id}` }}
       >
-        {imageError ? (
-          <div className="w-full h-full flex flex-col items-center justify-center text-gray-500">
-            <ImageIcon className="w-16 h-16 mb-2" />
-            <span>Image failed to load</span>
-          </div>
+        {!project.imageUrl || imageError ? (
+          <StatusPlaceholder status={project.status} variant="card" />
         ) : (
           <Image
             src={project.imageUrl}

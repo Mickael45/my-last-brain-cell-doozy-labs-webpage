@@ -29,3 +29,6 @@ dist-ssr
 package-lock.json
 .next
 .env
+
+# Local project data (copy from scripts/new-project.example.json)
+scripts/new-project.json

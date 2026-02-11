@@ -22,6 +22,7 @@ import Image from "next/image";
 import InteractiveCard from "./InteractiveCard";
 import DetailBackground from "./DetailBackground";
 import ProjectTasks from "./ProjectTasks";
+import StatusPlaceholder from "./StatusPlaceholder";
 import { getTechCategory, getCategoryStyle, techDescriptions } from "@/app/project/[id]/helpers";
 
 export default function ProjectDetailClient({
@@ -106,7 +107,7 @@ export default function ProjectDetailClient({
                     Launch Project
                   </a>
 
-                  <a href={`https://github.com/Mickael45/${project.githubRepo}`}  target="_blank"
+                  <a href={`https://github.com/Mickael45/${project.githubRepo}`} target="_blank"
                     rel="noopener noreferrer" className="relative inline-flex items-center gap-2 px-8 py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
                     <FaGithub className="w-5 h-5" />
                     View Code
@@ -139,12 +140,10 @@ export default function ProjectDetailClient({
                       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
                     </>
                   ) : (
-                    <div className="w-full h-full bg-gray-800/50 border-2 border-dashed border-gray-700 flex items-center justify-center">
-                      <div className="text-center text-gray-500">
-                        <Layers className="w-12 h-12 mx-auto mb-2" />
-                        <p>No Image Available</p>
-                      </div>
-                    </div>
+                    <StatusPlaceholder
+                      status={project.status}
+                      variant="detail"
+                    />
                   )}
                 </div>
               </div>
@@ -323,9 +322,8 @@ export default function ProjectDetailClient({
                 </p>
               </div>
               <div
-                className={`grid md:grid-cols-2 lg:grid-cols-${
-                  project.metrics.mrr ? 4 : 3
-                } gap-8 animate-fade-up`}
+                className={`grid md:grid-cols-2 lg:grid-cols-${project.metrics.mrr ? 4 : 3
+                  } gap-8 animate-fade-up`}
               >
                 <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl border border-cyan-500/20 animate-fade-up-scale">
                   <Users className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
@@ -378,7 +376,7 @@ export default function ProjectDetailClient({
           </section>
         )}
 
-                {/* Live Tasks Section */}
+        {/* Live Tasks Section */}
         {tasks && tasks.length > 0 && <ProjectTasks tasks={tasks} />}
 
         {/* Screenshots Section */}

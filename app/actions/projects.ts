@@ -1,16 +1,16 @@
-import { cacheLife, cacheTag } from "next/cache";
 import type { Category, Project } from "../../types";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import { mapProject } from "../../lib/projects";
+import { mockProjects } from "../../data/projects";
+import { cache } from "react";
 
-/** Fetch all projects sorted by sortOrder — cached via "use cache" (ISR). */
-export async function getProjects(): Promise<Project[]> {
-  "use cache";
-  cacheLife("static");
-  cacheTag("projects");
-
+/** Fetch all projects sorted by sortOrder.
+ *  Wrapped in React `cache()` for per-request deduplication (multiple
+ *  call-sites in the same render share one Convex round-trip).
+ *  Actual ISR caching is handled by `revalidate` on the consuming pages. */
+export const getProjects = cache(async (): Promise<Project[]> => {
   try {
     const docs = await fetchQuery(api.projects.list, {});
     return docs.map((doc) =>
@@ -30,24 +30,19 @@ export async function getProjects(): Promise<Project[]> {
       }),
     );
   } catch {
-    return [];
+    return mockProjects;
   }
-}
+});
 
-/** Fetch a single project by Convex ID — cached per id via "use cache". */
-export async function getProjectById(
-  id: string,
-): Promise<Project | null> {
-  "use cache";
-  cacheLife("static");
-  cacheTag("projects", `project-${id}`);
-
-  try {
-    const doc = await fetchQuery(api.projects.get, {
-      id: id as Id<"projects">,
-    });
-    return doc
-      ? mapProject({
+/** Fetch a single project by Convex ID — deduplicated per request via `cache()`. */
+export const getProjectById = cache(
+  async (id: string): Promise<Project | null> => {
+    try {
+      const doc = await fetchQuery(api.projects.get, {
+        id: id as Id<"projects">,
+      });
+      return doc
+        ? mapProject({
           ...doc,
           categories: (doc.categories || []).map((c) => {
             switch (c) {
@@ -61,8 +56,9 @@ export async function getProjectById(
             }
           }) as Category[],
         })
-      : null;
-  } catch {
-    return null;
-  }
-}
+        : null;
+    } catch {
+      return null;
+    }
+  },
+);

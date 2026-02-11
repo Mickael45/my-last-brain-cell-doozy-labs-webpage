@@ -81,7 +81,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const statusInfo = getStatusInfo(project.status);
   const typeStyling = getTypeStyling(project.type);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    // If there's an href and it's a modified click (Cmd/Ctrl/Shift/middle-click), let the browser handle it
+    if (href && (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1)) {
+      return;
+    }
+    
+    // Prevent default navigation for regular clicks
+    e.preventDefault();
+    
     if (href) {
       router.push(href);
     } else if (onClick) {
@@ -89,11 +97,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     }
   };
 
-  const Card = (
-    <div
-      onClick={handleClick}
-      className="cursor-pointer group relative rounded-xl overflow-hidden h-[450px] transition-all duration-300 hover:scale-[1.02] active:scale-95"
-    >
+  const CardContent = (
+    <>
       {/* Background Image */}
       <div
         className="absolute inset-0 rounded-xl overflow-hidden bg-gray-800"
@@ -187,6 +192,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         </div>
       </div>
+    </>
+  );
+
+  const Card = href ? (
+    <a
+      href={href}
+      onClick={handleClick}
+      className="block cursor-pointer group relative rounded-xl overflow-hidden h-[450px] transition-all duration-300 hover:scale-[1.02] active:scale-95"
+    >
+      {CardContent}
+    </a>
+  ) : (
+    <div
+      onClick={handleClick}
+      className="cursor-pointer group relative rounded-xl overflow-hidden h-[450px] transition-all duration-300 hover:scale-[1.02] active:scale-95"
+    >
+      {CardContent}
     </div>
   );
 

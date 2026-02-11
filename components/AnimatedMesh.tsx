@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from "react";
 const AnimatedMesh: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePosition = useRef({ x: 0, y: 0 });
-  const animationFrameId = useRef<number>();
+  const animationFrameId = useRef<number>(undefined);
 
   useEffect(() => {
     const canvas = canvasRef.current;

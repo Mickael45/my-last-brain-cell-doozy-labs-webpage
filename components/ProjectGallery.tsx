@@ -4,7 +4,6 @@ import { Grid, Filter } from "lucide-react";
 import ProjectCard from "./ProjectCard";
 import { Project } from "../types";
 import { useReveal } from "../lib/useReveal";
-import { CATEGORIES } from "@/lib/constants";
 
 interface ProjectGalleryProps {
   projects: Project[];
@@ -13,17 +12,11 @@ interface ProjectGalleryProps {
 const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
   const [showAll, setShowAll] = useState(false);
   const [activeTypeFilter, setActiveTypeFilter] = useState<string>("All");
-  const [activeCategoryFilter, setActiveCategoryFilter] = useState<string>("All");
 
   const typeOptions = ["All", "Forking Around", "Sass-y Solution"];
-  const categoryOptions = ["All", ...CATEGORIES];
 
   const filteredProjects = projects.filter((project) => {
-    const typeMatch = activeTypeFilter === "All" || project.type === activeTypeFilter;
-    const categoryMatch =
-      activeCategoryFilter === "All" ||
-      project.categories.includes(activeCategoryFilter as typeof CATEGORIES[number]);
-    return typeMatch && categoryMatch;
+    return activeTypeFilter === "All" || project.type === activeTypeFilter;
   });
 
   const displayedProjects = showAll
@@ -72,41 +65,21 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
           </p>
 
           {/* Filters */}
-          <div className="flex flex-col items-center justify-center gap-6 mb-12">
-            <div className="flex items-center justify-center gap-2">
-              <Filter className="w-5 h-5 text-gray-400 mr-2" />
-              <span className="text-gray-400 font-semibold mr-2">Type:</span>
-              {typeOptions.map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setActiveTypeFilter(type)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 active:scale-95 ${
-                    activeTypeFilter === type
-                      ? "bg-gradient-to-r from-pink-500 to-cyan-500 text-white shadow-lg shadow-pink-500/25"
-                      : "bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white"
+          <div className="flex items-center justify-center gap-2 mb-12">
+            <Filter className="w-5 h-5 text-gray-400 mr-2" />
+            <span className="text-gray-400 font-semibold mr-2">Type:</span>
+            {typeOptions.map((type) => (
+              <button
+                key={type}
+                onClick={() => setActiveTypeFilter(type)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 active:scale-95 ${activeTypeFilter === type
+                    ? "bg-gradient-to-r from-pink-500 to-cyan-500 text-white shadow-lg shadow-pink-500/25"
+                    : "bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white"
                   }`}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-            <div className="flex items-center justify-center gap-2 flex-wrap">
-              <Filter className="w-5 h-5 text-gray-400 mr-2" />
-              <span className="text-gray-400 font-semibold mr-2">Category:</span>
-              {categoryOptions.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setActiveCategoryFilter(category)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 active:scale-95 ${
-                    activeCategoryFilter === category
-                      ? "bg-gradient-to-r from-purple-500 to-orange-500 text-white shadow-lg shadow-purple-500/25"
-                      : "bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
+              >
+                {type}
+              </button>
+            ))}
           </div>
         </div>
 

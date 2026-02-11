@@ -20,7 +20,7 @@ export default function InteractiveCard({
   ...rest
 }: InteractiveCardProps) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const frame = useRef<number>();
+  const frame = useRef<number>(undefined);
   const [pos, setPos] = useState({ xPct: 50, yPct: 50 });
   const [hovered, setHovered] = useState(false);
   const resetTimeout = useRef<number | null>(null);

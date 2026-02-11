@@ -1,16 +1,19 @@
-"use server";
-
+import { cacheLife, cacheTag } from "next/cache";
 import type { GitHubIssue } from "@/types";
-import fetch from "node-fetch";
 
+/** Fetch open GitHub issues for a repo — cached via "use cache" (ISR). */
 export async function getGitHubIssues(
   repoName: string,
 ): Promise<GitHubIssue[]> {
+  "use cache";
+  cacheLife("issues");
+  cacheTag("github-issues", `issues-${repoName}`);
+
   if (!process.env.GITHUB_PAT) {
     console.error("GITHUB_PAT is not set in the environment variables.");
     throw new Error("Server configuration error: Missing GitHub PAT.");
   }
-  console.log("Github", process.env.GITHUB_PAT)
+
   try {
     const response = await fetch(
       `https://api.github.com/repos/${repoName}/issues`,
@@ -39,7 +42,6 @@ export async function getGitHubIssues(
       "An unexpected error occurred fetching GitHub issues:",
       error,
     );
-    // Re-throw a generic error to avoid leaking implementation details to the client.
     throw new Error("An unexpected error occurred while fetching tasks.");
   }
 }

@@ -6,7 +6,7 @@ import { FaGithub, FaLinkedin, FaBriefcase } from "react-icons/fa";
 
 const Footer: React.FC = () => {
   const socialLinks = [
-    { icon: FaGithub, href: "https://github.com", label: "GitHub" },
+    { icon: FaGithub, href: "https://github.com/Mickael45", label: "GitHub" },
     { icon: FaBriefcase, href: "https://www.mickael-gomes.com", label: "Portfolio" },
     { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
   ];

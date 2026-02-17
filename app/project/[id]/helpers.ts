@@ -57,6 +57,7 @@ const frontend = [
   { name: "Recharts", description: "A composable charting library built on React components and powered by D3." },
   { name: "React Context API", description: "A React feature for sharing state across the component tree without prop drilling." },
   { name: "Astro", description: "A web framework for building fast, content-driven websites using an islands architecture." },
+  { name: "CustomTkinter", description: "A modern and customizable Python UI library based on Tkinter, offering beautiful widgets and themes." },
 ];
 
 const backend = [
@@ -73,6 +74,8 @@ const backend = [
   { name: "Convex", description: "A full-stack TypeScript development platform with a real-time reactive database." },
   { name: "Convex Auth", description: "An authentication solution built for Convex applications." },
   { name: "Express", description: "A minimal and flexible Node.js web application framework for building APIs and web apps." },
+  { name: "Nuitka", description: "A Python compiler that converts Python code to C/C++ and creates standalone executables with improved performance." },
+  { name: "Watchdog", description: "A Python library and shell utilities to monitor file system events in real-time." },
 ];
 
 const mobile = [
@@ -109,6 +112,7 @@ const cloud = [
   { name: "AWS S3", description: "Amazon Simple Storage Service is a service offered by Amazon Web Services that provides object storage through a web service interface." },
   { name: "Docker", description: "A set of platform as a service products that use OS-level virtualization to deliver software in packages called containers." },
   { name: "Vercel", description: "A cloud platform for static sites and Serverless Functions that fits perfectly with your workflow." },
+  { name: "GitHub Actions", description: "A CI/CD platform for automating build, test, and deployment workflows directly from GitHub repositories." },
 ];
 
 const testing = [
@@ -128,6 +132,7 @@ const ai = [
   { name: "TensorFlow.js", description: "A library for machine learning in JavaScript, enabling training and deployment of ML models in the browser and Node.js." },
   { name: "Upscaler.js", description: "A JavaScript library for upscaling images using neural network models." },
   { name: "Ollama", description: "A tool for running large language models locally on your machine." },
+  { name: "Astropy", description: "A community Python library for astronomy, providing tools for astronomical calculations and data analysis." },
 ];
 
 const ide = [

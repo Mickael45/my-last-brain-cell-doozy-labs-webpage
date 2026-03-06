@@ -58,6 +58,7 @@ const frontend = [
   { name: "React Context API", description: "A React feature for sharing state across the component tree without prop drilling." },
   { name: "Astro", description: "A web framework for building fast, content-driven websites using an islands architecture." },
   { name: "CustomTkinter", description: "A modern and customizable Python UI library based on Tkinter, offering beautiful widgets and themes." },
+  { name: "HTMX", description: "A lightweight library that lets you build dynamic interfaces with simple HTML attributes and server-rendered partials—no heavy JS framework." },
 ];
 
 const backend = [
@@ -76,6 +77,11 @@ const backend = [
   { name: "Express", description: "A minimal and flexible Node.js web application framework for building APIs and web apps." },
   { name: "Nuitka", description: "A Python compiler that converts Python code to C/C++ and creates standalone executables with improved performance." },
   { name: "Watchdog", description: "A Python library and shell utilities to monitor file system events in real-time." },
+  { name: "FastAPI", description: "A modern, fast web framework for building APIs with Python based on standard type hints." },
+  { name: "Jinja2", description: "A fast, expressive, extensible templating engine for Python, often used for server-rendered HTML." },
+  { name: "PyMuPDF", description: "A high-performance Python library for reading, rendering, and manipulating PDF documents (fitz)." },
+  { name: "fpdf2", description: "A pure-Python library for generating PDF documents with minimal dependencies." },
+  { name: "LemonSqueezy", description: "A payment and licensing platform for digital products and SaaS, with APIs for subscriptions and license keys." },
 ];
 
 const mobile = [
@@ -98,6 +104,7 @@ const databases = [
   { name: "S3", description: "Amazon Simple Storage Service is a service offered by Amazon Web Services that provides object storage through a web service interface." },
   { name: "Apollo", description: "A platform for building a supergraph, a unified network of all your data, services, and capabilities." },
   { name: "Redis", description: "An in-memory data structure store, used as a database, cache, and message broker." },
+  { name: "SQLite", description: "A lightweight, file-based relational database engine that requires no separate server—ideal for local and embedded apps." },
 ];
 
 const cloud = [
@@ -133,11 +140,18 @@ const ai = [
   { name: "Upscaler.js", description: "A JavaScript library for upscaling images using neural network models." },
   { name: "Ollama", description: "A tool for running large language models locally on your machine." },
   { name: "Astropy", description: "A community Python library for astronomy, providing tools for astronomical calculations and data analysis." },
+  { name: "Docling", description: "A document understanding library that converts PDFs and images into structured content, with OCR and layout analysis." },
 ];
 
 const ide = [
   { name: "VS Code", description: "A code editor redefined and optimized for building and debugging modern web and cloud applications." },
   { name: "Cursor", description: "An AI-first code editor." },
+];
+
+const desktopAndBuild = [
+  { name: "pystray", description: "A Python library for creating system tray icons and menus on Windows, macOS, and Linux." },
+  { name: "PyInstaller", description: "A tool that bundles Python applications into standalone executables for distribution without a Python install." },
+  { name: "Inno Setup", description: "A free Windows installer creator used to build setup executables with a wizard-style UI and optional silent install." },
 ];
 
 export const allTech = [
@@ -150,6 +164,7 @@ export const allTech = [
   ...testing,
   ...ai,
   ...ide,
+  ...desktopAndBuild,
 ];
 
 export const techDescriptions = allTech.reduce((acc, tech) => {
@@ -167,6 +182,7 @@ export const getTechCategory = (tech: string) => {
   if (testing.some((t) => t.name === tech)) return "Testing";
   if (ai.some((t) => t.name === tech)) return "AI/ML";
   if (ide.some((t) => t.name === tech)) return "IDE";
+  if (desktopAndBuild.some((t) => t.name === tech)) return "Desktop & Build";
   return "Other";
 };
 
@@ -243,6 +259,14 @@ export const getCategoryStyle = (category: string) => {
         gradient: "from-indigo-500 to-violet-500",
         bg: "bg-indigo-500/10",
         border: "border-indigo-400/30",
+      };
+    case "Desktop & Build":
+      return {
+        shadow: "shadow-amber-500/20",
+        text: "text-amber-300",
+        gradient: "from-amber-500 to-orange-500",
+        bg: "bg-amber-500/10",
+        border: "border-amber-400/30",
       };
     default:
       return {

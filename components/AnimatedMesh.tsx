@@ -1,12 +1,31 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const AnimatedMesh: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePosition = useRef({ x: 0, y: 0 });
-  const animationFrameId = useRef<number>(undefined);
+  const animationFrameId = useRef<number | null>(null);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncEnabled = () => {
+      setEnabled(!media.matches && window.innerWidth >= 768);
+    };
+
+    syncEnabled();
+    window.addEventListener("resize", syncEnabled);
+    media.addEventListener?.("change", syncEnabled);
+
+    return () => {
+      window.removeEventListener("resize", syncEnabled);
+      media.removeEventListener?.("change", syncEnabled);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -14,37 +33,49 @@ const AnimatedMesh: React.FC = () => {
     if (!ctx) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      ctx.scale(dpr, dpr);
+    const viewport = {
+      width: window.innerWidth,
+      height: window.innerHeight,
     };
 
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    const resizeCanvas = () => {
+      viewport.width = window.innerWidth;
+      viewport.height = window.innerHeight;
+      canvas.width = viewport.width * dpr;
+      canvas.height = viewport.height * dpr;
+      canvas.style.width = `${viewport.width}px`;
+      canvas.style.height = `${viewport.height}px`;
+      // Reset matrix on each resize so scaling never compounds.
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      rebuildPoints();
+    };
 
-    const gridSize = 30;
+    const gridSize = 44;
     const points: Array<{
       x: number;
       y: number;
       originalX: number;
       originalY: number;
     }> = [];
-    const cols = Math.ceil(window.innerWidth / gridSize) + 1;
+    let cols = 0;
 
-    for (let x = 0; x <= window.innerWidth; x += gridSize) {
-      for (let y = 0; y <= window.innerHeight; y += gridSize) {
-        points.push({
-          x,
-          y,
-          originalX: x,
-          originalY: y,
-        });
+    const rebuildPoints = () => {
+      points.length = 0;
+      cols = Math.ceil(viewport.width / gridSize) + 1;
+      for (let x = 0; x <= viewport.width; x += gridSize) {
+        for (let y = 0; y <= viewport.height; y += gridSize) {
+          points.push({
+            x,
+            y,
+            originalX: x,
+            originalY: y,
+          });
+        }
       }
-    }
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
     const updatePoints = (time: number) => {
       points.forEach((point) => {
@@ -122,13 +153,25 @@ const AnimatedMesh: React.FC = () => {
       });
     };
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const time = Date.now() * 0.001;
+    const targetFrameTime = 1000 / 30;
+    let lastFrameTime = 0;
+    let isVisible = true;
 
-      updatePoints(time);
-      drawConnections();
-      drawPoints();
+    const animate = (timestamp: number) => {
+      if (!isVisible) {
+        animationFrameId.current = null;
+        return;
+      }
+
+      if (timestamp - lastFrameTime >= targetFrameTime) {
+        lastFrameTime = timestamp;
+        ctx.clearRect(0, 0, viewport.width, viewport.height);
+        const time = timestamp * 0.001;
+
+        updatePoints(time);
+        drawConnections();
+        drawPoints();
+      }
 
       animationFrameId.current = requestAnimationFrame(animate);
     };
@@ -141,16 +184,28 @@ const AnimatedMesh: React.FC = () => {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    animate();
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      const nextVisible = entries.some((entry) => entry.isIntersecting);
+      isVisible = nextVisible;
+      if (nextVisible && animationFrameId.current === null) {
+        animationFrameId.current = requestAnimationFrame(animate);
+      }
+    });
+    visibilityObserver.observe(canvas);
+    animationFrameId.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("mousemove", handleMouseMove);
-      if (animationFrameId.current) {
+      visibilityObserver.disconnect();
+      if (animationFrameId.current !== null) {
         cancelAnimationFrame(animationFrameId.current);
       }
+      animationFrameId.current = null;
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <canvas

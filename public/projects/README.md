@@ -12,16 +12,16 @@ public/projects/
 
 **URLs in your project data:** use paths from the site root (they work in dev and production):
 
-- `imageUrl`: `/projects/<project-slug>/hero.png`
-- `screenshots`: `["/projects/<project-slug>/screenshot-1.png", "/projects/<project-slug>/screenshot-2.png"]`
+- `imageUrl`: `/projects/<project-slug>/hero.webp`
+- `screenshots`: `["/projects/<project-slug>/screenshot-1.webp", "/projects/<project-slug>/screenshot-2.webp"]`
 
 Example for a project with slug `joblens-ai`:
 
 ```json
-"imageUrl": "/projects/joblens-ai/hero.png",
+"imageUrl": "/projects/joblens-ai/hero.webp",
 "screenshots": [
-  "/projects/joblens-ai/screenshot-1.png",
-  "/projects/joblens-ai/screenshot-2.png"
+  "/projects/joblens-ai/screenshot-1.webp",
+  "/projects/joblens-ai/screenshot-2.webp"
 ]
 ```
 

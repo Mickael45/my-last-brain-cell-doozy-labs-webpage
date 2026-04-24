@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 // Client component import is allowed; Next.js will split automatically.
 import DevOnlySeed from "../components/DevOnlySeed";
+import RevealObserver from "../components/RevealObserver";
 
 export const metadata: Metadata = {
   title: {
@@ -30,22 +31,22 @@ export const metadata: Metadata = {
       "One brain cell. Infinite bad ideas. Shower thoughts turned shipped products.",
     images: [
       {
-        url: "/icon.png",
-        width: 512,
-        height: 512,
-        alt: "Doozy Labs — a neuron in a beaker",
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Doozy Labs portfolio cover image",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "My Last Brain Cell Doozy Labs",
     description:
       "One brain cell. Infinite bad ideas. Shower thoughts turned shipped products.",
-    images: ["/icon.png"],
+    images: ["/og.png"],
   },
   icons: {
-    icon: "/icon.png",
+    icon: "/favicon-32.png",
     apple: "/apple-icon.png",
   },
 };
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className="bg-gray-900" suppressHydrationWarning>
       <body className="min-h-screen bg-gray-900 text-white">
         {children}
+        <RevealObserver />
         {/* Dev utility */}
         <DevOnlySeed />
       </body>

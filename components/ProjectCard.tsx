@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   Users,
@@ -11,7 +13,6 @@ import {
 } from "lucide-react";
 import { Project } from "../types";
 import Image from "next/image";
-import { useViewTransitionRouter } from "../lib/useViewTransitionRouter";
 import StatusPlaceholder from "./StatusPlaceholder";
 
 interface ProjectCardProps {
@@ -25,7 +26,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   href,
   onClick,
 }) => {
-  const router = useViewTransitionRouter();
+  const router = useRouter();
   const [imageError, setImageError] = useState(false);
 
   const getTypeStyling = (type: string) => {
@@ -81,19 +82,43 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const statusInfo = getStatusInfo(project.status);
   const typeStyling = getTypeStyling(project.type);
 
-  const handleClick = (e: React.MouseEvent) => {
-    // If there's an href and it's a modified click (Cmd/Ctrl/Shift/middle-click), let the browser handle it
-    if (href && (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1)) {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    // Card without href delegates to an optional click callback.
+    if (!href) {
+      onClick?.(project);
       return;
     }
 
-    // Prevent default navigation for regular clicks
-    e.preventDefault();
+    // If there's an href and it's a modified click (Cmd/Ctrl/Shift/middle-click), let the browser handle it
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) {
+      return;
+    }
 
-    if (href) {
+    if (typeof document.startViewTransition === "function") {
+      // Intercept only normal left clicks to keep native open-in-new-tab behavior.
+      e.preventDefault();
+      document.startViewTransition(() => {
+        router.push(href);
+      });
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+
+    if (!href) {
+      e.preventDefault();
+      onClick?.(project);
+      return;
+    }
+
+    e.preventDefault();
+    if (typeof document.startViewTransition === "function") {
+      document.startViewTransition(() => {
+        router.push(href);
+      });
+    } else {
       router.push(href);
-    } else if (onClick) {
-      onClick(project);
     }
   };
 
@@ -200,16 +225,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   );
 
   const Card = href ? (
-    <a
+    <Link
       href={href}
       onClick={handleClick}
       className="block cursor-pointer group relative rounded-xl overflow-hidden h-[450px] transition-all duration-300 hover:scale-[1.02] active:scale-95"
     >
       {CardContent}
-    </a>
+    </Link>
   ) : (
     <div
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
       className="cursor-pointer group relative rounded-xl overflow-hidden h-[450px] transition-all duration-300 hover:scale-[1.02] active:scale-95"
     >
       {CardContent}

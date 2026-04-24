@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaGithub } from "react-icons/fa";
+import dynamic from "next/dynamic";
 import {
   ArrowLeft,
   ExternalLink,
@@ -16,15 +16,19 @@ import {
   Users,
   DollarSign,
   Info,
+  Github,
 } from "lucide-react";
 import type { Project, GitHubIssue } from "../types";
 import Image from "next/image";
 import InteractiveCard from "./InteractiveCard";
 import DetailBackground from "./DetailBackground";
-import ProjectTasks from "./ProjectTasks";
 import StatusPlaceholder from "./StatusPlaceholder";
-import ImageLightbox from "./ImageLightbox";
 import { getTechCategory, getCategoryStyle, techDescriptions } from "@/app/project/[id]/helpers";
+
+const ProjectTasks = dynamic(() => import("./ProjectTasks"), { ssr: false });
+const ImageLightbox = dynamic(() => import("./ImageLightbox"), {
+  ssr: false,
+});
 
 export default function ProjectDetailClient({
   project,
@@ -122,7 +126,7 @@ export default function ProjectDetailClient({
                   {project.githubRepo &&
                     <a href={`https://github.com/Mickael45/${project.githubRepo}`} target="_blank"
                       rel="noopener noreferrer" className="relative inline-flex items-center gap-2 px-8 py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
-                      <FaGithub className="w-5 h-5" />
+                      <Github className="w-5 h-5" />
                       View Code
                       <span className="absolute inset-0 rounded-xl ring-0 hover:animate-border-pulse" />
                     </a>

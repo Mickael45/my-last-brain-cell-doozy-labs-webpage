@@ -23,6 +23,11 @@ interface ConvexProjectDoc {
   githubRepo?: string;
 }
 
+function normalizeProjectAssetUrl(url: string): string {
+  if (!url || !url.startsWith("/projects/")) return url;
+  return url.replace(/\.(png|jpe?g|avif)$/i, ".webp");
+}
+
 /** Returns true if Convex env is configured; logs a warning once if not. */
 let warned = false;
 export function assertConvexEnv(): boolean {
@@ -50,8 +55,8 @@ export function mapProject(doc: ConvexProjectDoc): Project {
     tagline: doc.tagline,
     description: doc.description,
     projectUrl: doc.projectUrl,
-    imageUrl: doc.imageUrl,
-    screenshots: doc.screenshots || [],
+    imageUrl: normalizeProjectAssetUrl(doc.imageUrl),
+    screenshots: (doc.screenshots || []).map(normalizeProjectAssetUrl),
     challenges: doc.challenges || [],
     solutions: doc.solutions || [],
     metrics: doc.metrics,

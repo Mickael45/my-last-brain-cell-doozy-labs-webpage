@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Clock, Package, XCircle, ImageIcon } from "lucide-react";
+import { Clock, Package, XCircle, Image as ImageIcon } from "lucide-react";
 import type { Project } from "../types";
 
 interface StatusPlaceholderProps {

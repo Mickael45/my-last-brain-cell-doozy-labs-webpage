@@ -14,13 +14,14 @@ export const revalidate = 3600;
 
 export default async function HomePage() {
   const projects: Project[] = await getProjects();
+  const featuredProjects = projects.filter((project) => project.isFeatured);
 
   return (
     <>
       <GoogleAnalytics gaId="G-JQWX179K9Q" />
       <main className="min-h-screen bg-gray-900">
         <HeroSection />
-        <FeaturedProjects projects={projects} />
+        <FeaturedProjects featuredProjects={featuredProjects} />
         <ProjectGallery projects={projects} />
         <div id="about">
           <AboutSection />

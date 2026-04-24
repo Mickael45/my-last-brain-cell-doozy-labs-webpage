@@ -1,6 +1,4 @@
-"use client";
 import React from "react";
-import { useReveal } from "../lib/useReveal";
 import { Brain, Lightbulb, Rocket, Code2 } from "lucide-react";
 
 const AboutSection: React.FC = () => {
@@ -31,21 +29,15 @@ const AboutSection: React.FC = () => {
     },
   ];
 
-  // Reveal hooks
-  const header = useReveal<HTMLDivElement>();
-  const story = useReveal<HTMLDivElement>();
-  const principlesReveal = useReveal<HTMLDivElement>();
-
   const PrincipleCard: React.FC<{
     principle: (typeof principles)[number];
     index: number;
   }> = ({ principle, index }) => {
-    const { ref, visible } = useReveal<HTMLDivElement>();
     return (
       <div
-        ref={ref}
-        className={`flex gap-4 p-6 rounded-xl bg-gradient-to-r from-gray-800/50 to-gray-700/30 border border-gray-600/30 backdrop-blur-sm hover:border-cyan-500/30 transition-all duration-300 opacity-0 ${visible && "animate-fade-up"}`}
-        style={{ animationDelay: `${index * 100 + 100}ms` }}
+        data-reveal="up"
+        className="flex gap-4 p-6 rounded-xl bg-gradient-to-r from-gray-800/50 to-gray-700/30 border border-gray-600/30 backdrop-blur-sm hover:border-cyan-500/30 transition-all duration-300"
+        style={{ transitionDelay: `${index * 100 + 100}ms` }}
       >
         <div className="flex-shrink-0">
           <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 flex items-center justify-center">
@@ -69,8 +61,8 @@ const AboutSection: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4">
         <div
-          ref={header.ref}
-          className={`text-center mb-16 opacity-0 ${header.visible && "animate-fade-up"}`}
+          data-reveal="up"
+          className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <Brain className="w-6 h-6 text-orange-400" />
@@ -88,8 +80,8 @@ const AboutSection: React.FC = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Story */}
           <div
-            ref={story.ref}
-            className={`space-y-6 opacity-0 ${story.visible && "animate-fade-right"}`}
+            data-reveal="right"
+            className="space-y-6"
           >
             <p className="text-lg text-gray-300 leading-relaxed">
               This digital playground was born at 3 AM during a particularly
@@ -118,8 +110,9 @@ const AboutSection: React.FC = () => {
 
           {/* Principles */}
           <div
-            ref={principlesReveal.ref}
-            className={`space-y-6 opacity-0 ${principlesReveal.visible && "animate-fade-left"}`}
+            data-reveal="left"
+            className="space-y-6"
+            style={{ transitionDelay: "120ms" }}
           >
             {principles.map((p, i) => (
               <PrincipleCard key={i} principle={p} index={i} />

@@ -1,6 +1,4 @@
-"use client";
 import React from "react";
-import { useReveal } from "../lib/useReveal";
 import { Mail } from "lucide-react";
 
 const CONTACT_EMAIL = "mickaelgomesconsulting@gmail.com"; // Change if needed
@@ -10,14 +8,12 @@ const BODY = encodeURIComponent(
 );
 
 const ContactSection: React.FC = () => {
-  const header = useReveal<HTMLDivElement>();
-  const panel = useReveal<HTMLDivElement>();
   return (
     <section className="py-20 bg-gray-900" id="contact">
       <div className="max-w-4xl mx-auto px-4">
         <div
-          ref={header.ref}
-          className={`text-center mb-16 opacity-0 ${header.visible && "animate-fade-up"}`}
+          data-reveal="up"
+          className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <Mail className="w-6 h-6 text-lime-400" />
@@ -37,9 +33,9 @@ const ContactSection: React.FC = () => {
           </p>
         </div>
         <div
-          ref={panel.ref}
-          className={`bg-gradient-to-br from-gray-800/50 to-gray-700/30 backdrop-blur-sm border border-gray-600/30 rounded-2xl p-10 flex flex-col items-center text-center gap-8 hover:border-lime-500/30 transition-all duration-300 opacity-0 ${panel.visible && "animate-fade-up"}`}
-          style={{ animationDelay: panel.visible ? "200ms" : undefined }}
+          data-reveal="up"
+          className="bg-gradient-to-br from-gray-800/50 to-gray-700/30 backdrop-blur-sm border border-gray-600/30 rounded-2xl p-10 flex flex-col items-center text-center gap-8 hover:border-lime-500/30 transition-all duration-300"
+          style={{ transitionDelay: "200ms" }}
         >
           <div className="space-y-4 max-w-xl">
             <h3 className="text-2xl font-semibold text-white">

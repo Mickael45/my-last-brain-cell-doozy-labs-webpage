@@ -291,6 +291,27 @@ body {
 
 /* Utility: delay variables via arbitrary values e.g. [animation-delay:400ms] */
 
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out;
+}
+
+[data-reveal="left"] {
+  transform: translateX(40px);
+}
+
+[data-reveal="right"] {
+  transform: translateX(-40px);
+}
+
+[data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
 @media (prefers-reduced-motion: reduce) {
 
   *:where(.animate-fade-up,
@@ -313,6 +334,12 @@ body {
     .animate-status-icon-pulse) {
     animation: none !important;
     transition: none !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 

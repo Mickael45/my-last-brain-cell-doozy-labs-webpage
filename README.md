@@ -31,7 +31,7 @@ If you found a typo—congratulations on your attention to detail. I’ll fix it
 - Next.js App Router (ISR, route segment features)
 - Convex (data layer + mutations / queries)
 - Tailwind CSS (utility-driven styling + custom animations)
-- Lucide + react-icons (iconography)
+- Lucide (iconography)
 - View Transition–style animations for detail navigation
 - GitHub API (optional live task/issues section)
 
@@ -57,10 +57,12 @@ Create a `.env.local`:
 CONVEX_DEPLOYMENT=dev:YOUR-DEPLOYMENT
 NEXT_PUBLIC_CONVEX_URL=https://your-instance.convex.cloud
 GITHUB_PAT=ghp_... (optional, enables live issues)
+REVALIDATE_TOKEN=your-secret-token (optional, enables protected tag refresh endpoint)
 ```
 
 `NEXT_PUBLIC_CONVEX_URL` is required for static param generation.  
 `GITHUB_PAT` only needed if you want issue lists on project detail pages.
+`REVALIDATE_TOKEN` enables `POST /api/revalidate/projects` to force-refresh the `projects` cache tag.
 
 ---
 

@@ -1,7 +1,11 @@
 "use client";
 import React from "react";
+import dynamic from "next/dynamic";
 import { ChevronDown } from "lucide-react";
-import AnimatedMesh from "./AnimatedMesh";
+
+const AnimatedMesh = dynamic(() => import("./AnimatedMesh"), {
+  ssr: false,
+});
 
 // Deterministic pseudo-random generator so that server & client render match
 // (Using Math.random in the render path caused hydration mismatches.)

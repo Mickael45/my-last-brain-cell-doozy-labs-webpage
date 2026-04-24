@@ -1,20 +1,16 @@
-"use client";
 import React from "react";
-import { useReveal } from "../lib/useReveal";
-import { Beaker } from "lucide-react";
-import { FaGithub, FaLinkedin, FaBriefcase } from "react-icons/fa";
+import { Beaker, Github, Linkedin, Briefcase } from "lucide-react";
 
 const Footer: React.FC = () => {
   const socialLinks = [
-    { icon: FaGithub, href: "https://github.com/Mickael45", label: "GitHub" },
-    { icon: FaBriefcase, href: "https://www.mickael-gomes.com", label: "Portfolio" },
-    { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
+    { icon: Github, href: "https://github.com/Mickael45", label: "GitHub" },
+    {
+      icon: Briefcase,
+      href: "https://www.mickael-gomes.com",
+      label: "Portfolio",
+    },
+    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
   ];
-
-  const left = useReveal<HTMLDivElement>();
-  const middle = useReveal<HTMLDivElement>();
-  const right = useReveal<HTMLDivElement>();
-  const bottom = useReveal<HTMLDivElement>();
 
   return (
     <footer className="bg-gray-900 border-t border-gray-800">
@@ -22,8 +18,8 @@ const Footer: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-8 items-center">
           {/* Logo and tagline */}
           <div
-            ref={left.ref}
-            className={`text-center md:text-left opacity-0 ${left.visible && "animate-fade-up"}`}
+            data-reveal="up"
+            className="text-center md:text-left"
           >
             <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
               <div className="p-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full border border-cyan-500/30 animate-rotate-slow">
@@ -44,9 +40,9 @@ const Footer: React.FC = () => {
 
           {/* Social links */}
           <div
-            ref={middle.ref}
-            className={`flex justify-center space-x-6 opacity-0 ${middle.visible && "animate-fade-up"}`}
-            style={{ animationDelay: middle.visible ? "100ms" : undefined }}
+            data-reveal="up"
+            className="flex justify-center space-x-6"
+            style={{ transitionDelay: "100ms" }}
           >
             {socialLinks.map((social, index) => (
               <a
@@ -64,9 +60,9 @@ const Footer: React.FC = () => {
 
           {/* Quick links */}
           <div
-            ref={right.ref}
-            className={`text-center md:text-right opacity-0 ${right.visible && "animate-fade-up"}`}
-            style={{ animationDelay: right.visible ? "200ms" : undefined }}
+            data-reveal="up"
+            className="text-center md:text-right"
+            style={{ transitionDelay: "200ms" }}
           >
             <div className="space-y-2">
               <a
@@ -93,9 +89,9 @@ const Footer: React.FC = () => {
 
         {/* Copyright */}
         <div
-          ref={bottom.ref}
-          className={`border-t border-gray-800 mt-12 pt-8 text-center opacity-0 ${bottom.visible && "animate-fade-up"}`}
-          style={{ animationDelay: bottom.visible ? "300ms" : undefined }}
+          data-reveal="up"
+          className="border-t border-gray-800 mt-12 pt-8 text-center"
+          style={{ transitionDelay: "300ms" }}
         >
           <p className="text-gray-500 text-sm">
             © 2025 ML-BCD-Labs - All rights reserved.

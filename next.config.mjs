@@ -2,8 +2,15 @@
 const nextConfig = {
   // Next.js 16: Turbopack is the default bundler — no CLI flag needed.
 
+  modularizeImports: {
+    "lucide-react": {
+      transform: "lucide-react/dist/esm/icons/{{kebabCase member}}",
+    },
+  },
+
   images: {
-    unoptimized: true,
+    unoptimized: false,
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",

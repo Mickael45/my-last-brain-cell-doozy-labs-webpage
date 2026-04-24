@@ -1,41 +1,19 @@
-"use client";
 import React from "react";
 import { Sparkles } from "lucide-react";
 import ProjectCard from "./ProjectCard";
 import { Project } from "../types";
-import { useReveal } from "../lib/useReveal";
 
 interface FeaturedProjectsProps {
-  projects: Project[];
+  featuredProjects: Project[];
 }
 
-const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
-  const featuredProjects = projects.filter((p) => p.isFeatured);
-
-  const header = useReveal<HTMLDivElement>();
-
-  const FeaturedCard: React.FC<{ project: Project; index: number }> = ({
-    project,
-    index,
-  }) => {
-    const { ref, visible } = useReveal<HTMLDivElement>();
-    return (
-      <div
-        ref={ref}
-        className={`opacity-0 ${visible && "animate-fade-up"}`}
-        style={{ animationDelay: `${index * 100}ms` }}
-      >
-        <ProjectCard project={project} href={`/project/${project.id}`} />
-      </div>
-    );
-  };
-
+const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ featuredProjects }) => {
   return (
     <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
       <div className="max-w-7xl mx-auto px-4">
         <div
-          ref={header.ref}
-          className={`text-center mb-16 opacity-0 ${header.visible && "animate-fade-up"}`}
+          data-reveal="up"
+          className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <Sparkles className="w-6 h-6 text-pink-400" />
@@ -55,7 +33,13 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProjects.map((project, index) => (
-            <FeaturedCard key={project.id} project={project} index={index} />
+            <div
+              key={project.id}
+              data-reveal="up"
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              <ProjectCard project={project} href={`/project/${project.id}`} />
+            </div>
           ))}
         </div>
       </div>

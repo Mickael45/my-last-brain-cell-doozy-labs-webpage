@@ -12,7 +12,6 @@ import {
   XCircle,
 } from "lucide-react";
 import { Project } from "../types";
-import Image from "next/image";
 import StatusPlaceholder from "./StatusPlaceholder";
 
 interface ProjectCardProps {
@@ -132,13 +131,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         {!project.imageUrl || imageError ? (
           <StatusPlaceholder status={project.status} variant="card" />
         ) : (
-          <Image
+          <img
             src={project.imageUrl}
             alt={project.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-300 group-hover:scale-110"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             loading="lazy"
+            decoding="async"
             onError={() => setImageError(true)}
           />
         )}

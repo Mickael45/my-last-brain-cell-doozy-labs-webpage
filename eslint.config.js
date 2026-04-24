@@ -15,7 +15,10 @@ export default tseslint.config(
         },
         rules: {
             ...nextPlugin.configs.recommended.rules,
-            ...nextPlugin.configs['core-web-vitals'].rules
+            ...nextPlugin.configs['core-web-vitals'].rules,
+            // We intentionally don't use next/image to avoid Vercel's paid
+            // image optimization endpoint (402 on quota exhaustion).
+            '@next/next/no-img-element': 'off'
         },
         languageOptions: {
             globals: {

@@ -19,7 +19,6 @@ import {
   Github,
 } from "lucide-react";
 import type { Project, GitHubIssue } from "../types";
-import Image from "next/image";
 import InteractiveCard from "./InteractiveCard";
 import DetailBackground from "./DetailBackground";
 import StatusPlaceholder from "./StatusPlaceholder";
@@ -138,12 +137,14 @@ export default function ProjectDetailClient({
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl group h-96">
                   {project.imageUrl && !imageError ? (
                     <>
-                      <Image
+                      <img
                         src={project.imageUrl}
                         alt={project.title}
                         width={1200}
                         height={600}
-                        priority
+                        loading="eager"
+                        fetchPriority="high"
+                        decoding="async"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         style={{
                           viewTransitionName: `project-image-${project.id}`,
@@ -406,13 +407,14 @@ export default function ProjectDetailClient({
                     onClick={() => openLightbox(index)}
                   >
                     <div className="relative rounded-xl overflow-hidden shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-tr before:from-white/5 before:via-transparent before:to-transparent before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
-                      <Image
+                      <img
                         src={screenshot}
                         alt={`${project.title} screenshot ${index + 1}`}
                         width={800}
                         height={400}
                         className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <span className="text-white/80 text-sm font-medium tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">

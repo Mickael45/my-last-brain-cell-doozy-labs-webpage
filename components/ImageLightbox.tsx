@@ -173,7 +173,6 @@ export default function ImageLightbox({
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={images[currentIndex]}
           alt={`${alt} screenshot ${currentIndex + 1}`}

@@ -8,19 +8,12 @@ const nextConfig = {
     },
   },
 
+  // Image optimization is disabled on purpose: Vercel's hosted image
+  // optimizer is a paid feature on the Hobby plan (returns 402 once you blow
+  // the free quota), and we don't need it for this portfolio. Assets are
+  // served as plain <img> tags pointing directly at /public.
   images: {
-    unoptimized: false,
-    formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-      },
-      {
-        protocol: "https",
-        hostname: "via.placeholder.com",
-      },
-    ],
+    unoptimized: true,
   },
 };
 

@@ -14,7 +14,7 @@ export const revalidate = 3600;
 
 export default async function HomePage() {
   const projects: Project[] = await getProjects();
-  const featuredProjects = projects.filter((project) => project.isFeatured).sort((a, b) => b.sortOrder - a.sortOrder);
+  const featuredProjects = projects.filter((project) => project.isFeatured).sort((a, b) => a.sortOrder - b.sortOrder);
 
   return (
     <>

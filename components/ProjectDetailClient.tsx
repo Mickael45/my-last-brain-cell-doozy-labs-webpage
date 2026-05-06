@@ -362,7 +362,7 @@ export default function ProjectDetailClient({
                     {project.metrics.impact}
                   </div>
                 </InteractiveCard>
-                {project.metrics.mrr && (
+                {typeof project.metrics.mrr === "number" && (
                   <InteractiveCard className="group text-center p-8 bg-gradient-to-br from-yellow-500/10 to-amber-500/10 rounded-2xl border border-yellow-500/20 animate-fade-up-scale [animation-delay:360ms]">
                     <DollarSign
                       className="w-12 h-12 text-yellow-400 mx-auto mb-4"

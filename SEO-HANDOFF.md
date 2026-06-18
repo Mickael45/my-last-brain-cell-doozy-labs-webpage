@@ -16,7 +16,19 @@ Framing note: pure SSG gives **no SEO ranking advantage over the old ISR** — c
 - ✅ Readable **slugs** + `getStaticPaths` (§1). Custom **404** (§8). Legacy Vite `index.html` deleted (§8).
 - ✅ `@astrojs/sitemap` → `sitemap-index.xml` (§3, sitemap half). **GA moved site-wide** into `BaseHead` (§9). **theme-color / color-scheme** added (§8). Per-page canonical + OG/Twitter (§2) via `BaseHead`; per-project `og:image` points at each project's `imageUrl` (interim form of §5).
 
-**Still open (Phase 3 — SEO pass):** `robots.txt` (§3); JSON-LD Person/Org/WebSite/Breadcrumb/CreativeWork (§4); build-time per-project OG image generation (§5); identity-link fixes (§6 — LinkedIn placeholder, GitHub casing, `rel="me"`); `astro:assets` images + alt/CWV (§7); web-app manifest (§8); keyword/title work (§10); category pages (§11, optional); post-launch checklist (§12).
+**Done (Phase 3 — SEO pass):**
+- ✅ `robots.txt` (§3, with sitemap reference).
+- ✅ JSON-LD (§4): site-wide **Person + Organization + WebSite** (with `sameAs`); per-project **BreadcrumbList + CreativeWork**, plus a matching on-page breadcrumb UI.
+- ✅ Identity fixes (§6): real LinkedIn profile, canonical GitHub casing (`mickael45`), `rel="me"` on the footer's GitHub / portfolio / LinkedIn links. Shared in `lib/site.ts`.
+- ✅ Web app **manifest** (§8).
+- ◑ Alt text (§7): all project images carry descriptive `alt`; detail-hero `alt` is now `"{title} — {tagline}"`.
+
+**Still open:**
+- Build-time **per-project OG image generation** (§5) — the interim (og:image → each project's image) is live; satori/canvas generation deferred to its own pass.
+- **`astro:assets`** optimization (§7) — images are already pre-optimized WebP with explicit dimensions (no CLS); a full `astro:assets` pipeline would require moving image rendering out of the React islands into `.astro`.
+- **Keyword / title** work (§10) — judgment calls, needs owner sign-off.
+- **Category pages** (§11, optional); **post-launch checklist** (§12, external — GSC/Bing, Rich Results test, Lighthouse, backlinks).
+- ⚠️ Confirm the **GitHub username casing** against the live profile (defaulted to `mickael45`; change in `lib/site.ts` if wrong).
 
 ---
 

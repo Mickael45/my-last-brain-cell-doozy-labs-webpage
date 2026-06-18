@@ -7,20 +7,62 @@
  * land in the follow-up SEO phase (SEO-HANDOFF §4–§5). This component covers
  * the metadata that already existed in the Next build so nothing regresses.
  */
+import { SITE } from "../../lib/site";
+
 interface Props {
   title: string;
   description: string;
   /** Absolute OG image path (relative to site root). Defaults to /og.png. */
   ogImage?: string;
   ogType?: "website" | "article";
+  /** Extra JSON-LD nodes for this page (e.g. BreadcrumbList, CreativeWork). */
+  jsonLd?: Record<string, unknown>[];
 }
 
-const { title, description, ogImage = "/og.png", ogType = "website" } = Astro.props;
+const {
+  title,
+  description,
+  ogImage = "/og.png",
+  ogType = "website",
+  jsonLd = [],
+} = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
-const SITE_NAME = "My Last Brain Cell Doozy Labs";
+const SITE_NAME = SITE.name;
 const GA_ID = "G-JQWX179K9Q";
+
+// Site-wide structured data (SEO-HANDOFF §4): ties the identity together via
+// sameAs, declares the Organization and the WebSite. Per-page nodes (Breadcrumb,
+// CreativeWork) arrive through the `jsonLd` prop.
+const siteHref = Astro.site!.href;
+const siteGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteHref}#person`,
+      name: SITE.authorName,
+      url: SITE.website,
+      email: SITE.email,
+      sameAs: [SITE.github, SITE.linkedin, SITE.website],
+    },
+    {
+      "@type": "Organization",
+      "@id": `${siteHref}#org`,
+      name: SITE.org,
+      url: siteHref,
+      logo: new URL("/icon.png", Astro.site).href,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteHref}#website`,
+      name: SITE.name,
+      url: siteHref,
+      publisher: { "@id": `${siteHref}#org` },
+    },
+  ],
+};
 ---
 
 <meta charset="utf-8" />
@@ -35,10 +77,11 @@ const GA_ID = "G-JQWX179K9Q";
 <meta name="theme-color" content="#111827" />
 <meta name="color-scheme" content="dark" />
 
-<!-- Icons -->
+<!-- Icons + web app manifest (SEO-HANDOFF §8) -->
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="512x512" href="/icon.png" />
 <link rel="apple-touch-icon" href="/apple-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
 
 <!-- Open Graph -->
 <meta property="og:type" content={ogType} />
@@ -54,6 +97,14 @@ const GA_ID = "G-JQWX179K9Q";
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageUrl} />
+
+<!-- Structured data (SEO-HANDOFF §4) -->
+<script type="application/ld+json" set:html={JSON.stringify(siteGraph)} />
+{
+  jsonLd.map((node) => (
+    <script type="application/ld+json" set:html={JSON.stringify(node)} />
+  ))
+}
 
 <!-- Google Analytics — site-wide so every page is tracked (SEO-HANDOFF §9) -->
 <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} async></script>

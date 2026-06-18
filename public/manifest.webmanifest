@@ -1,0 +1,22 @@
+{
+  "name": "My Last Brain Cell Doozy Labs",
+  "short_name": "Doozy Labs",
+  "description": "A solo dev lab where shower thoughts become shipped products and over-engineered prototypes achieve sentience at 3 AM.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "icons": [
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

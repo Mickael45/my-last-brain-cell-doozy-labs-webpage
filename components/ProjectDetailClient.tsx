@@ -22,6 +22,7 @@ import DetailBackground from "./DetailBackground";
 import StatusPlaceholder from "./StatusPlaceholder";
 import ImageLightbox from "./ImageLightbox";
 import { getTechCategory, getCategoryStyle, techDescriptions } from "../lib/techHelpers";
+import { SITE } from "../lib/site";
 
 export default function ProjectDetailClient({
   project,
@@ -67,6 +68,34 @@ export default function ProjectDetailClient({
               <ArrowLeft className="w-5 h-5 group-hover:text-cyan-400 transition-colors" />
               <span className="font-medium">Back to the Lab</span>
             </a>
+
+            {/* Breadcrumb — mirrors the BreadcrumbList JSON-LD */}
+            <nav aria-label="Breadcrumb" className="mt-3">
+              <ol className="flex items-center gap-2 text-sm text-gray-400">
+                <li>
+                  <a href="/" className="hover:text-white transition-colors">
+                    Home
+                  </a>
+                </li>
+                <li aria-hidden="true" className="text-gray-600">
+                  /
+                </li>
+                <li>
+                  <a
+                    href="/#projects"
+                    className="hover:text-white transition-colors"
+                  >
+                    Projects
+                  </a>
+                </li>
+                <li aria-hidden="true" className="text-gray-600">
+                  /
+                </li>
+                <li aria-current="page" className="text-gray-200 truncate">
+                  {project.title}
+                </li>
+              </ol>
+            </nav>
           </div>
         </nav>
 
@@ -114,7 +143,7 @@ export default function ProjectDetailClient({
                     </a>
                   )}
                   {project.githubRepo &&
-                    <a href={`https://github.com/Mickael45/${project.githubRepo}`} target="_blank"
+                    <a href={`${SITE.github}/${project.githubRepo}`} target="_blank"
                       rel="noopener noreferrer" className="relative inline-flex items-center gap-2 px-8 py-4 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:140ms]">
                       <Github className="w-5 h-5" />
                       View Code
@@ -130,7 +159,7 @@ export default function ProjectDetailClient({
                     <>
                       <img
                         src={project.imageUrl}
-                        alt={project.title}
+                        alt={`${project.title} — ${project.tagline}`}
                         width={1200}
                         height={600}
                         loading="eager"

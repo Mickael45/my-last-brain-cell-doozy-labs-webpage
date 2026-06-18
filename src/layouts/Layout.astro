@@ -8,15 +8,22 @@ interface Props {
   description: string;
   ogImage?: string;
   ogType?: "website" | "article";
+  jsonLd?: Record<string, unknown>[];
 }
 
-const { title, description, ogImage, ogType } = Astro.props;
+const { title, description, ogImage, ogType, jsonLd } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="bg-gray-900">
   <head>
-    <BaseHead title={title} description={description} ogImage={ogImage} ogType={ogType} />
+    <BaseHead
+      title={title}
+      description={description}
+      ogImage={ogImage}
+      ogType={ogType}
+      jsonLd={jsonLd}
+    />
   </head>
   <body class="min-h-screen bg-gray-900 text-white">
     <slot />

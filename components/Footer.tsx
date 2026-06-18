@@ -1,15 +1,12 @@
 import React from "react";
 import { Beaker, Github, Linkedin, Briefcase } from "lucide-react";
+import { SITE } from "../lib/site";
 
 const Footer: React.FC = () => {
   const socialLinks = [
-    { icon: Github, href: "https://github.com/Mickael45", label: "GitHub" },
-    {
-      icon: Briefcase,
-      href: "https://www.mickael-gomes.com",
-      label: "Portfolio",
-    },
-    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+    { icon: Github, href: SITE.github, label: "GitHub" },
+    { icon: Briefcase, href: SITE.website, label: "Portfolio" },
+    { icon: Linkedin, href: SITE.linkedin, label: "LinkedIn" },
   ];
 
   return (
@@ -49,7 +46,7 @@ const Footer: React.FC = () => {
                 key={index}
                 href={social.href}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="me noopener noreferrer"
                 className="p-3 bg-gray-800 hover:bg-gray-700 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-300 group hover:-translate-y-1 hover:scale-110 active:scale-95"
                 aria-label={social.label}
               >

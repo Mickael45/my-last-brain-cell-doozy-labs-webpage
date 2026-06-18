@@ -15,6 +15,32 @@ const { project } = Astro.props as { project: Project };
 
 const description = project.description || project.tagline;
 const ogImage = project.imageUrl || "/og.png";
+
+// Per-project structured data (SEO-HANDOFF §4).
+const siteHref = Astro.site!.href;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imageAbs = new URL(ogImage, Astro.site).href;
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
+    { "@type": "ListItem", position: 2, name: "Projects", item: `${siteHref}#projects` },
+    { "@type": "ListItem", position: 3, name: project.title, item: canonical },
+  ],
+};
+
+const creativeWork = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: project.title,
+  description,
+  url: canonical,
+  image: imageAbs,
+  author: { "@id": `${siteHref}#person` },
+  keywords: [...project.techStack, ...project.categories].join(", "),
+};
 ---
 
 <Layout
@@ -22,6 +48,7 @@ const ogImage = project.imageUrl || "/og.png";
   description={description}
   ogImage={ogImage}
   ogType="article"
+  jsonLd={[breadcrumb, creativeWork]}
 >
   <ProjectDetailClient project={project} client:load />
 </Layout>

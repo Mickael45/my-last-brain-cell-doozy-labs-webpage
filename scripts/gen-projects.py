@@ -6,6 +6,13 @@ SNAP = os.path.join(os.path.dirname(__file__), "..", "data",
                     "snapshot_vibrant-condor-44_1781788629065623499",
                     "projects", "documents.jsonl")
 
+# Data corrections applied on top of the raw snapshot:
+# Etsy Automation borrowed SDS Sentinel's favicon as its imageUrl in Convex —
+# it has no real hero image, so blank it to fall back to the status placeholder.
+IMAGE_OVERRIDES = {
+    "Etsy Automation": "",
+}
+
 # Stable, human-readable slugs (match existing /public/projects/* folders).
 SLUGS = {
     "Dish Database": "dish-database",
@@ -41,7 +48,7 @@ for d in docs:
         "tagline": d.get("tagline", ""),
         "description": d.get("description", ""),
         "projectUrl": d.get("projectUrl", ""),
-        "imageUrl": d.get("imageUrl", ""),
+        "imageUrl": IMAGE_OVERRIDES.get(title, d.get("imageUrl", "")),
         "screenshots": d.get("screenshots", []),
         "challenges": d.get("challenges", []),
         "solutions": d.get("solutions", []),

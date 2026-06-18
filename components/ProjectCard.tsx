@@ -127,7 +127,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, href }) => {
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-cyan-400" />
                 <span className="font-bold">
-                  {project.metrics?.users
+                  {project.metrics?.users != null
                     ? formatNumber(project.metrics.users)
                     : "N/A"}
                 </span>

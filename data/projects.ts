@@ -177,7 +177,7 @@ export const projects: Project[] = [
     "tagline": "From 'nice picture' to 'live on Etsy' without lifting more than one finger.",
     "description": "A full-stack automation tool that turns listing print-on-demand products into a single guided flow. Upload an image, and a local AI pipeline takes over: 8x ESRGAN upscaling, Ollama vision for image analysis, and a second LLM pass for SEO-optimized Etsy metadata — titles, descriptions, and exactly 13 tags. Smart-crops to product-specific aspect ratios, submits to Printify with full variant and pricing config. Everything runs locally — no API bills, no cloud, one flow from image to draft product.",
     "projectUrl": "",
-    "imageUrl": "/projects/sds-sentinel/favicon.webp",
+    "imageUrl": "",
     "screenshots": [],
     "challenges": [
       "Getting print-quality resolution from low-res source images without turning everything into an impressionist painting of artifacts.",

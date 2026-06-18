@@ -12,6 +12,9 @@ import { SITE } from "../../lib/site";
 interface Props {
   title: string;
   description: string;
+  /** Social-share headline (og/twitter). Defaults to `title`; set this to keep
+   *  the brand voice on shares while the SEO <title> stays keyword-forward. */
+  ogTitle?: string;
   /** Absolute OG image path (relative to site root). Defaults to /og.png. */
   ogImage?: string;
   ogType?: "website" | "article";
@@ -22,10 +25,13 @@ interface Props {
 const {
   title,
   description,
+  ogTitle,
   ogImage = "/og.png",
   ogType = "website",
   jsonLd = [],
 } = Astro.props;
+
+const socialTitle = ogTitle ?? title;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
@@ -85,7 +91,7 @@ const siteGraph = {
 
 <!-- Open Graph -->
 <meta property="og:type" content={ogType} />
-<meta property="og:title" content={title} />
+<meta property="og:title" content={socialTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImageUrl} />
 <meta property="og:url" content={canonical} />
@@ -94,7 +100,7 @@ const siteGraph = {
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={title} />
+<meta name="twitter:title" content={socialTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageUrl} />
 

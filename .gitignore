@@ -19,6 +19,10 @@ dist-ssr
 # Convex DB export — local source for scripts/gen-projects.py, not versioned
 data/snapshot_*/
 
+# Downloaded font cache for the OG-image generator (scripts/gen-og.ts).
+# The generated PNGs in public/og/ ARE committed; this cache is not.
+scripts/.cache/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -23,8 +23,14 @@ Framing note: pure SSG gives **no SEO ranking advantage over the old ISR** — c
 - ✅ Web app **manifest** (§8).
 - ◑ Alt text (§7): all project images carry descriptive `alt`; detail-hero `alt` is now `"{title} — {tagline}"`.
 
+**Done (Phase 4 — OG cards):**
+- ✅ Build-time **per-project OG image generation** (§5): `scripts/gen-og.ts` (satori + sharp) emits branded 1200×630 **PNG** cards (title + tagline + status + screenshot, with a text-only fallback for projects lacking a screenshot) to `public/og/<slug>.png`. Wired into `[slug].astro` for `og:image` / `twitter:image` / CreativeWork image. Run via `bun run gen:og`. **Fixes a real bug** — the interim pointed `og:image` at raw `.webp` screenshots, which LinkedIn/Facebook don't render and which weren't 1200×630.
+
+**Done (Phase 5 — content/keywords):**
+- ✅ §10: home `<title>` is now keyword-forward — `Indie Dev Lab & Micro-SaaS Experiments | Doozy Labs` (brand-only title had zero search volume). Added a keyword-bearing hero eyebrow ("Indie dev lab · Solo-built micro-SaaS & prototypes") above the unchanged playful gradient H1, so discoverability and brand voice coexist.
+- ✅ Split SEO title from social title: `BaseHead`/`Layout` gained an optional `ogTitle` prop (defaults to `title`). Home sets `ogTitle="My Last Brain Cell Doozy Labs"` so shares keep the brand voice while the `<title>` stays keyword-forward. Project pages still mirror their own title.
+
 **Still open:**
-- Build-time **per-project OG image generation** (§5) — the interim (og:image → each project's image) is live; satori/canvas generation deferred to its own pass.
 - **`astro:assets`** optimization (§7) — images are already pre-optimized WebP with explicit dimensions (no CLS); a full `astro:assets` pipeline would require moving image rendering out of the React islands into `.astro`.
 - **Keyword / title** work (§10) — judgment calls, needs owner sign-off.
 - **Category pages** (§11, optional); **post-launch checklist** (§12, external — GSC/Bing, Rich Results test, Lighthouse, backlinks).
@@ -149,7 +155,7 @@ Add `Organization` for "Doozy Labs" (name, url, logo = `/icon.png` absolute).
 
 ---
 
-## 5. Open Graph images
+## 5. Open Graph images — ✅ DONE (`scripts/gen-og.ts`, `bun run gen:og`)
 
 - Keep the existing static `public/og.png` (1200×630) as the **home / default** OG image. ✅ correct size already.
 - **Per-project OG images** (the old build shared one image across every page — low social CTR). Two ways in Astro:

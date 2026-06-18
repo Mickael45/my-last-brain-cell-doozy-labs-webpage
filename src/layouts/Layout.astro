@@ -6,12 +6,13 @@ import RevealObserver from "../../components/RevealObserver";
 interface Props {
   title: string;
   description: string;
+  ogTitle?: string;
   ogImage?: string;
   ogType?: "website" | "article";
   jsonLd?: Record<string, unknown>[];
 }
 
-const { title, description, ogImage, ogType, jsonLd } = Astro.props;
+const { title, description, ogTitle, ogImage, ogType, jsonLd } = Astro.props;
 ---
 
 <!doctype html>
@@ -20,6 +21,7 @@ const { title, description, ogImage, ogType, jsonLd } = Astro.props;
     <BaseHead
       title={title}
       description={description}
+      ogTitle={ogTitle}
       ogImage={ogImage}
       ogType={ogType}
       jsonLd={jsonLd}

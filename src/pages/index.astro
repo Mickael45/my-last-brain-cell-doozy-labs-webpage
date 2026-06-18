@@ -1,0 +1,31 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import FeaturedProjects from "../../components/FeaturedProjects";
+import ProjectGallery from "../../components/ProjectGallery";
+import AboutSection from "../../components/AboutSection";
+import ContactSection from "../../components/ContactSection";
+import Footer from "../../components/Footer";
+import { getProjects } from "../../data/projects";
+
+const projects = getProjects();
+const featuredProjects = projects
+  .filter((p) => p.isFeatured)
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+
+const description =
+  "One brain cell. Infinite bad ideas. A solo dev lab where shower thoughts become shipped products and over-engineered prototypes achieve sentience at 3 AM.";
+---
+
+<Layout title="My Last Brain Cell Doozy Labs" description={description}>
+  <main class="min-h-screen bg-gray-900">
+    <Hero />
+    {/* Static (zero-JS) — reveal handled by the global observer */}
+    <FeaturedProjects featuredProjects={featuredProjects} />
+    {/* Interactive: type filter + show-more + per-card reveal */}
+    <ProjectGallery projects={projects} client:visible />
+    <AboutSection />
+    <ContactSection />
+    <Footer />
+  </main>
+</Layout>

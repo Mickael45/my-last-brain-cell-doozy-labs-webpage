@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProjectDetailClient from "../../../components/ProjectDetailClient";
+import { getProjects } from "../../../data/projects";
+import type { Project } from "../../../types";
+
+export function getStaticPaths() {
+  return getProjects().map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props as { project: Project };
+
+const description = project.description || project.tagline;
+const ogImage = project.imageUrl || "/og.png";
+---
+
+<Layout
+  title={`${project.title} | Doozy Labs`}
+  description={description}
+  ogImage={ogImage}
+  ogType="article"
+>
+  <ProjectDetailClient project={project} client:load />
+</Layout>

@@ -1,0 +1,26 @@
+---
+import "../styles/global.css";
+import BaseHead from "../components/BaseHead.astro";
+import RevealObserver from "../../components/RevealObserver";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
+}
+
+const { title, description, ogImage, ogType } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="bg-gray-900">
+  <head>
+    <BaseHead title={title} description={description} ogImage={ogImage} ogType={ogType} />
+  </head>
+  <body class="min-h-screen bg-gray-900 text-white">
+    <slot />
+    {/* Reveal-on-scroll observer for [data-reveal] elements (zero-JS until idle) */}
+    <RevealObserver client:idle />
+  </body>
+</html>

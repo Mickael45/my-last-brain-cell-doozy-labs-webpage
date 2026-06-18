@@ -4,6 +4,8 @@ export type Category = (typeof CATEGORIES)[number];
 
 export interface Project {
   id: string;
+  /** Human-readable URL slug, e.g. "dish-database" → /project/dish-database. */
+  slug: string;
   title: string;
   tagline: string;
   description: string;
@@ -28,19 +30,4 @@ export interface Project {
   isFeatured: boolean;
   sortOrder: number;
   githubRepo?: string;
-}
-
-export interface GitHubIssue {
-  id: number;
-  number: number;
-  title: string;
-  state: string;
-  html_url: string;
-  user: {
-    login: string;
-  };
-  labels: {
-    name: string;
-    color: string;
-  }[];
 }

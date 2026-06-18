@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Grid, Filter } from "lucide-react";
 import ProjectCard from "./ProjectCard";
-import { Project } from "../types";
+import type { Project } from "../types";
 import { useReveal } from "../lib/useReveal";
 
 interface ProjectGalleryProps {
@@ -37,7 +37,7 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
         className={`opacity-0 ${visible && "animate-fade-up"}`}
         style={{ animationDelay: `${index * 75}ms` }}
       >
-        <ProjectCard project={project} href={`/project/${project.id}`} />
+        <ProjectCard project={project} href={`/project/${project.slug}`} />
       </div>
     );
   };

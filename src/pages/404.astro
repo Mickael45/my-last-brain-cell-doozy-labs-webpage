@@ -1,0 +1,31 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Page Not Found | Doozy Labs"
+  description="This page wandered off into the idea graveyard. Head back to the lab."
+>
+  <main class="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+    <div class="text-center max-w-xl">
+      <p class="text-sm font-mono tracking-widest text-cyan-400 uppercase mb-4">
+        Error 404
+      </p>
+      <h1 class="text-5xl md:text-7xl font-bold mb-6">
+        <span class="bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
+          This experiment escaped.
+        </span>
+      </h1>
+      <p class="text-xl text-gray-400 mb-10">
+        The page you're after either never existed or achieved sentience and
+        wandered off. Either way, it's not here.
+      </p>
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:from-pink-400 hover:via-purple-400 hover:to-cyan-400 text-white rounded-full font-semibold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/25 hover:scale-105 active:scale-95"
+      >
+        Back to the Lab
+      </a>
+    </div>
+  </main>
+</Layout>

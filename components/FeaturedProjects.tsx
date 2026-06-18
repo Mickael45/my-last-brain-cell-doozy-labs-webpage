@@ -1,7 +1,7 @@
 import React from "react";
 import { Sparkles } from "lucide-react";
 import ProjectCard from "./ProjectCard";
-import { Project } from "../types";
+import type { Project } from "../types";
 
 interface FeaturedProjectsProps {
   featuredProjects: Project[];
@@ -38,7 +38,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ featuredProjects })
               data-reveal="up"
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <ProjectCard project={project} href={`/project/${project.id}`} />
+              <ProjectCard project={project} href={`/project/${project.slug}`} />
             </div>
           ))}
         </div>

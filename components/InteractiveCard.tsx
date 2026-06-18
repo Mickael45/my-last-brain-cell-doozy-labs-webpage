@@ -1,5 +1,6 @@
 "use client";
-import React, { useRef, useState, useEffect, HTMLAttributes } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import type { HTMLAttributes } from "react";
 
 interface InteractiveCardProps extends HTMLAttributes<HTMLDivElement> {
   intensity?: number; // rotation intensity in degrees

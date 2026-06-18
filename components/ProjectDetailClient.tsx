@@ -1,7 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import {
   ArrowLeft,
   ExternalLink,
@@ -18,25 +16,18 @@ import {
   Info,
   Github,
 } from "lucide-react";
-import type { Project, GitHubIssue } from "../types";
+import type { Project } from "../types";
 import InteractiveCard from "./InteractiveCard";
 import DetailBackground from "./DetailBackground";
 import StatusPlaceholder from "./StatusPlaceholder";
-import { getTechCategory, getCategoryStyle, techDescriptions } from "@/app/project/[id]/helpers";
-
-const ProjectTasks = dynamic(() => import("./ProjectTasks"), { ssr: false });
-const ImageLightbox = dynamic(() => import("./ImageLightbox"), {
-  ssr: false,
-});
+import ImageLightbox from "./ImageLightbox";
+import { getTechCategory, getCategoryStyle, techDescriptions } from "../lib/techHelpers";
 
 export default function ProjectDetailClient({
   project,
-  tasks,
 }: {
   project: Project;
-  tasks: GitHubIssue[];
 }) {
-  const router = useRouter();
   const [imageError, setImageError] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -69,13 +60,13 @@ export default function ProjectDetailClient({
         {/* Navigation */}
         <nav className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800/50">
           <div className="max-w-7xl mx-auto px-4 py-4">
-            <button
-              onClick={() => router.push("/")}
-              className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors group hover:-translate-x-1 hover:scale-105 active:scale-95 transform duration-300"
+            <a
+              href="/"
+              className="inline-flex items-center gap-3 text-gray-300 hover:text-white transition-colors group hover:-translate-x-1 hover:scale-105 active:scale-95 transform duration-300"
             >
               <ArrowLeft className="w-5 h-5 group-hover:text-cyan-400 transition-colors" />
               <span className="font-medium">Back to the Lab</span>
-            </button>
+            </a>
           </div>
         </nav>
 
@@ -382,9 +373,6 @@ export default function ProjectDetailClient({
           </section>
         )}
 
-        {/* Live Tasks Section */}
-        {tasks && tasks.length > 0 && <ProjectTasks tasks={tasks} />}
-
         {/* Screenshots Section */}
         {project.screenshots && project.screenshots.length > 0 && (
           <section className="py-20 bg-gray-800/30">
@@ -480,14 +468,14 @@ export default function ProjectDetailClient({
                   </a>
                 )}
 
-                <button
-                  onClick={() => router.push("/")}
+                <a
+                  href="/"
                   className="relative inline-flex items-center gap-3 px-10 py-5 border-2 border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white rounded-2xl font-bold text-xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 animate-scale-in [animation-delay:120ms]"
                 >
                   <ArrowLeft className="w-6 h-6" />
                   Back to Lab
                   <span className="absolute inset-0 rounded-2xl ring-0 hover:animate-border-pulse" />
-                </button>
+                </a>
               </div>
             </div>
           </div>

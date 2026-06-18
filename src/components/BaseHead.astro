@@ -1,0 +1,67 @@
+---
+/**
+ * Shared <head> for every page. Absolute canonical + OG URLs are derived from
+ * `Astro.site` (set in astro.config.mjs), replacing Next's `metadataBase`.
+ *
+ * NOTE: JSON-LD, per-project OG generation, and the full structured-data pass
+ * land in the follow-up SEO phase (SEO-HANDOFF §4–§5). This component covers
+ * the metadata that already existed in the Next build so nothing regresses.
+ */
+interface Props {
+  title: string;
+  description: string;
+  /** Absolute OG image path (relative to site root). Defaults to /og.png. */
+  ogImage?: string;
+  ogType?: "website" | "article";
+}
+
+const { title, description, ogImage = "/og.png", ogType = "website" } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage, Astro.site);
+const SITE_NAME = "My Last Brain Cell Doozy Labs";
+const GA_ID = "G-JQWX179K9Q";
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- Theme / color scheme (SEO-HANDOFF §8) -->
+<meta name="theme-color" content="#111827" />
+<meta name="color-scheme" content="dark" />
+
+<!-- Icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/icon.png" />
+<link rel="apple-touch-icon" href="/apple-icon.png" />
+
+<!-- Open Graph -->
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+<!-- Google Analytics — site-wide so every page is tracked (SEO-HANDOFF §9) -->
+<script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} async></script>
+<script is:inline define:vars={{ GA_ID }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", GA_ID);
+</script>

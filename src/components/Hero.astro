@@ -1,0 +1,88 @@
+---
+import AnimatedMesh from "../../components/AnimatedMesh";
+
+// Deterministic particle layout, computed once at build time (was a client
+// pseudo-random in the old React HeroSection).
+const PARTICLE_COUNT = 6;
+const pseudoRandom = (seed: number) => {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+const particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+  left: `${(pseudoRandom(i + 1) * 100).toFixed(4)}%`,
+  top: `${(pseudoRandom(i + 101) * 100).toFixed(4)}%`,
+  animationDelay: `${i * 0.5}s`,
+  animationDuration: "4s",
+}));
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
+  {/* Animated mesh background — hydrates when the browser is idle */}
+  <AnimatedMesh client:idle />
+
+  {/* Gradient overlay */}
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-gray-900/20 via-gray-900/40 to-gray-900/80"
+    style="z-index: 2"
+  >
+  </div>
+
+  {/* Content */}
+  <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+    <div class="mb-8 animate-fade-up [animation-delay:200ms]">
+      <h1 class="text-6xl md:text-8xl font-bold mb-6 leading-tight animate-fade-up [animation-delay:400ms]">
+        <span class="bg-gradient-to-r from-cyan-400 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+          My Last Brain Cell
+        </span>{" "}
+        <span class="bg-gradient-to-r from-purple-400 via-blue-500 to-green-400 bg-clip-text text-transparent">
+          Doozy
+        </span>
+      </h1>
+
+      <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-up [animation-delay:600ms]">
+        Where caffeine-fueled coding sessions meet questionable life choices.
+        Building stuff that probably shouldn't exist, but somehow does.
+      </p>
+
+      <a
+        href="#projects"
+        class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:from-pink-400 hover:via-purple-400 hover:to-cyan-400 text-white rounded-full font-semibold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/25 animate-fade-up [animation-delay:800ms] hover:scale-105 active:scale-95"
+      >
+        Enter the Chaos
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-5 h-5"
+          aria-hidden="true"
+        >
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+      </a>
+    </div>
+
+    {/* Floating particles */}
+    <div class="absolute inset-0 pointer-events-none">
+      {
+        particles.map((cfg) => (
+          <span
+            class="absolute w-2 h-2 bg-gradient-to-r from-pink-400 to-cyan-400 rounded-full animate-float-y"
+            style={`left:${cfg.left};top:${cfg.top};animation-delay:${cfg.animationDelay};animation-duration:${cfg.animationDuration}`}
+          />
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-fade-up [animation-delay:1500ms]">
+    <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center animate-bob">
+      <div class="w-1 h-3 bg-white/50 rounded-full mt-2 animate-bob" style="animation-duration: 2s"></div>
+    </div>
+  </div>
+</section>

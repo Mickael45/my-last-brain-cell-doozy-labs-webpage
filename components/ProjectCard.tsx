@@ -1,7 +1,4 @@
-"use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import React from "react";
 import {
   ArrowRight,
   Users,
@@ -11,23 +8,16 @@ import {
   Package,
   XCircle,
 } from "lucide-react";
-import { Project } from "../types";
+import type { Project } from "../types";
 import StatusPlaceholder from "./StatusPlaceholder";
 
 interface ProjectCardProps {
   project: Project;
-  href?: string; // optional link destination
-  onClick?: (project: Project) => void; // fallback click handler
+  /** Link destination, e.g. /project/dish-database */
+  href: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({
-  project,
-  href,
-  onClick,
-}) => {
-  const router = useRouter();
-  const [imageError, setImageError] = useState(false);
-
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, href }) => {
   const getTypeStyling = (type: string) => {
     return type === "Forking Around"
       ? {
@@ -81,63 +71,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const statusInfo = getStatusInfo(project.status);
   const typeStyling = getTypeStyling(project.type);
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    // Card without href delegates to an optional click callback.
-    if (!href) {
-      onClick?.(project);
-      return;
-    }
-
-    // If there's an href and it's a modified click (Cmd/Ctrl/Shift/middle-click), let the browser handle it
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) {
-      return;
-    }
-
-    if (typeof document.startViewTransition === "function") {
-      // Intercept only normal left clicks to keep native open-in-new-tab behavior.
-      e.preventDefault();
-      document.startViewTransition(() => {
-        router.push(href);
-      });
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key !== "Enter" && e.key !== " ") return;
-
-    if (!href) {
-      e.preventDefault();
-      onClick?.(project);
-      return;
-    }
-
-    e.preventDefault();
-    if (typeof document.startViewTransition === "function") {
-      document.startViewTransition(() => {
-        router.push(href);
-      });
-    } else {
-      router.push(href);
-    }
-  };
-
-  const CardContent = (
-    <>
+  return (
+    <a
+      href={href}
+      className="block cursor-pointer group relative rounded-xl overflow-hidden h-[450px] transition-all duration-300 hover:scale-[1.02] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+    >
       {/* Background Image */}
       <div
         className="absolute inset-0 rounded-xl overflow-hidden bg-gray-800"
         style={{ viewTransitionName: `project-image-${project.id}` }}
       >
-        {!project.imageUrl || imageError ? (
+        {!project.imageUrl ? (
           <StatusPlaceholder status={project.status} variant="card" />
         ) : (
           <img
             src={project.imageUrl}
-            alt={project.title}
+            alt={`${project.title} — ${project.tagline}`}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             loading="lazy"
             decoding="async"
-            onError={() => setImageError(true)}
           />
         )}
         {/* Content Overlay */}
@@ -219,30 +171,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         </div>
       </div>
-    </>
+    </a>
   );
-
-  const Card = href ? (
-    <Link
-      href={href}
-      onClick={handleClick}
-      className="block cursor-pointer group relative rounded-xl overflow-hidden h-[450px] transition-all duration-300 hover:scale-[1.02] active:scale-95"
-    >
-      {CardContent}
-    </Link>
-  ) : (
-    <div
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      role="button"
-      tabIndex={0}
-      className="cursor-pointer group relative rounded-xl overflow-hidden h-[450px] transition-all duration-300 hover:scale-[1.02] active:scale-95"
-    >
-      {CardContent}
-    </div>
-  );
-
-  return Card;
 };
 
 export default ProjectCard;

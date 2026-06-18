@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 
 const REVEAL_SELECTOR = "[data-reveal]";
 
@@ -11,12 +10,9 @@ function markVisible(element: Element) {
 }
 
 export default function RevealObserver() {
-  // RevealObserver lives in the root layout which never unmounts, so the
-  // effect must re-run on every route change. Otherwise newly mounted
-  // [data-reveal] nodes (e.g. on back-nav from /project/[id] to /) stay
-  // at opacity:0 forever because nothing ever observes them.
-  const pathname = usePathname();
-
+  // Astro ships a multi-page app: every navigation is a full document load,
+  // so this effect runs fresh on each page and re-scans the new [data-reveal]
+  // nodes. The MutationObserver below also catches late client-rendered inserts.
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -79,7 +75,7 @@ export default function RevealObserver() {
       mutationObserver.disconnect();
       observer.disconnect();
     };
-  }, [pathname]);
+  }, []);
 
   return null;
 }

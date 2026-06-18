@@ -12,4 +12,7 @@ export const SITE = {
   github: "https://github.com/mickael45",
   linkedin: "https://www.linkedin.com/in/mickael-gomes-consulting/",
   website: "https://www.mickael-gomes.com",
+  // Google Search Console ownership verification (HTML-tag method). Rendered in
+  // <head> by BaseHead so it survives every rebuild.
+  googleSiteVerification: "TWDG3ZZ0MviUxRigvx9OnaeriEFqoyKslbZsFcdXeU8",
 } as const;

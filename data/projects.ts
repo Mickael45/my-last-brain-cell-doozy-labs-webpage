@@ -306,7 +306,7 @@ export const projects: Project[] = [
       "impact": "Divided job search time by 2",
       "mrr": 0,
       "performance": "Summaries generated in under 3s",
-      "users": 18
+      "users": 22
     },
     "techStack": [
       "ReactJS",
